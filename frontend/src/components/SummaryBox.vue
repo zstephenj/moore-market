@@ -1,6 +1,6 @@
 <template>
     <div class=summaryBox>
-      <h2>{{ sumBoxTitle }}</h2>
+      <h2>Summary</h2>
       <hr/>
       <ul>
           <li v-for="message in sumBoxMessages">{{ message }}</li>
@@ -12,9 +12,6 @@
 export default {
    name: 'SummaryBox',
    props: {
-    sumBoxTitle: {
-        type: String
-    },
     sumBoxMessages: {
         type: Array
     }
@@ -38,7 +35,7 @@ export default {
     width: 300px;
     margin: 15px;
 }
-ul {
+.summaryBox ul {
     text-align: left;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class=feedBox>
-      <h2>{{ boxTitle }}</h2>
+      <h2>The Feed</h2>
       <hr/>
       <ul>
           <li v-for="message in messages">{{ message }}</li>
@@ -12,9 +12,6 @@
 export default {
    name: 'FeedBox',
    props: {
-    boxTitle: {
-        type: String
-    },
     messages: {
         type: Array
     }
@@ -39,7 +36,7 @@ export default {
     margin: 15px;
     
 }
-ul {
+.feedBox ul {
     text-align: left;
 }
 </style>

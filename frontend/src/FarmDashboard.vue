@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
+  <div id="dashboard">
       <div>
-          <h1>{{ storefrontName }}</h1>
+          <h1>Vendor-Mart</h1>
       </div>
 
-      <FeedBox :boxTitle="boxTitle" :messages="messages"></FeedBox>
-      <SummaryBox :sumBoxTitle="sumBoxTitle" :sumBoxMessages="sumBoxMessages"></SummaryBox>
+      <FeedBox :messages="messages"></FeedBox>
+      <SummaryBox :sumBoxMessages="sumBoxMessages"></SummaryBox>
 
 
       <div class=farmerNav>
@@ -45,7 +45,6 @@ export default {
   },
   data() {
       return {
-          storefrontName: 'Vendor-Mart',
           columnTitles: ['Item', 'Category','Price', 'Quantity', 'Item Code', 'Edit/Remove'],
           items: [{
               id: 1,
@@ -76,13 +75,11 @@ export default {
               quantity: 13,
               code: 5003,
           }],
-          boxTitle: 'The Feed',
           messages: [
               'Last item purchased: banana',
               'Customer 1 is looking for carrots',
               'Food bank 2 needs spinach'
           ],
-          sumBoxTitle: 'Summary Box',
           sumBoxMessages: [
               'Low Stock Alert(s): oranges',
               'Sales Totals: $550.00',
@@ -94,13 +91,9 @@ export default {
 </script>
 
 <style>
-#app {
+#dashboard {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 20px;
 }
 
 table.itemSummary {
