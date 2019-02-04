@@ -23,7 +23,7 @@ namespace MooreMarket
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<MooreMarketContext>(options =>
-                options.UseMySQL("server=localhost;port=8889;database=moore-market;user=moore-market;password=password"));
+                options.UseMySQL(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
