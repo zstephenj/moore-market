@@ -106,19 +106,19 @@ export default {
         
     },
     methods: {
-        toggleHidePerishables : function() {
-            this.$data.isPerishable = !this.$data.isPerishable
+        toggleHidePerishables() {
+            this.isPerishable = !this.isPerishable
         },
-        toggleHideRoom : function() {
-            this.$data.keepRoom = !this.$data.keepRoom
+        toggleHideRoom() {
+            this.keepRoom = !this.keepRoom
         },
-        toggleHideFridge: function() {
-            this.$data.keepFridge = !this.$data.keepFridge
+        toggleHideFridge() {
+            this.keepFridge = !this.keepFridge
         },
-        toggleHideFreezer: function() {
-            this.$data.keepFrozen = !this.$data.keepFrozen
+        toggleHideFreezer() {
+            this.keepFrozen = !this.keepFrozen
         },
-        validateForm: function() {
+        validateForm() {
             /* document.getElementById('errorName').innerHTML=""
             document.getElementById('errorDescription').innerHTML=""
             document.getElementById('errorCategory').innerHTML=""
@@ -161,21 +161,17 @@ export default {
                 newProduct.frozenShelfLife = this.frozenShelfLife
                 newProduct.image = this.image
                 console.log(this.$store)
-                this.$store.dispatch('product/addProduct', 1000, newProduct)
+                this.$store.dispatch('addNewProduct', 1000, newProduct)
         },
-        test: function() {
-            console.log(this.$store.getters.newProduct)
+        test() {
+            console.log(this.$store.getters['getNewProduct'])
         },
         changeCategory() {
             let s = document.getElementById('addProductFormCategory')
             let valsearch = s.options[s.selectedIndex]
-            this.$data.selectedCategory = s.selectedIndex
+            this.selectedCategory = s.selectedIndex
             valsearch.selected = true
-        },
-
-        ...mapActions('../store/modules/product', [
-            'addProduct'
-        ])
+        }
 
 },
     data() {

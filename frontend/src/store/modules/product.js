@@ -1,19 +1,19 @@
 const product = {
-    namespaced: true,
+    namespaced: false,
     state: { 
         newProduct: undefined
     },
 
     mutations: {
-        addNewProduct (state, product) {
+        setNewProduct (state, product) {
             state.newProduct = product
         }
     },
 
     actions: { 
-        addProduct: ({ commit }, delay, product) => {
+        addNewProduct: ({ commit }, delay, product) => {
             setTimeout(() => {
-              commit('addNewProduct', product)
+              commit('setNewProduct', product)
             }, delay)
     },
     },

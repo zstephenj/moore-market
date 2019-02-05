@@ -20,7 +20,5 @@ const store = new vuex.Store({
     }
 })
 
-export default {
-    store
-}
+export default store
 
