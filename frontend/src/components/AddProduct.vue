@@ -17,7 +17,7 @@
             <div>
                 <label for='addProductFormCategory'>Category: </label>
                 <select v-model='category' name='category' id='addProductFormCategory' form='addProductForm' @change='changeCategory()'>
-                <option :key='productCategory.id' v-for='productCategory in categories' value=productCategory.id> {{productCategory.name}} </option>
+                <option :key='productCategory.id' v-for='productCategory in categories' value=${productCategory.id}> {{productCategory.name}} </option>
                 </select>
             </div>
             <div id='errorCategory'></div>  
@@ -119,7 +119,7 @@ export default {
             this.$data.keepFrozen = !this.$data.keepFrozen
         },
         validateForm: function() {
-            document.getElementById('errorName').innerHTML=""
+            /* document.getElementById('errorName').innerHTML=""
             document.getElementById('errorDescription').innerHTML=""
             document.getElementById('errorCategory').innerHTML=""
             document.getElementById('errorQuantity').innerHTML=""
@@ -145,26 +145,24 @@ export default {
                 document.getElementById('errorPrice').innerHTML="Please enter a Price"
                 return false
                 }
-            else {
-                class newProduct{}
-                newProduct = new ProductItem()
-                newProduct.name = this.$data.name
-                newProduct.description = this.$data.description
-                newProduct.category = this.$data.category
-                newProduct.quantity = this.$data.quantity
-                newProduct.price = this.$data.price
-                newProduct.isPerishable = this.$data.isPerishable
-                newProduct.keepRoom = this.$data.keepRoom
-                newProduct.roomShelfLife = this.$data.roomShelfLife
-                newProduct.keepFridge = this.$data.keepFridge
-                newProduct.fridgeShelfLife = this.$data.fridgeShelfLife
-                newProduct.keepFrozen = this.$data.keepFrozen
-                newProduct.frozenShelfLife = this.$data.frozenShelfLife
-                newProduct.image = this.$data.image
-                console.log('predispatch')
-                this.$store.dispatch('addProduct',newProduct)
-            }
-        },  
+            else { */
+                let newProduct = new Object()
+                newProduct.name = this.name
+                newProduct.description = this.description
+                newProduct.category = this.category
+                newProduct.quantity = this.quantity
+                newProduct.price = this.price
+                newProduct.isPerishable = this.isPerishable
+                newProduct.keepRoom = this.keepRoom
+                newProduct.roomShelfLife = this.roomShelfLife
+                newProduct.keepFridge = this.keepFridge
+                newProduct.fridgeShelfLife = this.fridgeShelfLife
+                newProduct.keepFrozen = this.keepFrozen
+                newProduct.frozenShelfLife = this.frozenShelfLife
+                newProduct.image = this.image
+                console.log(this.$store)
+                this.$store.dispatch('product/addProduct', 1000, newProduct)
+        },
         test: function() {
             console.log(this.$store.getters.newProduct)
         },
@@ -173,7 +171,12 @@ export default {
             let valsearch = s.options[s.selectedIndex]
             this.$data.selectedCategory = s.selectedIndex
             valsearch.selected = true
-        }
+        },
+
+        ...mapActions('../store/modules/product', [
+            'addProduct'
+        ])
+
 },
     data() {
         return {
@@ -194,23 +197,7 @@ export default {
         }
     }
 }
-export class ProductItem {
-    constructor(name = '', description = '', category = '', quantity = '', price = '', isPerishable = '', keepRoom = '', roomShelfLife = '', keepFridge = '', fridgeShelfLife = '', keepFrozen = '', frozenShelfLife = '', image = '') {
-        this.name = name
-        this.description = description
-        this.category = category
-        this.quantity = quantity
-        this.price = price
-        this.isPerishable = isPerishable
-        this.keepRoom = keepRoom
-        this.roomShelfLife = roomShelfLife
-        this.keepFridge = keepFridge
-        this.fridgeShelfLife = fridgeShelfLife
-        this.keepFrozen = keepFrozen
-        this.frozenShelfLife =frozenShelfLife
-        this.image = image
-    }
-}
+
 </script>
 
 <style scoped>
