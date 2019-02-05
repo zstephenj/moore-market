@@ -21,7 +21,7 @@ export default {
         ...mapState([
             'currentUser'
         ]),
-        getAccountType: function () {
+        getAccountType () {
             return this.currentUser.AccountType
         }
     }
