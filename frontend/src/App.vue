@@ -1,17 +1,27 @@
 <template>
   <div id="app">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <AddProduct v-bind:categories="addProductFormCategories" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddProduct from './components/AddProduct.vue'
+import { ProductItem } from './components/ProductItem'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    AddProduct, ProductItem
+  },
+  data() {
+    return {
+        addProductFormCategories: [{id:1, name:'Category 1'}, {id:2, name:'Category 2'}, {id:3, name:'Category 3'} ]
+        }
   }
 }
 </script>
