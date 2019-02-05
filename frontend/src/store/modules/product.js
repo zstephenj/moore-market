@@ -1,5 +1,5 @@
 const product = {
-    namespaced: false,
+    namespaced: true,
     state: { 
         newProduct: undefined
     },
@@ -18,7 +18,7 @@ const product = {
     },
     },
     getters: {
-        newProduct (state) {
+        getNewProduct (state) {
             return state.newProduct
         }
     }

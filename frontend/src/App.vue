@@ -11,12 +11,11 @@
 
 <script>
 import AddProduct from './components/AddProduct.vue'
-import { ProductItem } from './components/ProductItem'
 
 export default {
   name: 'app',
   components: {
-    AddProduct, ProductItem
+    AddProduct,
   },
   data() {
     return {
