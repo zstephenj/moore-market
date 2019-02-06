@@ -2,4 +2,4 @@ const mutations = {
 
 }
 
-export {mutations}
+export default mutations

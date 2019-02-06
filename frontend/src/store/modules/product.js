@@ -1,21 +1,21 @@
 const product = {
-    namespaced: false,
+    namespaced: true,
     state: { 
         newProduct: undefined
     },
 
     mutations: {
         setNewProduct (state, product) {
+            console.log(product)
             state.newProduct = product
         }
     },
 
     actions: { 
-        addNewProduct: ({ commit }, delay, product) => {
-            setTimeout(() => {
-              commit('setNewProduct', product)
-            }, delay)
-    },
+        addNewProduct(context, product) {
+            console.log(product)
+            context.commit('setNewProduct', product)
+        }
     },
     getters: {
         getNewProduct (state) {
@@ -24,6 +24,4 @@ const product = {
     }
 }
 
-export default {
-    product
-}
+export default product
