@@ -4,6 +4,9 @@ import vue from 'vue';
 vue.use(vuex);
 
 export default new vuex.Store({
-
-});
+    state: {
+        currentUser: {id:1, username: "John", AccountType: "farmer", isLoggedIn: true},
+        
+    }
+})
 
