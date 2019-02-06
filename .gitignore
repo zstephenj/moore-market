@@ -5,6 +5,8 @@
 
 ##We don't need all these I just copied and pasted a template that I found from googling - Clarence
 
+.vscode
+
 # User-specific files
 *.rsuser
 *.suo
