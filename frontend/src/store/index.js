@@ -4,6 +4,10 @@ import vue from 'vue';
 vue.use(vuex);
 
 export default new vuex.Store({
-
+  state: {
+    user: {
+      isLoggedIn: true,
+    }
+  }
 });
 

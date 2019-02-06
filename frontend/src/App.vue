@@ -1,17 +1,31 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import UserLogin from './components/UserLogin.vue'
+import UserDashboard from './components/UserDashboard.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    UserLogin,
+    UserDashboard
+  },
+  data() {
+    return {
+      user: null
+    }
+  },
+  beforeCreate: function () {
+    if (this.$store.state.user.isLoggedIn === true)
+      this.$router.push('/')
+    else
+      this.$router.push('/login')
   }
 }
 </script>
