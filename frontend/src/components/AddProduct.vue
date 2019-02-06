@@ -17,7 +17,7 @@
             <div>
                 <label for='addProductFormCategory'>Category: </label>
                 <select v-model='category' name='category' id='addProductFormCategory' form='addProductForm' @change='changeCategory()'>
-                <option :key='productCategory.id' v-for='productCategory in categories' value=${productCategory.id}> {{productCategory.name}} </option>
+                <option :key='productCategory.id' v-for='productCategory in categories' value='${productCategory.id}''> {{productCategory.name}} </option>
                 </select>
             </div>
             <div id='errorCategory'></div>  
@@ -160,18 +160,22 @@ export default {
                 newProduct.keepFrozen = this.keepFrozen
                 newProduct.frozenShelfLife = this.frozenShelfLife
                 newProduct.image = this.image
-                console.log(this.$store)
-                this.$store.dispatch('addNewProduct', 1000, newProduct)
+                console.log(newProduct)
+                this.addNewProduct(newProduct)
         },
         test() {
-            console.log(this.$store.getters['getNewProduct'])
+            console.log(this.$store.getters['product/getNewProduct'])
         },
         changeCategory() {
             let s = document.getElementById('addProductFormCategory')
             let valsearch = s.options[s.selectedIndex]
             this.selectedCategory = s.selectedIndex
             valsearch.selected = true
-        }
+        },
+
+        ...mapActions('product', [
+            'addNewProduct'
+        ])
 
 },
     data() {
