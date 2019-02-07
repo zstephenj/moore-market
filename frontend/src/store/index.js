@@ -13,7 +13,7 @@ export default new vuex.Store({
 =======
   state: {
     user: {
-      isLoggedIn: true,
+      isLoggedIn: false,
     }
   }
 });

@@ -13,8 +13,11 @@
 =======
 import UserLogin from './components/UserLogin.vue'
 import UserDashboard from './components/UserDashboard.vue'
+<<<<<<< f3c2e149e7f9cbff605ef54d1d321e8e8fd36a84
 import { mapState } from 'vuex'
 >>>>>>> added conditional routing based on user state
+=======
+>>>>>>> cleaned up file directory moved router to seperate file
 
 export default {
   name: 'app',
@@ -31,7 +34,7 @@ export default {
   },
   beforeCreate: function () {
     if (this.$store.state.user.isLoggedIn === true)
-      this.$router.push('/')
+      this.$router.push('/dashboard')
     else
       this.$router.push('/login')
 >>>>>>> added conditional routing based on user state
