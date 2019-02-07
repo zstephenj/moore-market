@@ -6,13 +6,13 @@
 
 <script>
 import UserLogin from './components/UserLogin.vue'
-import Dashboard from './Dashboard'
+import Dashboard from './components/Dashboard'
 
 export default {
   name: 'app',
   components: {
     UserLogin,
-    UserDashboard
+    Dashboard
   },
   data() {
     return {
@@ -20,7 +20,7 @@ export default {
     }
   },
   beforeCreate: function () {
-    if (this.$store.state.user.isLoggedIn === true)
+    if (this.$store.state.currentUser.isLoggedIn === true)
       this.$router.push('/dasboard')
     else
       this.$router.push('/login')
