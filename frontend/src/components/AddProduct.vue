@@ -412,30 +412,35 @@ export default {
         validateForm() {
 
             this.hasErrorName = false
+            this.$refs.errorName.innerHTML = ''
             if (this.checkErrorName()) {
                 this.hasErrorName = true
                 this.$refs.errorName.innerHTML = this.checkErrorName()
             }
 
             this.hasErrorDescription = false
+            this.$refs.errorDescription.innerHTML = ''
             if (this.checkErrorDescription()) {
                 this.hasErrorDescription = true
                 this.$refs.errorDescription.innerHTML = this.checkErrorDescription()
             }
 
             this.hasErrorCategory = false
+            this.$refs.errorCategory.innerHTML = ''
             if (this.checkErrorCategory()) {
                 this.hasErrorCategory = true
                 this.$refs.errorCategory.innerHTML = this.checkErrorCategory()
             }
 
             this.hasErrorQuantity = false
+            this.$refs.errorQuantity.innerHTML = ''
             if (this.checkErrorQuantity()) {
                 this.hasErrorQuantity = true
                 this.$refs.errorQuantity.innerHTML = this.checkErrorQuantity()
             }
 
             this.hasErrorPrice = false
+            this.$refs.errorPrice.innerHTML = ''
             if (this.checkErrorPrice()) {
                 this.hasErrorPrice = true
                 this.$refs.errorPrice.innerHTML = this.checkErrorPrice()
@@ -446,6 +451,7 @@ export default {
                 if (this.$refs.keepRoomYes.checked == true) {
 
                     this.hasErrorShelfLifeRoom = false
+                    this.$refs.errorShelfLifeRoom.innerHTML = ''
                     let formShelfLife = this.$refs.addProductFormShelfLifeRoom.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeRoom = true
@@ -456,6 +462,7 @@ export default {
                 if (this.$refs.keepFridgeYes.checked == true) {
 
                     this.hasErrorShelfLifeFridge = false
+                    this.$refs.errorShelfLifeFridge.innerHTML = ''
                     let formShelfLife = this.$refs.addProductFormShelfLifeFridge.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeFridge = true
@@ -466,6 +473,7 @@ export default {
                 if (this.$refs.keepFreezerYes.checked == true) {
 
                     this.hasErrorShelfLifeFreezer = false
+                    this.$refs.errorShelfLifeFreezer.innerHTML = ''
                     let formShelfLife = this.$refs.addProductFormShelfLifeFreezer.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeFreezer = true
