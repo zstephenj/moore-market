@@ -4,9 +4,9 @@
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <img alt="Vue logo" src="./assets/logo.png">
-    <AddProduct v-bind:categories="addProductFormCategories" />
+    
   </div>
 </template>
 
@@ -16,11 +16,11 @@ import AddProduct from './components/AddProduct.vue'
 export default {
   name: 'app',
   components: {
-    AddProduct,
+    AddProduct
   },
   data() {
     return {
-        addProductFormCategories: [{id:1, name:'Category 1'}, {id:2, name:'Category 2'}, {id:3, name:'Category 3'} ]
+        
         }
   }
 }

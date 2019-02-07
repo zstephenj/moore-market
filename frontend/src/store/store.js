@@ -1,5 +1,5 @@
-import vuex from 'vuex';
-import vue from 'vue';
+import Vuex from 'vuex';
+import Vue from 'vue';
 
 import state from './state.js'
 import mutations from './mutations.js'
@@ -8,9 +8,9 @@ import getters from './getters.js'
 
 import product from  './modules/product'
 
-vue.use(vuex)
+Vue.use(Vuex)
 
-const store = new vuex.Store({
+const store = new Vuex.Store({
     state,
     mutations,
     actions,

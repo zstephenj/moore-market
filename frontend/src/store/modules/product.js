@@ -1,5 +1,7 @@
 const product = {
+
     namespaced: true,
+
     state: { 
         newProduct: undefined
     },
@@ -15,6 +17,7 @@ const product = {
             context.commit('setNewProduct', product)
         }
     },
+    
     getters: {
         getNewProduct (state) {
             return state.newProduct

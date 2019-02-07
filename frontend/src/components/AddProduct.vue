@@ -1,9 +1,13 @@
 <template>
+
     <div class='container-fluid'>
+
         <div class='row'>
+
             <div class='col text-center'>
                 <h1> Add Product</h1>
             </div>
+
         </div>
 
         <form id='addProductForm'>
@@ -44,7 +48,7 @@
                     <label for='addProductFormCategory' class="col-md-2 col-form-label alert alert-success">Category: </label>
                     <div class="col-md-4">
                         <select class="custom-select" v-model='category' name='category' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
-                        <option :key='productCategory.id' v-for='productCategory in categories' :value='productCategory.id'> {{productCategory.name}} </option>
+                        <option :key='productCategory.id' v-for='productCategory in addProductFormCategories' :value='productCategory.id'> {{productCategory.name}} </option>
                         </select>
                     </div>
                 </div>
@@ -228,9 +232,6 @@ export default {
     },
 
     computed: { 
-        
-        
-        
     },
 
     methods: {
@@ -523,7 +524,8 @@ export default {
             hasErrorPrice: false,
             hasErrorShelfLifeRoom: false,
             hasErrorShelfLifeFridge: false,
-            hasErrorShelfLifeFreezer: false
+            hasErrorShelfLifeFreezer: false,
+            addProductFormCategories: [{id:1, name:'Category 1'}, {id:2, name:'Category 2'}, {id:3, name:'Category 3'} ]
         }
     }
 }
