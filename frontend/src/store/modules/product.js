@@ -6,14 +6,12 @@ const product = {
 
     mutations: {
         setNewProduct (state, product) {
-            console.log(product)
             state.newProduct = product
         }
     },
 
     actions: { 
         addNewProduct(context, product) {
-            console.log(product)
             context.commit('setNewProduct', product)
         }
     },
