@@ -3,12 +3,16 @@
 <<<<<<< b7f80194ec4974c92188e44d20ed33759711afb5
 =======
     <img alt="Vue logo" src="./assets/logo.png">
+<<<<<<< HEAD
 >>>>>>> added conditional routing based on user state
+=======
+>>>>>>> 456f2a92ae06194456b9bfcacc38b98604abaeec
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 <<<<<<< b7f80194ec4974c92188e44d20ed33759711afb5
 =======
 import UserLogin from './components/UserLogin.vue'
@@ -18,12 +22,19 @@ import { mapState } from 'vuex'
 >>>>>>> added conditional routing based on user state
 =======
 >>>>>>> cleaned up file directory moved router to seperate file
+=======
+import UserLogin from './components/UserLogin.vue'
+import UserDashboard from './components/UserDashboard.vue'
+>>>>>>> 456f2a92ae06194456b9bfcacc38b98604abaeec
 
 export default {
   name: 'app',
   components: {
+<<<<<<< HEAD
 <<<<<<< b7f80194ec4974c92188e44d20ed33759711afb5
 =======
+=======
+>>>>>>> 456f2a92ae06194456b9bfcacc38b98604abaeec
     UserLogin,
     UserDashboard
   },
@@ -37,7 +48,10 @@ export default {
       this.$router.push('/dashboard')
     else
       this.$router.push('/login')
+<<<<<<< HEAD
 >>>>>>> added conditional routing based on user state
+=======
+>>>>>>> 456f2a92ae06194456b9bfcacc38b98604abaeec
   }
 }
 </script>

@@ -1,12 +1,15 @@
 <template>
-    <div>
-      <h1>This will be the User Dashboard</h1>
-    </div>
+  <div class="user-dashboard">
+    User dashboard here
+  </div>
 </template>
 
 <script>
 export default {
-    
+  name: 'UserDashboard'
 }
 </script>
 
+<style>
+
+</style>
