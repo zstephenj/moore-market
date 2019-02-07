@@ -1,23 +1,14 @@
 <template>
   <div id="app">
-
-    <AddProduct />
-
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import AddProduct from './components/AddProduct.vue'
 
 export default {
   name: 'app',
   components: {
-    AddProduct
-  },
-  data() {
-    return {
-        
-        }
   }
 }
 </script>
