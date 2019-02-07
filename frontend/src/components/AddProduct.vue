@@ -1,90 +1,215 @@
 <template>
-    <div>
-        <h1> Add Product</h1>
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col text-center'>
+                <h1> Add Product</h1>
+            </div>
+        </div>
+
         <form id='addProductForm'>
             
-            <div>
-                <label for='addProductFormName'> Name: </label>
-                <input type='text' v-model='name' name='name' id='addProductFormName'>
-            </div>
-            <div id='errorName'></div>
-            
-            <div>
-                <label for='addProductFormDescription'> Description: </label>
-                <textarea v-model='description' name='description' id='addProductFormDescription' form='addProductForm'> </textarea> 
-            </div>
-            <div id='errorDescription'></div>
-            <div>
-                <label for='addProductFormCategory'>Category: </label>
-                <select v-model='category' name='category' id='addProductFormCategory' form='addProductForm' @change='changeCategory()'>
-                <option :key='productCategory.id' v-for='productCategory in categories' value='${productCategory.id}''> {{productCategory.name}} </option>
-                </select>
-            </div>
-            <div id='errorCategory'></div>  
-            
-            <div>
-                <label for='addProductFormQuantity'>Quantity: </label>
-                <input type='number' v-model="quantity" name='quantity' id='addProductFormQuantity'>
-            </div>  
-            <div id='errorQuantity'></div>
+            <div class="form-group">
 
-            <div>
-                <label for='addProductFormQuantity'>Price: </label>
-                <input type='number' step='0.01' v-model="price" name='price' id='addProductFormPrice'>
-            </div>  
-            <div id='errorPrice'></div>
-            
-            <div>
-                <label for='addProductFormIsPerishable'>Is this item perishable? </label>
-                <input type='checkbox' name='isPerishable' @change="toggleHidePerishables" id='addProductFormIsPerishable'>
-            </div>  
-            
-            <div :class="{'hide-form':!isPerishable}">
-                <div>
-                    <label for='addProductFormKeepRoom'>Can this item be stored at room temperature? </label>
-                    <input type='checkbox' name='keepRoom' @change="toggleHideRoom" id='addProductFormKeepRoom'>
-                </div>
-                
-                <div :class="{'hide-form':!keepRoom}">  
-                    <div>
-                        <label for="addProductFormRoomShelfLife">How long can this item be stored at room temperature? </label>
-                        <input type='text' v-model="roomShelfLife" name='roomShelfLife' id='addProductFormRoomShelfLife'>
-                    </div>  
-                </div>
-                
-                <div>
-                    <label for="addProductFormKeepFridge">Can this item be stored in a refrigerator? </label>
-                    <input type='checkbox' name='keepFridge' @change='toggleHideFridge' id='addProductFormKeepFridge'>
-                </div>
-                
-                <div :class="{'hide-form':!keepFridge}">  
-                    <div>
-                        <label for="addProductFormFridgeShelfLife">How long can this item be stored in the refrigerator? </label>
-                        <input type='text' v-model="fridgeShelfLife" name='fridgeShelfLife' id='addProductFormFridgeShelfLife'>
-                    </div> 
-                </div> 
-
-                <div>
-                    <label for="addProductFormKeepFrozen">Can this item be stored at room temperature? </label>
-                    <input type='checkbox' name='keepFrozen' @change="toggleHideFreezer" id='addProductFormKeepFrozen'>
-                </div> 
-
-                <div :class="{'hide-form':!keepFrozen}"> 
-                    <div>
-                        <label for="addProductFormFrozenShelfLife">How long can this item be stored in the freezer? </label>
-                        <input type='text' v-model="frozenShelfLife" name='frozenShelfLife' id='addProductFormFrozenShelfLife'>
+                <div class="form-row align-items-center justify-content-center">
+                    <label for='addProductFormName' class="col-md-2 col-form-label alert alert-success"> Name: </label>
+                    <div class="col-md-4">
+                        <input class="form-control" type='text' v-model='name' name='name' ref='addProductFormName' id='addProductFormName' >
                     </div>
-                </div> 
-            </div> 
+                </div>
 
-            <div>
-                <label>Upload a Picture: </label>
-                <input type='file' name='pic' accept='image/*' id='addProductForm'>
+                <div class="form-row align-items-center justify-content-center">
+                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorName}" role="alert" id='errorName'>  </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <div class="form-row align-items-center justify-content-center">
+                    <label for='addProductFormDescription' class="col-md-2 col-form-label alert alert-success"> Description: </label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" v-model='description' name='description' ref='addProductFormDescription' id='addProductFormDescription' form='addProductForm'> </textarea> 
+                    </div>
+                </div>
+
+                <div class="form-row align-items-center justify-content-center">
+                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorDescription}" role="alert" ref='errorDescription' id='errorDescription'></div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <div class="form-row align-items-center justify-content-center">
+                    <label for='addProductFormCategory' class="col-md-2 col-form-label alert alert-success">Category: </label>
+                    <div class="col-md-4">
+                        <select class="custom-select" v-model='category' name='category' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
+                        <option :key='productCategory.id' v-for='productCategory in categories' :value='productCategory.id'> {{productCategory.name}} </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row align-items-center justify-content-center">
+                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorCategory}" role="alert" ref='errorCategory' id='errorCategory'></div> 
+                </div> 
+
+            </div>
+
+            <div class="form-group">
+                
+                <div class="form-row align-items-center justify-content-center">
+                    <label for='addProductFormQuantity' class="col-md-2 col-form-label alert alert-success">Quantity: </label>
+                    <div class="col-md-4">
+                        <input class="form-control" type='number' v-model="quantity" name='quantity' ref='addProductFormQuantity' id='addProductFormQuantity'>
+                    </div>
+                </div>
+
+                <div class="form-row align-items-center justify-content-center">
+                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorQuantity}" role="alert" ref='errorQuantity' id='errorQuantity'></div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                
+                <div class="form-row align-items-center justify-content-center">
+                    <label for='addProductFormPrice' class="col-md-2 col-form-label alert alert-success">Price: </label>
+                    <div class="col-md-4">
+                        <input class="form-control" type='number' step='0.01' v-model="price" name='price' ref='addProductFormPrice' id='addProductFormPrice'>
+                    </div>
+                </div>
+                
+                <div class="form-row align-items-center justify-content-center">
+                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorPrice}" role="alert" ref='errorPrice' id='errorPrice'></div>
+                </div>
+
+            </div>
+
+            <fieldset class="form-group" id='isPerishable' >
+                <div class="form-row align-items-center justify-content-center">
+                    <legend class="col-form-label col-md-2 alert alert-success">Item is perishable: </legend>
+                    <div class="custom-control custom-radio col-md-2">
+                        <input class="custom-control-input" type='radio' ref='isPerishableYes' id='isPerishableYes' name='isPerishable' value=true  @click="changeIsPerishable(true)">
+                        <label class="custom-control-label" for="isPerishableYes">Yes</label>
+                    </div>
+                    <div class="custom-control custom-radio col-md-2">
+                        <input class="custom-control-input" type='radio' id='isPerishableNo' name='isPerishable' value=false  @click="changeIsPerishable(false)" checked>
+                        <label class="custom-control-label" for="isPerishableNo">No</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+                <div :class="{'hide-form':!isPerishable}">
+                    
+                    <fieldset class="form-group" id='keepRoom'>
+                        <div class="form-row align-items-center justify-content-center">
+                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
+                            <div class="custom-control custom-radio col-md-2">
+                                <input class="custom-control-input" ref='keepRoomYes' id='keepRoomYes' type='radio' value=true name='keepRoom' @click="changeKeepRoom(true)">
+                                <label class="custom-control-label" for="keepRoomYes">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio col-md-2">
+                                <input class="custom-control-input" id='keepRoomNo' type='radio' value=false name='keepRoom' @click="changeKeepRoom(false)" checked>
+                                <label class="custom-control-label" for="keepRoomNo">No</label>                            
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    
+                        <div :class="{'hide-form':!keepRoom}">
+                            <div class="form-group">
+                                
+                                <div class="form-row align-items-center justify-content-center">
+                                    <label class="col-md-2 col-form-label alert alert-success" for="addProductFormShelfLifeRoom">Shelf life in room: </label>
+                                    <div class="col-md-4">
+                                        <input class="form-control" type='text' v-model="shelfLifeRoom" ref='addProductFormShelfLifeRoom' name='shelfLifeRoom' id='addProductFormShelfLifeRoom'>
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center justify-content-center">
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeRoom}" role="alert" id='errorShelfLifeRoom'>  </div>
+                                </div>
+
+                            </div>    
+                        </div>
+                    
+                    <fieldset class="form-group" id='keepFridge'>
+                        <div class="form-row align-items-center justify-content-center">
+                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
+                            <div class="custom-control custom-radio col-md-2">
+                                <input class="custom-control-input" ref='keepFridgeYes' id='keepFridgeYes' type='radio' value=true name='keepFridge' @click="changeKeepFridge(true)">
+                                <label class="custom-control-label" for="keepFridgeYes">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio col-md-2">
+                                <input class="custom-control-input" id='keepFridgeNo' type='radio' value=false name='keepFridge' @click="changeKeepFridge(false)" checked>
+                                <label class="custom-control-label" for="keepFridgeNo">No</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    
+                        <div :class="{'hide-form':!keepFridge}">
+
+                            <div class="form-group">
+
+                                <div class="form-row align-items-center justify-content-center">
+                                    <label class="col-md-2 col-form-label alert alert-success" for="addProductFormShelfLifeFridge">Shelf life in refrigerator:  </label>
+                                    <div class="col-md-4">
+                                        <input class="form-control" type='text' v-model="shelfLifeFridge" name='shelfLifeFridge' ref='addProductFormShelfLifeFridge' id='addProductFormShelfLifeFridge'>
+                                    </div>
+                                </div> 
+
+                                <div class="form-row align-items-center justify-content-center">
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFridge}" role="alert" id='errorShelfLifeFridge'>  </div>
+                                </div>
+
+                            </div>
+
+                        </div> 
+
+                    <fieldset class="form-group" id='keepFreezer'>
+                        <div class="form-row align-items-center justify-content-center">
+                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
+                            <div class="custom-control custom-radio col-md-2">
+                                <input class="custom-control-input" ref='keepFreezerYes' id='keepFreezerYes' type='radio' value=true name='keepFreezer' @click="changeKeepFreezer(true)">
+                                <label class="custom-control-label" for="keepFreezerYes">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio col-md-2">
+                                <input class="custom-control-input" id='keepFreezerNo' type='radio' value=false name='keepFreezer' @click="changeKeepFreezer(false)" checked>
+                                <label class="custom-control-label" for="keepFreezerNo">No</label>
+                            </div>
+                        </div> 
+                    </fieldset>
+                    
+                        <div :class="{'hide-form':!keepFreezer}"> 
+                            
+                            <div class="form-group">
+
+                                <div class="form-row align-items-center justify-content-center">
+                                    <label class="col-md-2 col-form-label alert alert-success" for="addProductFormShelfLifeFreezer">Shelf life in freezer:  </label>
+                                    <div class="col-md-4">
+                                        <input class="form-control" type='text' v-model="shelfLifeFreezer" ref='addProductFormShelfLifeFreezer' name='shelfLifeFreezer' id='addProductFormShelfLifeFreezer'>
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center justify-content-center">
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFreezer}" role="alert" id='errorShelfLifeFreezer'>  </div>
+                                </div>
+                            
+                            </div>
+
+                        </div>
+                     
+                </div> 
+
+            <div class="form-group form-row align-items-center justify-content-center">
+                <label class="col-md-2 col-form-label alert alert-success">Upload a Picture: </label>
+                <div class="col-md-4">
+                    <input class="form-control-file" type='file' ref='addProductFormPic' name='pic' accept='image/*' id='addProductFormPic'>
+                </div>
             </div>  
 
-            <div><input type='checkbox' @click='test'></div>
-
-            <button type='button' @click="validateForm"> Add Product </button>
+            <button class="btn btn-success" type='button' @click="validateForm"> Add Product </button>
             
         </form>
     </div>
@@ -104,80 +229,278 @@ export default {
 
     computed: { 
         
+        
+        
     },
+
     methods: {
-        toggleHidePerishables() {
-            this.isPerishable = !this.isPerishable
-        },
-        toggleHideRoom() {
-            this.keepRoom = !this.keepRoom
-        },
-        toggleHideFridge() {
-            this.keepFridge = !this.keepFridge
-        },
-        toggleHideFreezer() {
-            this.keepFrozen = !this.keepFrozen
-        },
-        validateForm() {
-            /* document.getElementById('errorName').innerHTML=""
-            document.getElementById('errorDescription').innerHTML=""
-            document.getElementById('errorCategory').innerHTML=""
-            document.getElementById('errorQuantity').innerHTML=""
-            document.getElementById('errorPrice').innerHTML=""
-            if (this.$data.name.length < 3 || this.$data.name.length > 56) {
-                document.getElementById('errorName').innerHTML="Please adjust Product Name to be 3 to 56 characters long"
-                return false
+
+        // Helper function
+        isAlphaNumeric(str) {
+            let code, i, len
+            for (i = 0, len = str.length; i < len; i++) {
+                code = str.charCodeAt(i);
+                if (!(code > 47 && code < 58) && // numeric (0-9)
+                    !(code > 64 && code < 91) && // upper alpha (A-Z)
+                    !(code > 96 && code < 123)) { // lower alpha (a-z)
+                    return false;
+                    }
             }
-            else if (this.$data.description.length > 512) {
-                document.getElementById('errorDescription').innerHTML="Please shorten Product Description to 512 characters or less"
-                return false
-            }
-            else if (this.$data.category == '') {
-                
-                document.getElementById('errorCategory').innerHTML="Please select a valid Category"
-                return false
-            }
-            else if (this.$data.quantity == '') {
-                document.getElementById('errorQuantity').innerHTML="Please enter a Quantity"
-                return false
-                }
-            else if (this.$data.price == '') {
-                document.getElementById('errorPrice').innerHTML="Please enter a Price"
-                return false
-                }
-            else { */
-                let newProduct = new Object()
-                newProduct.name = this.name
-                newProduct.description = this.description
-                newProduct.category = this.category
-                newProduct.quantity = this.quantity
-                newProduct.price = this.price
-                newProduct.isPerishable = this.isPerishable
-                newProduct.keepRoom = this.keepRoom
-                newProduct.roomShelfLife = this.roomShelfLife
-                newProduct.keepFridge = this.keepFridge
-                newProduct.fridgeShelfLife = this.fridgeShelfLife
-                newProduct.keepFrozen = this.keepFrozen
-                newProduct.frozenShelfLife = this.frozenShelfLife
-                newProduct.image = this.image
-                console.log(newProduct)
-                this.addNewProduct(newProduct)
-        },
-        test() {
-            console.log(this.$store.getters['product/getNewProduct'])
-        },
-        changeCategory() {
-            let s = document.getElementById('addProductFormCategory')
-            let valsearch = s.options[s.selectedIndex]
-            this.selectedCategory = s.selectedIndex
-            valsearch.selected = true
+            return true
         },
 
+        //Check form errors
+        checkErrorName() {
+            let formName = this.$refs.addProductFormName.value
+            let msgError = ''
+
+            if (formName == '') {
+                msgError = 'Please provide a Name for the new product'
+                return msgError
+            }
+
+            else if (!this.isAlphaNumeric(formName)) {
+                msgError = 'Please use letters and numbers only'
+                return msgError
+            }
+
+            else if (formName.length < 3 || formName.length > 56) {
+                msgError = 'Name must be 3 to 56 characters in length'
+                return msgError
+            }
+
+            else {
+                return false
+            }
+        },
+        
+        checkErrorDescription() {
+            let formDescription = this.$refs.addProductFormDescription.value
+            let msgError = ''
+
+            if (formDescription.length > 512) {
+                msgError = 'Please shorten the Description to 512 characters or less'
+                return msgError
+            }
+            
+            else {
+                return false                
+            }
+        },
+        
+        checkErrorCategory() {
+            let formCategory = this.$refs.addProductFormCategory.value
+            let msgError = ''
+        
+            if (formCategory == '') {
+                msgError = 'Please select a Category'
+                return msgError
+            }
+
+            else {
+                return false
+            }
+        },
+
+        checkErrorQuantity() {
+            let formQuantity = this.$refs.addProductFormQuantity.value
+            let msgError = ''
+
+            if (formQuantity == '') {
+                msgError = 'Please enter a Quantity'
+                return msgError
+            }
+
+            else if (formQuantity > 999999) {
+                msgError = "You couldn't possibly have that many, could you?"
+                return msgError
+            }
+
+            else if (formQuantity < 0) {
+                msgError = "Let's try something positive"
+                return msgError
+            }
+
+            else {
+                return false
+            }
+        },
+        
+        checkErrorPrice() {
+            let formPrice = this.$refs.addProductFormPrice.value
+            let msgError = ''
+
+            if (formPrice == '') {
+                msgError = 'Please enter a Price'
+                return msgError
+            }
+            
+            else if (formPrice > 999999) {
+                msgError = "That's a little expensive for our taste!"
+                return msgError
+            }
+
+            else if (formPrice < 0) {
+                msgError = "Rather than pay people to take your product, why not donate it instead?"
+                return msgError
+            }
+
+            else {
+                return false
+            }
+        },
+
+        checkErrorShelfLife(formShelfLife) {
+            let msgError = ''
+
+            if (formShelfLife == '') {
+                msgError = 'Please provide a Shelf Life for the new product'
+                return msgError
+            }
+
+            else if (!this.isAlphaNumeric(formShelfLife)) {
+                msgError = 'Please use letters and numbers only'
+                return msgError
+            }
+
+            else if (formShelfLife.length < 3 || formShelfLife.length > 128) {
+                msgError = 'Shelf Life must be 3 to 128 characters in length'
+                return msgError
+            }
+
+            else {
+                return false
+            }
+        },
+        
+
+        //Change bool form values true/false
+        changeIsPerishable(tf) {
+            this.isPerishable = tf
+        },
+
+        changeKeepRoom(tf) {
+            this.keepRoom = tf
+        },
+
+        changeKeepFridge(tf) {
+            this.keepFridge = tf
+        },
+
+        changeKeepFreezer(tf) {
+            this.keepFreezer = tf
+        },
+
+        //Validate
+        anyErrors() {
+            if(this.hasErrorName == true ||
+            this.hasErrorDescription == true ||
+            this.hasErrorCategory == true ||
+            this.hasErrorQuantity == true ||
+            this.hasErrorPrice == true ||
+            this.hasErrorShelfLifeRoom == true ||
+            this.hasErrorShelfLifeFridge == true ||
+            this.hasErrorShelfLifeFreezer == true) {
+                return true
+            }
+            else {
+                return false
+            }
+        },
+
+        validateForm() {
+            document.getElementById('errorName').innerHTML = ''
+            this.hasErrorName = false
+            if (this.checkErrorName()) {
+                this.hasErrorName = true
+                document.getElementById('errorName').innerHTML = this.checkErrorName()
+            }
+
+            document.getElementById('errorDescription').innerHTML = ''
+            this.hasErrorDescription = false
+            if (this.checkErrorDescription()) {
+                this.hasErrorDescription = true
+                document.getElementById('errorDescription').innerHTML = this.checkErrorDescription()
+            }
+
+            document.getElementById('errorCategory').innerHTML = ''
+            this.hasErrorCategory = false
+            if (this.checkErrorCategory()) {
+                this.hasErrorCategory = true
+                document.getElementById('errorCategory').innerHTML = this.checkErrorCategory()
+            }
+
+            document.getElementById('errorQuantity').innerHTML = ''
+            this.hasErrorQuantity = false
+            if (this.checkErrorQuantity()) {
+                this.hasErrorQuantity = true
+                document.getElementById('errorQuantity').innerHTML = this.checkErrorQuantity()
+            }
+
+            document.getElementById('errorPrice').innerHTML = ''
+            this.hasErrorPrice = false
+            if (this.checkErrorPrice()) {
+                this.hasErrorPrice = true
+                document.getElementById('errorPrice').innerHTML = this.checkErrorPrice()
+            }
+
+            if (this.$refs.isPerishableYes.checked == true) {
+
+                if (this.$refs.keepRoomYes.checked == true) {
+                    document.getElementById('errorShelfLifeRoom').innerHTML = ''
+                    this.hasErrorShelfLifeRoom = false
+                    let formShelfLife = this.$refs.addProductFormShelfLifeRoom.value
+                    if (this.checkErrorShelfLife(formShelfLife)) {
+                        this.hasErrorShelfLifeRoom = true
+                        document.getElementById('errorShelfLifeRoom').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                    }
+                }
+
+                if (this.$refs.keepFridgeYes.checked == true) {
+                    document.getElementById('errorShelfLifeFridge').innerHTML = ''
+                    this.hasErrorShelfLifeFridge = false
+                    let formShelfLife = this.$refs.addProductFormShelfLifeFridge.value
+                    if (this.checkErrorShelfLife(formShelfLife)) {
+                        this.hasErrorShelfLifeFridge = true
+                        document.getElementById('errorShelfLifeFridge').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                    }
+                }
+
+                if (this.$refs.keepFreezerYes.checked == true) {
+                    document.getElementById('errorShelfLifeFreezer').innerHTML = ''
+                    this.hasErrorShelfLifeFreezer = false
+                    let formShelfLife = this.$refs.addProductFormShelfLifeFreezer.value
+                    if (this.checkErrorShelfLife(formShelfLife)) {
+                        this.hasErrorShelfLifeFreezer = true
+                        document.getElementById('errorShelfLifeFreezer').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                    }
+                }
+            }
+
+            if (!this.anyErrors()) {
+                let newProduct = new Object()
+                newProduct.name = this.$refs.addProductFormName.value
+                newProduct.description = this.$refs.addProductFormDescription.value
+                newProduct.category = this.$refs.addProductFormCategory.value
+                newProduct.quantity = this.$refs.addProductFormQuantity.value
+                newProduct.price = this.$refs.addProductFormPrice.value
+                newProduct.isPerishable = this.$refs.isPerishableYes.checked
+                newProduct.keepRoom = this.$refs.keepRoomYes.checked
+                newProduct.shelfLifeRoom = this.$refs.addProductFormShelfLifeRoom.value
+                newProduct.keepFridge = this.$refs.keepFridgeYes.checked
+                newProduct.shelfLifeFridge = this.$refs.addProductFormShelfLifeFridge.value
+                newProduct.keepFreezer = this.$refs.keepFreezerYes.checked
+                newProduct.shelfLifeFreezer = this.$refs.addProductFormShelfLifeFreezer .value
+                newProduct.image = this.$refs.addProductFormPic.value
+                this.addNewProduct(newProduct)
+            }
+        },
+        
         ...mapActions('product', [
             'addNewProduct'
         ])
-
-},
+    
+    },
     data() {
         return {
             name:'',
@@ -187,13 +510,20 @@ export default {
             price: '',
             isPerishable: false,
             keepRoom: false,
-            roomShelfLife: '',
+            shelfLifeRoom: '',
             keepFridge: false,
-            fridgeShelfLife: '',
-            keepFrozen: false,
-            frozenShelfLife: '',
+            shelfLifeFridge: '',
+            keepFreezer: false,
+            shelfLifeFreezer: '',
             image: '',
-            selectedCategory: ''
+            hasErrorName: false ,
+            hasErrorDescription: false ,
+            hasErrorCategory: false ,
+            hasErrorQuantity: false ,
+            hasErrorPrice: false,
+            hasErrorShelfLifeRoom: false,
+            hasErrorShelfLifeFridge: false,
+            hasErrorShelfLifeFreezer: false
         }
     }
 }
