@@ -139,7 +139,7 @@
                     
                     <fieldset class="form-group" id='keepFridge'>
                         <div class="form-row align-items-center justify-content-center">
-                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
+                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored in refrigerator: </legend>
                             <div class="custom-control custom-radio col-md-2">
                                 <input class="custom-control-input" ref='keepFridgeYes' id='keepFridgeYes' type='radio' value=true name='keepFridge' @click="changeKeepFridge(true)">
                                 <label class="custom-control-label" for="keepFridgeYes">Yes</label>
@@ -173,7 +173,7 @@
 
                     <fieldset class="form-group" id='keepFreezer'>
                         <div class="form-row align-items-center justify-content-center">
-                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
+                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored in freezer: </legend>
                             <div class="custom-control custom-radio col-md-2">
                                 <input class="custom-control-input" ref='keepFreezerYes' id='keepFreezerYes' type='radio' value=true name='keepFreezer' @click="changeKeepFreezer(true)">
                                 <label class="custom-control-label" for="keepFreezerYes">Yes</label>
