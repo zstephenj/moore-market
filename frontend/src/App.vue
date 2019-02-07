@@ -8,7 +8,6 @@
 <script>
 import UserLogin from './components/UserLogin.vue'
 import UserDashboard from './components/UserDashboard.vue'
-import { mapState } from 'vuex'
 
 export default {
   name: 'app',
@@ -23,7 +22,7 @@ export default {
   },
   beforeCreate: function () {
     if (this.$store.state.user.isLoggedIn === true)
-      this.$router.push('/')
+      this.$router.push('/dashboard')
     else
       this.$router.push('/login')
   }
