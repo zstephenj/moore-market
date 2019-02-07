@@ -1,10 +1,7 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
     <router-view></router-view>
     
-=======
->>>>>>> 82f74e73179f71bb04874a6422219e513bad1929
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
