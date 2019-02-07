@@ -1,12 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <img alt="Vue logo" src="./assets/logo.png">
-    
+    <AddProduct />
+
   </div>
 </template>
 

@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="form-row align-items-center justify-content-center">
-                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorName}" role="alert" id='errorName'>  </div>
+                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorName}" role="alert" ref='errorName' id='errorName'>  </div>
                 </div>
 
             </div>
@@ -131,7 +131,7 @@
                                 </div>
 
                                 <div class="form-row align-items-center justify-content-center">
-                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeRoom}" role="alert" id='errorShelfLifeRoom'>  </div>
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeRoom}" role="alert" ref='errorShelfLifeRoom' id='errorShelfLifeRoom'>  </div>
                                 </div>
 
                             </div>    
@@ -164,7 +164,7 @@
                                 </div> 
 
                                 <div class="form-row align-items-center justify-content-center">
-                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFridge}" role="alert" id='errorShelfLifeFridge'>  </div>
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFridge}" role="alert" ref='errorShelfLifeFridge' id='errorShelfLifeFridge'>  </div>
                                 </div>
 
                             </div>
@@ -197,7 +197,7 @@
                                 </div>
 
                                 <div class="form-row align-items-center justify-content-center">
-                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFreezer}" role="alert" id='errorShelfLifeFreezer'>  </div>
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFreezer}" role="alert" ref='errorShelfLifeFreezer' id='errorShelfLifeFreezer'>  </div>
                                 </div>
                             
                             </div>
@@ -410,70 +410,66 @@ export default {
         },
 
         validateForm() {
-            document.getElementById('errorName').innerHTML = ''
+
             this.hasErrorName = false
             if (this.checkErrorName()) {
                 this.hasErrorName = true
-                document.getElementById('errorName').innerHTML = this.checkErrorName()
+                this.$refs.errorName.innerHTML = this.checkErrorName()
             }
 
-            document.getElementById('errorDescription').innerHTML = ''
             this.hasErrorDescription = false
             if (this.checkErrorDescription()) {
                 this.hasErrorDescription = true
-                document.getElementById('errorDescription').innerHTML = this.checkErrorDescription()
+                this.$refs.errorDescription.innerHTML = this.checkErrorDescription()
             }
 
-            document.getElementById('errorCategory').innerHTML = ''
             this.hasErrorCategory = false
             if (this.checkErrorCategory()) {
                 this.hasErrorCategory = true
-                document.getElementById('errorCategory').innerHTML = this.checkErrorCategory()
+                this.$refs.errorCategory.innerHTML = this.checkErrorCategory()
             }
 
-            document.getElementById('errorQuantity').innerHTML = ''
             this.hasErrorQuantity = false
             if (this.checkErrorQuantity()) {
                 this.hasErrorQuantity = true
-                document.getElementById('errorQuantity').innerHTML = this.checkErrorQuantity()
+                this.$refs.errorQuantity.innerHTML = this.checkErrorQuantity()
             }
 
-            document.getElementById('errorPrice').innerHTML = ''
             this.hasErrorPrice = false
             if (this.checkErrorPrice()) {
                 this.hasErrorPrice = true
-                document.getElementById('errorPrice').innerHTML = this.checkErrorPrice()
+                this.$refs.errorPrice.innerHTML = this.checkErrorPrice()
             }
 
             if (this.$refs.isPerishableYes.checked == true) {
 
                 if (this.$refs.keepRoomYes.checked == true) {
-                    document.getElementById('errorShelfLifeRoom').innerHTML = ''
+
                     this.hasErrorShelfLifeRoom = false
                     let formShelfLife = this.$refs.addProductFormShelfLifeRoom.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeRoom = true
-                        document.getElementById('errorShelfLifeRoom').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                        this.$refs.errorShelfLifeRoom.innerHTML = this.checkErrorShelfLife(formShelfLife)
                     }
                 }
 
                 if (this.$refs.keepFridgeYes.checked == true) {
-                    document.getElementById('errorShelfLifeFridge').innerHTML = ''
+
                     this.hasErrorShelfLifeFridge = false
                     let formShelfLife = this.$refs.addProductFormShelfLifeFridge.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeFridge = true
-                        document.getElementById('errorShelfLifeFridge').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                        this.$refs.errorShelfLifeFridge.innerHTML = this.checkErrorShelfLife(formShelfLife)
                     }
                 }
 
                 if (this.$refs.keepFreezerYes.checked == true) {
-                    document.getElementById('errorShelfLifeFreezer').innerHTML = ''
+
                     this.hasErrorShelfLifeFreezer = false
                     let formShelfLife = this.$refs.addProductFormShelfLifeFreezer.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeFreezer = true
-                        document.getElementById('errorShelfLifeFreezer').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                        this.$refs.errorShelfLifeFreezer.innerHTML = this.checkErrorShelfLife(formShelfLife)
                     }
                 }
             }
@@ -494,6 +490,11 @@ export default {
                 newProduct.shelfLifeFreezer = this.$refs.addProductFormShelfLifeFreezer .value
                 newProduct.image = this.$refs.addProductFormPic.value
                 this.addNewProduct(newProduct)
+                return true
+            }
+
+            else{
+                return false
             }
         },
         
