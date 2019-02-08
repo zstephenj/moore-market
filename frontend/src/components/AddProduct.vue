@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="form-row align-items-center justify-content-center">
-                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorName}" role="alert" id='errorName'>  </div>
+                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorName}" role="alert" ref='errorName' id='errorName'>  </div>
                 </div>
 
             </div>
@@ -131,7 +131,7 @@
                                 </div>
 
                                 <div class="form-row align-items-center justify-content-center">
-                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeRoom}" role="alert" id='errorShelfLifeRoom'>  </div>
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeRoom}" role="alert" ref='errorShelfLifeRoom' id='errorShelfLifeRoom'>  </div>
                                 </div>
 
                             </div>    
@@ -139,7 +139,7 @@
                     
                     <fieldset class="form-group" id='keepFridge'>
                         <div class="form-row align-items-center justify-content-center">
-                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
+                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored in refrigerator: </legend>
                             <div class="custom-control custom-radio col-md-2">
                                 <input class="custom-control-input" ref='keepFridgeYes' id='keepFridgeYes' type='radio' value=true name='keepFridge' @click="changeKeepFridge(true)">
                                 <label class="custom-control-label" for="keepFridgeYes">Yes</label>
@@ -164,7 +164,7 @@
                                 </div> 
 
                                 <div class="form-row align-items-center justify-content-center">
-                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFridge}" role="alert" id='errorShelfLifeFridge'>  </div>
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFridge}" role="alert" ref='errorShelfLifeFridge' id='errorShelfLifeFridge'>  </div>
                                 </div>
 
                             </div>
@@ -173,7 +173,7 @@
 
                     <fieldset class="form-group" id='keepFreezer'>
                         <div class="form-row align-items-center justify-content-center">
-                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
+                            <legend class="col-form-label col-md-2 alert alert-success">Item can be stored in freezer: </legend>
                             <div class="custom-control custom-radio col-md-2">
                                 <input class="custom-control-input" ref='keepFreezerYes' id='keepFreezerYes' type='radio' value=true name='keepFreezer' @click="changeKeepFreezer(true)">
                                 <label class="custom-control-label" for="keepFreezerYes">Yes</label>
@@ -197,7 +197,7 @@
                                 </div>
 
                                 <div class="form-row align-items-center justify-content-center">
-                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFreezer}" role="alert" id='errorShelfLifeFreezer'>  </div>
+                                    <div class="col-md-6" :class="{'alert alert-danger':hasErrorShelfLifeFreezer}" role="alert" ref='errorShelfLifeFreezer' id='errorShelfLifeFreezer'>  </div>
                                 </div>
                             
                             </div>
@@ -410,70 +410,74 @@ export default {
         },
 
         validateForm() {
-            document.getElementById('errorName').innerHTML = ''
+
             this.hasErrorName = false
+            this.$refs.errorName.innerHTML = ''
             if (this.checkErrorName()) {
                 this.hasErrorName = true
-                document.getElementById('errorName').innerHTML = this.checkErrorName()
+                this.$refs.errorName.innerHTML = this.checkErrorName()
             }
 
-            document.getElementById('errorDescription').innerHTML = ''
             this.hasErrorDescription = false
+            this.$refs.errorDescription.innerHTML = ''
             if (this.checkErrorDescription()) {
                 this.hasErrorDescription = true
-                document.getElementById('errorDescription').innerHTML = this.checkErrorDescription()
+                this.$refs.errorDescription.innerHTML = this.checkErrorDescription()
             }
 
-            document.getElementById('errorCategory').innerHTML = ''
             this.hasErrorCategory = false
+            this.$refs.errorCategory.innerHTML = ''
             if (this.checkErrorCategory()) {
                 this.hasErrorCategory = true
-                document.getElementById('errorCategory').innerHTML = this.checkErrorCategory()
+                this.$refs.errorCategory.innerHTML = this.checkErrorCategory()
             }
 
-            document.getElementById('errorQuantity').innerHTML = ''
             this.hasErrorQuantity = false
+            this.$refs.errorQuantity.innerHTML = ''
             if (this.checkErrorQuantity()) {
                 this.hasErrorQuantity = true
-                document.getElementById('errorQuantity').innerHTML = this.checkErrorQuantity()
+                this.$refs.errorQuantity.innerHTML = this.checkErrorQuantity()
             }
 
-            document.getElementById('errorPrice').innerHTML = ''
             this.hasErrorPrice = false
+            this.$refs.errorPrice.innerHTML = ''
             if (this.checkErrorPrice()) {
                 this.hasErrorPrice = true
-                document.getElementById('errorPrice').innerHTML = this.checkErrorPrice()
+                this.$refs.errorPrice.innerHTML = this.checkErrorPrice()
             }
 
             if (this.$refs.isPerishableYes.checked == true) {
 
                 if (this.$refs.keepRoomYes.checked == true) {
-                    document.getElementById('errorShelfLifeRoom').innerHTML = ''
+
                     this.hasErrorShelfLifeRoom = false
+                    this.$refs.errorShelfLifeRoom.innerHTML = ''
                     let formShelfLife = this.$refs.addProductFormShelfLifeRoom.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeRoom = true
-                        document.getElementById('errorShelfLifeRoom').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                        this.$refs.errorShelfLifeRoom.innerHTML = this.checkErrorShelfLife(formShelfLife)
                     }
                 }
 
                 if (this.$refs.keepFridgeYes.checked == true) {
-                    document.getElementById('errorShelfLifeFridge').innerHTML = ''
+
                     this.hasErrorShelfLifeFridge = false
+                    this.$refs.errorShelfLifeFridge.innerHTML = ''
                     let formShelfLife = this.$refs.addProductFormShelfLifeFridge.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeFridge = true
-                        document.getElementById('errorShelfLifeFridge').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                        this.$refs.errorShelfLifeFridge.innerHTML = this.checkErrorShelfLife(formShelfLife)
                     }
                 }
 
                 if (this.$refs.keepFreezerYes.checked == true) {
-                    document.getElementById('errorShelfLifeFreezer').innerHTML = ''
+
                     this.hasErrorShelfLifeFreezer = false
+                    this.$refs.errorShelfLifeFreezer.innerHTML = ''
                     let formShelfLife = this.$refs.addProductFormShelfLifeFreezer.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
                         this.hasErrorShelfLifeFreezer = true
-                        document.getElementById('errorShelfLifeFreezer').innerHTML = this.checkErrorShelfLife(formShelfLife)
+                        this.$refs.errorShelfLifeFreezer.innerHTML = this.checkErrorShelfLife(formShelfLife)
                     }
                 }
             }
@@ -494,6 +498,11 @@ export default {
                 newProduct.shelfLifeFreezer = this.$refs.addProductFormShelfLifeFreezer .value
                 newProduct.image = this.$refs.addProductFormPic.value
                 this.addNewProduct(newProduct)
+                return true
+            }
+
+            else{
+                return false
             }
         },
         
