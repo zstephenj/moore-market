@@ -11,16 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 Vue.config.productionTip = false
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-new Vue({
-  render: h => h(App),
-  store
-=======
-=======
->>>>>>> upstream/master
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: Routes
@@ -29,9 +20,5 @@ const router = new VueRouter({
 new Vue({
   render: h => h(App),
   store,
-  router,
-<<<<<<< HEAD
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
+  router
 }).$mount('#app');
