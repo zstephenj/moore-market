@@ -72,8 +72,8 @@ namespace MooreMarket.Controllers
 
             return Ok(product);
         }
+
         //POST Products/Add
-        
         [HttpPost("Add")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -103,9 +103,9 @@ namespace MooreMarket.Controllers
             Product newProduct = product;
             newProduct.ID = id;
 
-            if (newProduct.ID == null)
+            if (newProduct.name == "")
             {
-                return BadRequest();
+                return BadRequest(newProduct);
             }
 
             _context.Products.Update(newProduct);
@@ -114,7 +114,7 @@ namespace MooreMarket.Controllers
 
             return RedirectToAction(nameof(GetProduct), new { id = id});
         }
-        
+
         //DELETE Products/{id}/Remove
         [HttpDelete("{id}/Remove")]
         public IActionResult Remove(int id)

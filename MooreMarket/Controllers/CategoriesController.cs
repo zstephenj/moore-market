@@ -50,8 +50,8 @@ namespace MooreMarket.Controllers
 
             return Ok(category);
         }
-        //POST Categories/add
-        
+
+        //POST Categories/Add
         [HttpPost("Add")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -70,7 +70,7 @@ namespace MooreMarket.Controllers
             return CreatedAtAction(nameof(GetCategory), new { id = newCategory.ID }, newCategory);
         }
 
-        //PUT Categories/Edit
+        //PUT Categories/{id}/Edit
         [HttpPut("{id}/Edit")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -80,7 +80,7 @@ namespace MooreMarket.Controllers
 
             if (newCategory.Name == "")
             {
-                return BadRequest();
+                return BadRequest(newCategory);
             }
 
             ProductCategory oldCategory = _context.Categories.Single(c => c.ID == id);
@@ -90,8 +90,8 @@ namespace MooreMarket.Controllers
 
             return RedirectToAction(nameof(GetCategory), new { id = id});
         }
-        
-        //DELETE Categories/Remove
+
+        //DELETE Categories/{id}/Remove
         [HttpDelete("{id}/Remove")]
         public IActionResult Remove(int id)
         {
