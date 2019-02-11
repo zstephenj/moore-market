@@ -471,16 +471,45 @@ export default {
                 newProduct.categoryId = this.$refs.addProductFormCategory.value
                 newProduct.quantity = this.$refs.addProductFormQuantity.value
                 newProduct.price = this.$refs.addProductFormPrice.value
-                newProduct.isPerishable = this.$refs.isPerishableYes.checked
-                newProduct.keepRoom = this.$refs.keepRoomYes.checked
+                
+                if (this.$refs.isPerishableYes.checked){
+                    newProduct.isPerishable = 1
+                }
+                else {
+                    newProduct.isPerishable = 0
+                }
+                
+                if (this.$refs.keepRoomYes.checked) {
+                    newProduct.keepRoom = 1
+                }
+                else {
+                    newProduct.keepRoom = 0
+                }
+
                 newProduct.shelfLifeRoom = this.$refs.addProductFormShelfLifeRoom.value
-                newProduct.keepFridge = this.$refs.keepFridgeYes.checked
+
+                if (this.$refs.keepFridgeYes.checked){
+                    newProduct.keepFridge = 1
+                }
+                else {
+                    newProduct.keepFridge = 0
+                }
+
                 newProduct.shelfLifeFridge = this.$refs.addProductFormShelfLifeFridge.value
-                newProduct.keepFreezer = this.$refs.keepFreezerYes.checked
+
+                if (this.$refs.keepFreezerYes.checked){
+                    newProduct.keepFreezer = 1
+                }
+                else {
+                    newProduct.keepFreezer = 0
+                }
+
                 newProduct.shelfLifeFreezer = this.$refs.addProductFormShelfLifeFreezer .value
+
                 if (this.$refs.addProductFormPic.files.length == 1) {
                     newProduct.image = this.generateBase64(this.$refs.addProductFormPic.files[0])
                     }
+                    
                 this.addNewProduct(newProduct)
                 return true
             }
