@@ -47,7 +47,7 @@
                 <div class="form-row align-items-center justify-content-center">
                     <label for='addProductFormCategory' class="col-md-2 col-form-label alert alert-success">Category: </label>
                     <div class="col-md-4">
-                        <select class="custom-select" v-model='category' name='category' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
+                        <select class="custom-select" v-model='categoryId' name='categoryId' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
                         <option :key='productCategory.id' v-for='productCategory in addProductFormCategories' :value='productCategory.id'> {{productCategory.name}} </option>
                         </select>
                     </div>
@@ -468,7 +468,7 @@ export default {
                 let newProduct = new Object()
                 newProduct.name = this.$refs.addProductFormName.value
                 newProduct.description = this.$refs.addProductFormDescription.value
-                newProduct.category = this.$refs.addProductFormCategory.value
+                newProduct.categoryId = this.$refs.addProductFormCategory.value
                 newProduct.quantity = this.$refs.addProductFormQuantity.value
                 newProduct.price = this.$refs.addProductFormPrice.value
                 newProduct.isPerishable = this.$refs.isPerishableYes.checked
@@ -499,7 +499,7 @@ export default {
         return {
             name:'',
             description: '',
-            category: '',
+            categoryId: '',
             quantity: '',
             price: '',
             isPerishable: false,
