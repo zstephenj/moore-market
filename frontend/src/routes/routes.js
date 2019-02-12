@@ -1,7 +1,7 @@
-import HelloWorld from './components/HelloWorld'
-import UserLogin from './components/UserLogin'
+import HelloWorld from './components/HelloWorld.vue';
+import Dashboard from './Dashboard.vue';
 
 export default [
-    {path: '/', component: HelloWorld},
-    {path: '/login', component: UserLogin}
+    { path: '/', component: HelloWorld},
+    { path: '/dashboard', component: Dashboard},
 ]
