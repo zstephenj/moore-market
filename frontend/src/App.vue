@@ -12,15 +12,10 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import HelloWorld from './components/HelloWorld.vue'
-import UserLogin from './components/UserLogin.vue'
-=======
-<<<<<<< HEAD
-    HelloWorld,
-    UserLogin,
-=======
->>>>>>> 38d539d5d60674e31dee12feeba154affcd016f0
+
+export default {
+  name: 'app',
+  components: {
   }
 }
 </script>
