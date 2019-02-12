@@ -103,7 +103,7 @@ namespace MooreMarket.Controllers
             Product newProduct = product;
             newProduct.ID = id;
 
-            if (newProduct.name == "")
+            if (newProduct.Name == "")
             {
                 return BadRequest(newProduct);
             }
