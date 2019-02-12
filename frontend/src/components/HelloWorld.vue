@@ -1,16 +1,18 @@
 <template>
   <div class="hello">
+<<<<<<< HEAD
     <h1>BOO</h1>
+=======
+    <h1>This is the Home Page</h1>
+>>>>>>> 38d539d5d60674e31dee12feeba154affcd016f0
     
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
-  }
 }
 </script>
 

@@ -1,20 +1,24 @@
-import Vue from 'vue'
-import App from './App.vue'
-import VueRouter from 'vue-router'
-import routes from './routes'
+import Vue from 'vue';
 
-import store from './store'
+import App from './App.vue';
+import VueRouter from 'vue-router'
+import Routes from './routes'
+
+import store from './store/store';
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 Vue.config.productionTip = false
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const router = new VueRouter ({
-  routes: routes,
-})
+const router = new VueRouter({
+  routes: Routes
+});
 
 new Vue({
   render: h => h(App),
   router,
   store,
-}).$mount('#app')
+}).$mount('#app');

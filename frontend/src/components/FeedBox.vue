@@ -3,7 +3,7 @@
       <h2>The Feed</h2>
       <hr/>
       <ul>
-          <li v-for="message in messages">{{ message }}</li>
+          <li :key='message.id' v-for="message in messages">{{ message }}</li>
       </ul>
     </div>
 </template>
