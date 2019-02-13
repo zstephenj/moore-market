@@ -9,5 +9,10 @@ namespace MooreMarket.Data
             : base(options) { }
 
         public DbSet<UserModel> Users { get; set; }
+
+        public DbSet<Product> Products {get;set;}
+        public DbSet<ProductCategory> Categories {get; set;}
+
+        
     }
 }
