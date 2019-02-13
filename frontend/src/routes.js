@@ -1,9 +1,9 @@
-import HelloWorld from './components/HelloWorld.vue'
-import Dashboard from './Dashboard.vue'
-import AddProduct from './components/AddProduct'
+import HelloWorld from './components/HelloWorld.vue';
+import Dashboard from './components/Dashboard.vue';
+import ProductList from './components/ProductList.vue';
 
 export default [
-    { path: '/', component: HelloWorld},
-    { path: '/dashboard', component: Dashboard},
-    { path: '/addproduct', component: AddProduct}
+    { path: '/', component: HelloWorld },
+    { path: '/dashboard', component: Dashboard },
+    { path: '/productlist', component: ProductList },
 ]
