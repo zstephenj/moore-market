@@ -47,7 +47,7 @@
                 <div class="form-row align-items-center justify-content-center">
                     <label for='addProductFormCategory' class="col-md-2 col-form-label alert alert-success">Category: </label>
                     <div class="col-md-4">
-                        <select class="custom-select" v-model='category' name='category' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
+                        <select class="custom-select" v-model='categoryId' name='categoryId' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
                         <option :key='productCategory.id' v-for='productCategory in addProductFormCategories' :value='productCategory.id'> {{productCategory.name}} </option>
                         </select>
                     </div>
@@ -249,104 +249,117 @@ export default {
             }
             return true
         },
+        
+        generateBase64(img) {
+            let reader = new FileReader()
+            reader.readAsDataURL(img)
+            reader.onload = function() {
+                this.image = reader.result
+                }
+        },
 
         //Check form errors
         checkErrorName() {
+            this.hasErrorName = true
             let formName = this.$refs.addProductFormName.value
-            let msgError = ''
 
             if (formName == '') {
-                msgError = 'Please provide a Name for the new product'
-                return msgError
+                this.$refs.errorName.innerHTML = 'Please provide a Name for the new product'
+                return true
             }
 
-            else if (!this.isAlphaNumeric(formName)) {
-                msgError = 'Please use letters and numbers only'
-                return msgError
+            if (!this.isAlphaNumeric(formName)) {
+                this.$refs.errorName.innerHTML = 'Please use letters and numbers only'
+                return true
             }
 
-            else if (formName.length < 3 || formName.length > 56) {
-                msgError = 'Name must be 3 to 56 characters in length'
-                return msgError
+            if (formName.length < 3 || formName.length > 56) {
+                this.$refs.errorName.innerHTML = 'Name must be 3 to 56 characters in length'
+                return true
             }
-
+            
             else {
+                this.hasErrorName = false
                 return false
             }
         },
         
         checkErrorDescription() {
+            this.hasErrorDescription = true
             let formDescription = this.$refs.addProductFormDescription.value
-            let msgError = ''
 
             if (formDescription.length > 512) {
-                msgError = 'Please shorten the Description to 512 characters or less'
-                return msgError
+                this.$refs.errorDescription.innerHTML = 'Please shorten the Description to 512 characters or less'
+                return true
             }
             
             else {
+                this.hasErrorDescription = false
                 return false                
             }
         },
         
         checkErrorCategory() {
+            this.hasErrorCategory = true
             let formCategory = this.$refs.addProductFormCategory.value
-            let msgError = ''
         
             if (formCategory == '') {
-                msgError = 'Please select a Category'
-                return msgError
+                this.$refs.errorCategory.innerHTML = 'Please select a Category'
+                return true
             }
 
             else {
+                this.hasErrorCategory = false
                 return false
             }
         },
 
         checkErrorQuantity() {
+            this.hasErrorQuantity = true
             let formQuantity = this.$refs.addProductFormQuantity.value
-            let msgError = ''
 
             if (formQuantity == '') {
-                msgError = 'Please enter a Quantity'
-                return msgError
+                this.$refs.errorQuantity.innerHTML = 'Please enter a Quantity'
+                return true
             }
 
             else if (formQuantity > 999999) {
-                msgError = "You couldn't possibly have that many, could you?"
-                return msgError
+                this.$refs.errorQuantity.innerHTML = "You couldn't possibly have that many, could you?"
+                return true
             }
 
             else if (formQuantity < 0) {
-                msgError = "Let's try something positive"
-                return msgError
+                this.$refs.errorQuantity.innerHTML = "Let's try something positive"
+                return true
             }
 
             else {
+                this.hasErrorQuantity = false
                 return false
             }
         },
         
         checkErrorPrice() {
+            this.hasErrorPrice = true
             let formPrice = this.$refs.addProductFormPrice.value
-            let msgError = ''
 
             if (formPrice == '') {
-                msgError = 'Please enter a Price'
-                return msgError
+                this.$refs.errorPrice.innerHTML = 'Please enter a Price'
+                return true
             }
             
             else if (formPrice > 999999) {
-                msgError = "That's a little expensive for our taste!"
-                return msgError
+                this.$refs.errorPrice.innerHTML = "That's a little expensive for our taste!"
+                return true
             }
 
             else if (formPrice < 0) {
-                msgError = "Rather than pay people to take your product, why not donate it instead?"
-                return msgError
+                this.$refs.errorPrice.innerHTML = "Rather than pay people to take your product, why not donate it instead?"
+                return true
             }
 
             else {
+                this.hasErrorPrice = false
                 return false
             }
         },
@@ -373,7 +386,6 @@ export default {
                 return false
             }
         },
-        
 
         //Change bool form values true/false
         changeIsPerishable(tf) {
@@ -410,41 +422,11 @@ export default {
         },
 
         validateForm() {
-
-            this.hasErrorName = false
-            this.$refs.errorName.innerHTML = ''
-            if (this.checkErrorName()) {
-                this.hasErrorName = true
-                this.$refs.errorName.innerHTML = this.checkErrorName()
-            }
-
-            this.hasErrorDescription = false
-            this.$refs.errorDescription.innerHTML = ''
-            if (this.checkErrorDescription()) {
-                this.hasErrorDescription = true
-                this.$refs.errorDescription.innerHTML = this.checkErrorDescription()
-            }
-
-            this.hasErrorCategory = false
-            this.$refs.errorCategory.innerHTML = ''
-            if (this.checkErrorCategory()) {
-                this.hasErrorCategory = true
-                this.$refs.errorCategory.innerHTML = this.checkErrorCategory()
-            }
-
-            this.hasErrorQuantity = false
-            this.$refs.errorQuantity.innerHTML = ''
-            if (this.checkErrorQuantity()) {
-                this.hasErrorQuantity = true
-                this.$refs.errorQuantity.innerHTML = this.checkErrorQuantity()
-            }
-
-            this.hasErrorPrice = false
-            this.$refs.errorPrice.innerHTML = ''
-            if (this.checkErrorPrice()) {
-                this.hasErrorPrice = true
-                this.$refs.errorPrice.innerHTML = this.checkErrorPrice()
-            }
+            this.checkErrorName()
+            this.checkErrorDescription()
+            this.checkErrorCategory()
+            this.checkErrorQuantity()
+            this.checkErrorPrice()
 
             if (this.$refs.isPerishableYes.checked == true) {
 
@@ -486,17 +468,48 @@ export default {
                 let newProduct = new Object()
                 newProduct.name = this.$refs.addProductFormName.value
                 newProduct.description = this.$refs.addProductFormDescription.value
-                newProduct.category = this.$refs.addProductFormCategory.value
+                newProduct.categoryId = this.$refs.addProductFormCategory.value
                 newProduct.quantity = this.$refs.addProductFormQuantity.value
                 newProduct.price = this.$refs.addProductFormPrice.value
-                newProduct.isPerishable = this.$refs.isPerishableYes.checked
-                newProduct.keepRoom = this.$refs.keepRoomYes.checked
+                
+                if (this.$refs.isPerishableYes.checked){
+                    newProduct.isPerishable = 1
+                }
+                else {
+                    newProduct.isPerishable = 0
+                }
+                
+                if (this.$refs.keepRoomYes.checked) {
+                    newProduct.keepRoom = 1
+                }
+                else {
+                    newProduct.keepRoom = 0
+                }
+
                 newProduct.shelfLifeRoom = this.$refs.addProductFormShelfLifeRoom.value
-                newProduct.keepFridge = this.$refs.keepFridgeYes.checked
+
+                if (this.$refs.keepFridgeYes.checked){
+                    newProduct.keepFridge = 1
+                }
+                else {
+                    newProduct.keepFridge = 0
+                }
+
                 newProduct.shelfLifeFridge = this.$refs.addProductFormShelfLifeFridge.value
-                newProduct.keepFreezer = this.$refs.keepFreezerYes.checked
+
+                if (this.$refs.keepFreezerYes.checked){
+                    newProduct.keepFreezer = 1
+                }
+                else {
+                    newProduct.keepFreezer = 0
+                }
+
                 newProduct.shelfLifeFreezer = this.$refs.addProductFormShelfLifeFreezer .value
-                newProduct.image = this.$refs.addProductFormPic.value
+
+                if (this.$refs.addProductFormPic.files.length == 1) {
+                    newProduct.image = this.generateBase64(this.$refs.addProductFormPic.files[0])
+                    }
+                    
                 this.addNewProduct(newProduct)
                 return true
             }
@@ -515,7 +528,7 @@ export default {
         return {
             name:'',
             description: '',
-            category: '',
+            categoryId: '',
             quantity: '',
             price: '',
             isPerishable: false,
@@ -534,6 +547,7 @@ export default {
             hasErrorShelfLifeRoom: false,
             hasErrorShelfLifeFridge: false,
             hasErrorShelfLifeFreezer: false,
+            hasErrorImage: false,
             addProductFormCategories: [{id:1, name:'Category 1'}, {id:2, name:'Category 2'}, {id:3, name:'Category 3'} ]
         }
     }

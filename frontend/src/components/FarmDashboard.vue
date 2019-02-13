@@ -16,7 +16,7 @@
       <table class=itemSummary>
           <thead>
             <tr>
-              <th v-for="columnTitle in columnTitles">{{ columnTitle }}</th>
+              <th :key='columnTitle.something' v-for="columnTitle in columnTitles">{{ columnTitle }}</th>
             </tr>
           </thead>
           <tbody>
