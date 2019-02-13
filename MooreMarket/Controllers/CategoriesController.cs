@@ -74,16 +74,24 @@ namespace MooreMarket.Controllers
         [HttpPut("{id}/Edit")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult Edit(int id, ProductCategory category)
         {
             ProductCategory newCategory = category;
+            ProductCategory oldCategory = _context.Categories.SingleOrDefault(c => c.ID == id);
 
+            if (oldCategory == null)
+            {
+                return NotFound();
+
+            }
+            
             if (newCategory.Name == "")
             {
                 return BadRequest(newCategory);
             }
 
-            ProductCategory oldCategory = _context.Categories.Single(c => c.ID == id);
+            
             oldCategory.Name = newCategory.Name;
 
             _context.SaveChanges();
@@ -95,7 +103,7 @@ namespace MooreMarket.Controllers
         [HttpDelete("{id}/Remove")]
         public IActionResult Remove(int id)
         {
-            ProductCategory category = _context.Categories.Single(c => c.ID == id);
+            ProductCategory category = _context.Categories.SingleOrDefault(c => c.ID == id);
             _context.Categories.Remove(category);
 
             _context.SaveChanges();
