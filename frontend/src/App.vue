@@ -1,13 +1,8 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
-    <div>hello</div>
-    <router-view></router-view>
-=======
 
     <router-view></router-view>
 
->>>>>>> 38d539d5d60674e31dee12feeba154affcd016f0
   </div>
 </template>
 
@@ -16,6 +11,12 @@
 export default {
   name: 'app',
   components: {
+  },
+  beforeCreate: function() {
+    if(this.$store.state.user.currentUser.isLoggedIn === true)
+      this.$router.push('/dashboard')
+    else
+      this.$router.push('/')
   }
 }
 </script>
