@@ -74,7 +74,7 @@ namespace MooreMarket.Controllers
         }
 
         //POST Products/Add
-        [HttpPost]
+        [HttpPost("Add")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -99,28 +99,28 @@ namespace MooreMarket.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = newProduct.ID }, newProduct);
         }
 
-        //PUT Products/{id}/Edit
-        [HttpPut("{id}/Edit")]
+        //PUT Products/Edit/{id}
+        [HttpPut("Edit/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult Edit(int id, Product product)
         {
             product.ID = id;
 
-            if (newProduct.Name == "")
+            if (product.Name == "")
             {
-                return BadRequest(newProduct);
+                return BadRequest(product);
             }
 
-            _context.Products.Update(newProduct);
+            _context.Products.Update(product);
 
             _context.SaveChanges();
 
             return RedirectToAction(nameof(GetProduct), new { id = id});
         }
 
-        //DELETE Products/{id}/Remove
-        [HttpDelete("{id}")]
+        //DELETE Products/Remove/{id}
+        [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
             Product product = _context.Products.SingleOrDefault(p => p.ID == id);
