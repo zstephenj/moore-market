@@ -1,6 +1,6 @@
 import HelloWorld from './components/HelloWorld.vue'
 import Dashboard from './Dashboard.vue'
-import AddProduct from './components/AddProduct'
+import AddProduct from './components/Product/AddProduct'
 
 export default [
     { path: '/', component: HelloWorld},
