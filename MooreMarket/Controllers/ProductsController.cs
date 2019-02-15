@@ -65,7 +65,7 @@ namespace MooreMarket.Controllers
         {
             Product product = _context.Products.SingleOrDefault(p => p.ID == id);
 
-            if(product.Name == null)
+            if(product == null)
             {
                 return NotFound();
             }
@@ -74,17 +74,16 @@ namespace MooreMarket.Controllers
         }
 
         //POST Products/Add
-        [HttpPost("Add")]
+        [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult Add(Product product)
+        public IActionResult Add(Product newProduct)
         {
-            Product newProduct = new Product(product.Name, product.Description, product.CategoryID, product.Quantity, product.Price, product.IsPerishable, product.KeepRoom, product.ShelfLifeRoom, product.KeepFridge, product.ShelfLifeFridge, product.KeepFreezer, product.ShelfLifeFreezer, product.Image);
             ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == newProduct.CategoryID);
-            newProduct.Category = newProductCategory;  
+            newProduct.Category = newProductCategory; 
 
-            if (newProduct.Name == null)
+            if (newProduct == null)
             {
                 return NotFound();
             }
@@ -106,8 +105,7 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(400)]
         public IActionResult Edit(int id, Product product)
         {
-            Product newProduct = product;
-            newProduct.ID = id;
+            product.ID = id;
 
             if (newProduct.Name == "")
             {
@@ -122,7 +120,7 @@ namespace MooreMarket.Controllers
         }
 
         //DELETE Products/{id}/Remove
-        [HttpDelete("{id}/Remove")]
+        [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
             Product product = _context.Products.SingleOrDefault(p => p.ID == id);

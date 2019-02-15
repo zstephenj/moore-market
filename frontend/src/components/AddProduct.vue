@@ -206,10 +206,21 @@
                      
                 </div> 
 
-            <div class="form-group form-row align-items-center justify-content-center">
-                <label class="col-md-2 col-form-label alert alert-success">Upload a Picture: </label>
-                <div class="col-md-4">
-                    <input class="form-control-file" type='file' ref='addProductFormPic' name='pic' accept='image/*' id='addProductFormPic'>
+            <div class="form-group">
+                <div class='form-row align-items-center justify-content-center'>
+                    <label class="col-md-2 col-form-label alert alert-success">Upload a Picture: </label>
+                    <div class="col-md-4">
+                        <input class="form-control-file" type='file' ref='addProductFormPic' name='pic' accept='image/*' id='addProductFormPic' @change='generateBase64()'>
+                    </div>
+                </div>
+
+                <div :class="{'hide-form':!hasImage}"> 
+                    <div class='form-row align-items-center justify-content-center'>
+                        <label class="col-md-2 col-form-label alert alert-success">Uploaded Picture: </label>
+                        <div class="col-md-4">
+                            <img class='image-responsive img-thumbnail' id='displayedImage' ref='displayedImage'>
+                        </div>
+                    </div>
                 </div>
             </div>  
 
@@ -250,12 +261,17 @@ export default {
             return true
         },
         
-        generateBase64(img) {
+        
+        generateBase64() {
+
             let reader = new FileReader()
-            reader.readAsDataURL(img)
-            reader.onload = function() {
-                this.image = reader.result
-                }
+            reader.readAsDataURL(this.$refs.addProductFormPic.files[0])
+            
+            reader.onload = () => {
+                    this.$refs.displayedImage.src = reader.result
+                    this.image = this.$refs.displayedImage.src
+                    this.hasImage = true
+                    }
         },
 
         //Check form errors
@@ -507,9 +523,9 @@ export default {
                 newProduct.shelfLifeFreezer = this.$refs.addProductFormShelfLifeFreezer .value
 
                 if (this.$refs.addProductFormPic.files.length == 1) {
-                    newProduct.image = this.generateBase64(this.$refs.addProductFormPic.files[0])
-                    }
-                    
+                   newProduct.image = this.image
+                }
+
                 this.addNewProduct(newProduct)
                 return true
             }
@@ -538,6 +554,7 @@ export default {
             shelfLifeFridge: '',
             keepFreezer: false,
             shelfLifeFreezer: '',
+            hasImage: false,
             image: '',
             hasErrorName: false ,
             hasErrorDescription: false ,
@@ -547,7 +564,6 @@ export default {
             hasErrorShelfLifeRoom: false,
             hasErrorShelfLifeFridge: false,
             hasErrorShelfLifeFreezer: false,
-            hasErrorImage: false,
             addProductFormCategories: [{id:1, name:'Category 1'}, {id:2, name:'Category 2'}, {id:3, name:'Category 3'} ]
         }
     }

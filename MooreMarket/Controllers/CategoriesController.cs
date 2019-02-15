@@ -55,10 +55,9 @@ namespace MooreMarket.Controllers
         [HttpPost("Add")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult Add(ProductCategory category)
+        public IActionResult Add(ProductCategory newCategory)
         {
-            ProductCategory newCategory = new ProductCategory(category.Name);
-
+            //Validate newCategory data
             if (newCategory.Name == "")
             {
                 return BadRequest(newCategory);
@@ -75,9 +74,8 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult Edit(int id, ProductCategory category)
+        public IActionResult Edit(int id, ProductCategory newCategory)
         {
-            ProductCategory newCategory = category;
             ProductCategory oldCategory = _context.Categories.SingleOrDefault(c => c.ID == id);
 
             if (oldCategory == null)
@@ -85,7 +83,7 @@ namespace MooreMarket.Controllers
                 return NotFound();
 
             }
-            
+
             if (newCategory.Name == "")
             {
                 return BadRequest(newCategory);
