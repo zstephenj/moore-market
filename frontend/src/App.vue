@@ -21,7 +21,7 @@ export default {
   },
   beforeCreate: function () {
     if (this.$store.state.currentUser.isLoggedIn === true)
-      this.$router.push('/dasboard')
+      this.$router.push('/dashboard')
     else
       this.$router.push('/login')
   }
