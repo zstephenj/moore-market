@@ -16,7 +16,6 @@ namespace MooreMarket.Controllers
         public UserController(MooreMarketContext context)
         {
             _context = context;
-            _context.Database.EnsureCreated();
             //some fake users
             if (_context.Users.Count() == 0)
             {
@@ -24,7 +23,7 @@ namespace MooreMarket.Controllers
                 _context.Add(new UserModel("malfoy", "ihateharrypotter"));
                 _context.SaveChanges();
             }
-        }
+        }   
         public ActionResult<IEnumerable<UserModel>> Login()
         {
             return _context.Users.ToList();
