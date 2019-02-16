@@ -2,9 +2,9 @@ const user = {
     namespaced: true,
     state: {
         currentUser: {
-            username: "",
-            accountType: "",
-            isLoggedIn: false,
+            username: "user",
+            accountType: "farmer",
+            isLoggedIn: true,
         }
     },
     mutations: {

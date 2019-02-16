@@ -1,5 +1,5 @@
 import HelloWorld from './components/HelloWorld.vue'
-import Dashboard from './Dashboard.vue'
+import Dashboard from './components/Dashboard.vue'
 import AddProduct from './components/AddProduct'
 
 export default [
