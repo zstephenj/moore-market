@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>Current User's name: {{ currentUser.username }} | Account Type: {{ currentUser.AccountType }}</p>
+        <p>Current User's name: {{ getUsername }} | Account Type: {{ getAccountType }}</p>
         <farm-dashboard v-if="getAccountType === 'farmer'"></farm-dashboard>
         <user-dashboard v-else></user-dashboard>
     </div>
@@ -18,11 +18,11 @@ export default {
     },
 
     computed: {
-        ...mapState([
-            'currentUser'
-        ]),
-        getAccountType () {
-            return this.currentUser.AccountType
+        getAccountType() {
+            return this.$store.state.user.currentUser.accountType
+        },
+        getUsername() {
+            return this.$store.state.user.currentUser.username
         }
     }
 }

@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-
     <router-view></router-view>
-
   </div>
 </template>
 
@@ -13,19 +11,12 @@ import Dashboard from './components/Dashboard'
 export default {
   name: 'app',
   components: {
-    UserLogin,
-    Dashboard
   },
-  data() {
-    return {
-      user: null
-    }
-  },
-  beforeCreate: function () {
-    if (this.$store.state.currentUser.isLoggedIn === true)
-      this.$router.push('/dasboard')
+  beforeCreate: function() {
+    if(this.$store.state.user.currentUser.isLoggedIn === true)
+      this.$router.push('/dashboard')
     else
-      this.$router.push('/login')
+      this.$router.push('/')
   }
 }
 </script>
