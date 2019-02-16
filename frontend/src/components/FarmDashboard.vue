@@ -16,7 +16,7 @@
       <table class=itemSummary>
           <thead>
             <tr>
-              <th v-for="columnTitle in columnTitles">{{ columnTitle }}</th>
+              <th :key='columnTitle.something' v-for="columnTitle in columnTitles">{{ columnTitle }}</th>
             </tr>
           </thead>
           <tbody>
@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import FeedBox from './components/FeedBox.vue';
-import SummaryBox from './components/SummaryBox.vue';
+import FeedBox from '../components/FeedBox.vue';
+import SummaryBox from '../components/SummaryBox.vue';
 
 export default {
   name: 'app',

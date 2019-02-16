@@ -1,31 +1,22 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
-    <div>hello</div>
     <router-view></router-view>
-=======
-
-    <router-view></router-view>
-
->>>>>>> 38d539d5d60674e31dee12feeba154affcd016f0
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-import HelloWorld from './components/HelloWorld.vue'
-import UserLogin from './components/UserLogin.vue'
-=======
->>>>>>> 38d539d5d60674e31dee12feeba154affcd016f0
-
 export default {
   name: 'app',
-  components: {
-<<<<<<< HEAD
-    HelloWorld,
-    UserLogin,
-=======
->>>>>>> 38d539d5d60674e31dee12feeba154affcd016f0
+  data() {
+    return {
+      user: null
+    }
+  },
+  beforeCreate: function () {
+    if (this.$store.state.currentUser.isLoggedIn === true)
+      this.$router.push('/dashboard')
+    else
+      this.$router.push('/login')
   }
 }
 </script>

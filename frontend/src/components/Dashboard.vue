@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import UserDashboard from './UserDashboard.vue'
-import FarmDashboard from './FarmDashboard.vue'
+import UserDashboard from '../components/UserDashboard.vue'
+import FarmDashboard from '../components/FarmDashboard.vue'
 import { mapState } from 'vuex'
 
 export default {

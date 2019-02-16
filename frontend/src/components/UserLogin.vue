@@ -1,12 +1,12 @@
 <template>
-    <div class="root">
-        Login!
-    </div>
+  <div class="user-login">
+    Login here
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'UserLogin',
+  name: 'UserLogin',
 }
 </script>
 
