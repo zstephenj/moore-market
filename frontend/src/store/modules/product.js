@@ -3,7 +3,7 @@ import axios from 'axios';
 const product = {
     namespaced: true,
     state: { 
-        newProduct: undefined,
+        newProduct: null,
         allProducts: [],
     },
 
@@ -21,13 +21,6 @@ const product = {
     },
     actions: { 
         addNewProduct({ commit }, product) {
-            // eslint-disable-next-line no-console
-            // axios.post({
-            //   url: 'https://localhost:5001/products/add', 
-            //   method: 'get',
-            //   headers: {'Access-Control-Allow-Origin': 'meeeee'},
-            //   data: product,
-            // })
             axios.post('/api/products/add', product)
             return commit('setNewProduct', product)
         },

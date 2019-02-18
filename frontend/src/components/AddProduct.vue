@@ -1,7 +1,6 @@
 <template>
 
     <div class='container-fluid'>
-      <div class="test">{{ product.name }}, {{ product.description }}</div>
 
         <div class='row'>
 
