@@ -16,7 +16,6 @@ namespace MooreMarket.Controllers
         public UserController(MooreMarketContext context)
         {
             _context = context;           
-            //some fake users
         }
         public ActionResult<IEnumerable<UserModel>> Login()
         {

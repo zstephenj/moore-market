@@ -9,7 +9,7 @@
 
 
       <div class=farmerNav>
-          <button>Add New Item</button>
+          <router-link to="/addproduct">Add New Item</router-link>
           <button>Add New Category</button>
       </div>
       
@@ -20,13 +20,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in products" :key="item.id">
+            <tr v-for="item in allProducts" :key="item.id">
               <td>{{item.name}}</td>
-              <td>{{item.category}}</td>
+              <td>{{item.category.name}}</td>
               <td>{{item.price}}</td>
               <td>{{item.quantity}}</td>
               <td>{{item.description}}</td>
-              <td><a v-bind:href="'/products/edit/?id='+item.id">Edit</a> | <a v-bind:href="'/products/remove/?id='+item.id">Remove</a></td>  
+              <td><a v-bind:href="'/products/edit/?id='+item.id">Edit</a> | <button @click="removeProduct(item.id)">Remove</button></td>  
             </tr>
           </tbody>  
       </table>
@@ -45,20 +45,25 @@ export default {
       'SummaryBox': SummaryBox
   },
   created() {
-    this.getAllProducts()
+    this.getAllProductsFromApi()
   },
   computed: {
-    products() {
-      return this.$store.state.product.allProducts
-    }
+    ...mapState('product', ['allProducts'])
   },
   methods: {
-    ...mapActions('product', ['getAllProducts'])
+    ...mapActions('product', [
+      'getAllProductsFromApi', 
+      'removeProductById']),
+    removeProduct(id) {
+      this.removeProductById(id)
+    },
   },
   data() {
       return {
-          columnTitles: ['Item', 'Category','Price', 'Quantity', 'Item Code', 'Edit/Remove'],          
-      }
+          columnTitles: ['Item', 'Category','Price', 'Quantity', 'Item Code', 'Edit/Remove'],
+          messages: [],
+          sumBoxMessages: [],
+          }
   }
 }
 </script>

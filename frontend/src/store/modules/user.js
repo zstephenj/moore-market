@@ -8,7 +8,6 @@ const user = {
         }
     },
     mutations: {
-
         
     },
     actions: {
@@ -17,7 +16,7 @@ const user = {
     getters: {
         isLoggedIn(state) {
             return state.user.isLoggedIn
-        }
+        },
     },
 }
 

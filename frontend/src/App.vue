@@ -1,26 +1,15 @@
 <template>
   <div id="app">
-    <div class="test">
-      Testing
-    </div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import UserLogin from './components/UserLogin.vue'
-import Dashboard from './components/Dashboard'
 
 export default {
   name: 'app',
   components: {
   },
-  beforeCreate: function() {
-    if(this.$store.state.user.currentUser.isLoggedIn === true)
-      this.$router.push('/dashboard')
-    else
-      this.$router.push('/')
-  }
 }
 </script>
 

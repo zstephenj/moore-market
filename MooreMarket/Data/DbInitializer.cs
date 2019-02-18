@@ -15,10 +15,10 @@ namespace MooreMarket.Data
             context.Categories.Add(TestCat1);
             context.Categories.Add(TestCat2);
             context.SaveChanges();
-            Product TestProduct1 = new Product("TestProduct1N", "TestProduct1D", 1, 8, 88, 0, 0, "", 0, "", 0, "", "img1data");
+            Product TestProduct1 = new Product("TestProduct1N", "TestProduct1D", 1, 8, 88, false, false, "", false, "", false, "", "img1data");
             TestProduct1.CategoryID = 1;
             TestProduct1.Category = TestCat1;
-            Product TestProduct2 = new Product("TestProduct2N", "TestProduct2D", 2, 6, 66, 1, 1, "11", 1, "11", 1, "11", "img2data");
+            Product TestProduct2 = new Product("TestProduct2N", "TestProduct2D", 2, 6, 66, true, true, "11", true, "11", true, "11", "img2data");
             TestProduct2.CategoryID = 2;
             TestProduct2.Category = TestCat2;
             context.Products.Add(TestProduct1);

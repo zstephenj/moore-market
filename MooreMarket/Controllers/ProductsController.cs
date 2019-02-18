@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MooreMarket.Data;
@@ -9,7 +7,7 @@ using MooreMarket.Models;
 
 namespace MooreMarket.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -55,30 +53,29 @@ namespace MooreMarket.Controllers
         }
 
         //POST Products/Add
-        [HttpPost]
+        [HttpPost("Add")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult Add(Product product)
         {
-            Product newProduct = new Product(product.Name, product.Description, product.CategoryID, product.Quantity, product.Price, product.IsPerishable, product.KeepRoom, product.ShelfLifeRoom, product.KeepFridge, product.ShelfLifeFridge, product.KeepFreezer, product.ShelfLifeFreezer, product.Image);
-            ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == newProduct.CategoryID);
-            newProduct.Category = newProductCategory;  
+            ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == product.CategoryID);
+            product.Category = newProductCategory;              
 
-            if (newProduct.Name == null)
+            if (product.Name == null)
             {
                 return NotFound();
             }
 
-            if (newProduct.Name == "")
+            if (product.Name == "")
             {
-                return BadRequest(newProduct);
+                return BadRequest(product);
             }
 
-            _context.Products.Add(newProduct);
+            _context.Products.Add(product);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetProduct), new { id = newProduct.ID }, newProduct);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.ID }, product);
         }
 
         //PUT Products/{id}/Edit
