@@ -1,13 +1,22 @@
-version: '3.3'
+version: '3.4'
 
 services:
-  web:
-    build: .
-    image: moore-market_web:latest
+  api:
+    build:
+      context: .
+      target: api
     ports:
       - "8000:80"
     depends_on:
       - db
+  ui:
+    build:
+      context: .
+      target: ui
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
   db:
     image: mysql:5.7
     volumes:
