@@ -95,7 +95,7 @@ namespace MooreMarket.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(GetProduct), new { id = id});
+            return NoContent();
         }
 
         //DELETE Products/{id}/Remove
@@ -107,7 +107,7 @@ namespace MooreMarket.Controllers
             _context.Products.Remove(product);
             _context.SaveChanges();
 
-            return Ok();
+            return NoContent();
         }
     }
 }
