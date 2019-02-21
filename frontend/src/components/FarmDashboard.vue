@@ -36,7 +36,7 @@
 <script>
 import FeedBox from '../components/FeedBox.vue';
 import SummaryBox from '../components/SummaryBox.vue';
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'app',
