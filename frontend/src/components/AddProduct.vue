@@ -17,7 +17,7 @@
                 <div class="form-row align-items-center justify-content-center">
                     <label for='addProductFormName' class="col-md-2 col-form-label alert alert-success"> Name: </label>
                     <div class="col-md-4">
-                        <input class="form-control" type='text' v-model='name' name='name' ref='addProductFormName' id='addProductFormName' >
+                        <input class="form-control" type='text' v-model='product.name' name='name' ref='addProductFormName' id='addProductFormName' >
                     </div>
                 </div>
 
@@ -32,7 +32,7 @@
                 <div class="form-row align-items-center justify-content-center">
                     <label for='addProductFormDescription' class="col-md-2 col-form-label alert alert-success"> Description: </label>
                     <div class="col-md-4">
-                        <textarea class="form-control" v-model='description' name='description' ref='addProductFormDescription' id='addProductFormDescription' form='addProductForm'> </textarea> 
+                        <textarea class="form-control" v-model='product.description' name='description' ref='addProductFormDescription' id='addProductFormDescription' form='addProductForm'> </textarea> 
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
                 <div class="form-row align-items-center justify-content-center">
                     <label for='addProductFormCategory' class="col-md-2 col-form-label alert alert-success">Category: </label>
                     <div class="col-md-4">
-                        <select class="custom-select" v-model='categoryId' name='categoryId' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
+                        <select class="custom-select" v-model='product.categoryId' name='categoryId' ref='addProductFormCategory' id='addProductFormCategory' form='addProductForm'>
                         <option :key='productCategory.id' v-for='productCategory in addProductFormCategories' :value='productCategory.id'> {{productCategory.name}} </option>
                         </select>
                     </div>
@@ -64,7 +64,7 @@
                 <div class="form-row align-items-center justify-content-center">
                     <label for='addProductFormQuantity' class="col-md-2 col-form-label alert alert-success">Quantity: </label>
                     <div class="col-md-4">
-                        <input class="form-control" type='number' v-model="quantity" name='quantity' ref='addProductFormQuantity' id='addProductFormQuantity'>
+                        <input class="form-control" type='number' v-model="product.quantity" name='quantity' ref='addProductFormQuantity' id='addProductFormQuantity'>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
                 <div class="form-row align-items-center justify-content-center">
                     <label for='addProductFormPrice' class="col-md-2 col-form-label alert alert-success">Price: </label>
                     <div class="col-md-4">
-                        <input class="form-control" type='number' step='0.01' v-model="price" name='price' ref='addProductFormPrice' id='addProductFormPrice'>
+                        <input class="form-control" type='number' step='0.01' v-model="product.price" name='price' ref='addProductFormPrice' id='addProductFormPrice'>
                     </div>
                 </div>
                 
@@ -93,40 +93,40 @@
                 <div class="form-row align-items-center justify-content-center">
                     <legend class="col-form-label col-md-2 alert alert-success">Item is perishable: </legend>
                     <div class="custom-control custom-radio col-md-2">
-                        <input class="custom-control-input" type='radio' ref='isPerishableYes' id='isPerishableYes' name='isPerishable' value=true  @click="changeIsPerishable(true)">
+                        <input class="custom-control-input" type='radio' ref='isPerishableYes' id='isPerishableYes' name='isPerishable' @click="product.isPerishable = true" value=true >
                         <label class="custom-control-label" for="isPerishableYes">Yes</label>
                     </div>
                     <div class="custom-control custom-radio col-md-2">
-                        <input class="custom-control-input" type='radio' id='isPerishableNo' name='isPerishable' value=false  @click="changeIsPerishable(false)" checked>
+                        <input class="custom-control-input" type='radio' id='isPerishableNo' name='isPerishable' @click="product.isPerishable = false" value=false checked>
                         <label class="custom-control-label" for="isPerishableNo">No</label>
                     </div>
                 </div>
             </fieldset>
             
-                <div :class="{'hide-form':!isPerishable}">
+                <div :class="{'hide-form':!product.isPerishable}">
                     
                     <fieldset class="form-group" id='keepRoom'>
                         <div class="form-row align-items-center justify-content-center">
                             <legend class="col-form-label col-md-2 alert alert-success">Item can be stored at room temperature: </legend>
                             <div class="custom-control custom-radio col-md-2">
-                                <input class="custom-control-input" ref='keepRoomYes' id='keepRoomYes' type='radio' value=true name='keepRoom' @click="changeKeepRoom(true)">
+                                <input class="custom-control-input" ref='keepRoomYes' id='keepRoomYes' type='radio' value=true name='keepRoom' @click="product.keepRoom = true">
                                 <label class="custom-control-label" for="keepRoomYes">Yes</label>
                             </div>
                             <div class="custom-control custom-radio col-md-2">
-                                <input class="custom-control-input" id='keepRoomNo' type='radio' value=false name='keepRoom' @click="changeKeepRoom(false)" checked>
+                                <input class="custom-control-input" id='keepRoomNo' type='radio' value=false name='keepRoom' @click="product.keepRoom = false" checked>
                                 <label class="custom-control-label" for="keepRoomNo">No</label>                            
                             </div>
                         </div>
                     </fieldset>
                     
                     
-                        <div :class="{'hide-form':!keepRoom}">
+                        <div :class="{'hide-form':!product.keepRoom}">
                             <div class="form-group">
                                 
                                 <div class="form-row align-items-center justify-content-center">
                                     <label class="col-md-2 col-form-label alert alert-success" for="addProductFormShelfLifeRoom">Shelf life in room: </label>
                                     <div class="col-md-4">
-                                        <input class="form-control" type='text' v-model="shelfLifeRoom" ref='addProductFormShelfLifeRoom' name='shelfLifeRoom' id='addProductFormShelfLifeRoom'>
+                                        <input class="form-control" type='text' v-model="product.shelfLifeRoom" ref='addProductFormShelfLifeRoom' name='shelfLifeRoom' id='addProductFormShelfLifeRoom'>
                                     </div>
                                 </div>
 
@@ -141,25 +141,25 @@
                         <div class="form-row align-items-center justify-content-center">
                             <legend class="col-form-label col-md-2 alert alert-success">Item can be stored in refrigerator: </legend>
                             <div class="custom-control custom-radio col-md-2">
-                                <input class="custom-control-input" ref='keepFridgeYes' id='keepFridgeYes' type='radio' value=true name='keepFridge' @click="changeKeepFridge(true)">
+                                <input class="custom-control-input" ref='keepFridgeYes' id='keepFridgeYes' type='radio' value=true name='keepFridge' @click="product.keepFridge = true">
                                 <label class="custom-control-label" for="keepFridgeYes">Yes</label>
                             </div>
                             <div class="custom-control custom-radio col-md-2">
-                                <input class="custom-control-input" id='keepFridgeNo' type='radio' value=false name='keepFridge' @click="changeKeepFridge(false)" checked>
+                                <input class="custom-control-input" id='keepFridgeNo' type='radio' value=false name='keepFridge' @click="product.keepFridge = false" checked>
                                 <label class="custom-control-label" for="keepFridgeNo">No</label>
                             </div>
                         </div>
                     </fieldset>
                     
                     
-                        <div :class="{'hide-form':!keepFridge}">
+                        <div :class="{'hide-form':!product.keepFridge}">
 
                             <div class="form-group">
 
                                 <div class="form-row align-items-center justify-content-center">
                                     <label class="col-md-2 col-form-label alert alert-success" for="addProductFormShelfLifeFridge">Shelf life in refrigerator:  </label>
                                     <div class="col-md-4">
-                                        <input class="form-control" type='text' v-model="shelfLifeFridge" name='shelfLifeFridge' ref='addProductFormShelfLifeFridge' id='addProductFormShelfLifeFridge'>
+                                        <input class="form-control" type='text' v-model="product.shelfLifeFridge" name='shelfLifeFridge' ref='addProductFormShelfLifeFridge' id='addProductFormShelfLifeFridge'>
                                     </div>
                                 </div> 
 
@@ -175,24 +175,24 @@
                         <div class="form-row align-items-center justify-content-center">
                             <legend class="col-form-label col-md-2 alert alert-success">Item can be stored in freezer: </legend>
                             <div class="custom-control custom-radio col-md-2">
-                                <input class="custom-control-input" ref='keepFreezerYes' id='keepFreezerYes' type='radio' value=true name='keepFreezer' @click="changeKeepFreezer(true)">
+                                <input class="custom-control-input" ref='keepFreezerYes' id='keepFreezerYes' type='radio' value=true name='keepFreezer' @click="product.keepFreezer = true">
                                 <label class="custom-control-label" for="keepFreezerYes">Yes</label>
                             </div>
                             <div class="custom-control custom-radio col-md-2">
-                                <input class="custom-control-input" id='keepFreezerNo' type='radio' value=false name='keepFreezer' @click="changeKeepFreezer(false)" checked>
+                                <input class="custom-control-input" id='keepFreezerNo' type='radio' value=false name='keepFreezer' @click="product.keepFreezer = false" checked>
                                 <label class="custom-control-label" for="keepFreezerNo">No</label>
                             </div>
                         </div> 
                     </fieldset>
                     
-                        <div :class="{'hide-form':!keepFreezer}"> 
+                        <div :class="{'hide-form':!product.keepFreezer}"> 
                             
                             <div class="form-group">
 
                                 <div class="form-row align-items-center justify-content-center">
                                     <label class="col-md-2 col-form-label alert alert-success" for="addProductFormShelfLifeFreezer">Shelf life in freezer:  </label>
                                     <div class="col-md-4">
-                                        <input class="form-control" type='text' v-model="shelfLifeFreezer" ref='addProductFormShelfLifeFreezer' name='shelfLifeFreezer' id='addProductFormShelfLifeFreezer'>
+                                        <input class="form-control" type='text' v-model="product.shelfLifeFreezer" ref='addProductFormShelfLifeFreezer' name='shelfLifeFreezer' id='addProductFormShelfLifeFreezer'>
                                     </div>
                                 </div>
 
@@ -201,9 +201,7 @@
                                 </div>
                             
                             </div>
-
-                        </div>
-                     
+                        </div>                     
                 </div> 
 
             <div class="form-group form-row align-items-center justify-content-center">
@@ -213,7 +211,7 @@
                 </div>
             </div>  
 
-            <button class="btn btn-success" type='button' @click="validateForm"> Add Product </button>
+            <button class="btn btn-success" type='button' @click="addProduct()"> Add Product </button>
             
         </form>
     </div>
@@ -386,24 +384,6 @@ export default {
                 return false
             }
         },
-
-        //Change bool form values true/false
-        changeIsPerishable(tf) {
-            this.isPerishable = tf
-        },
-
-        changeKeepRoom(tf) {
-            this.keepRoom = tf
-        },
-
-        changeKeepFridge(tf) {
-            this.keepFridge = tf
-        },
-
-        changeKeepFreezer(tf) {
-            this.keepFreezer = tf
-        },
-
         //Validate
         anyErrors() {
             if(this.hasErrorName == true ||
@@ -428,11 +408,11 @@ export default {
             this.checkErrorQuantity()
             this.checkErrorPrice()
 
-            if (this.$refs.isPerishableYes.checked == true) {
+            if (this.product.isPerishable) {
 
-                if (this.$refs.keepRoomYes.checked == true) {
+                if (this.product.keepRoom) {
 
-                    this.hasErrorShelfLifeRoom = false
+                    //this.hasErrorShelfLifeRoom = false
                     this.$refs.errorShelfLifeRoom.innerHTML = ''
                     let formShelfLife = this.$refs.addProductFormShelfLifeRoom.value
                     if (this.checkErrorShelfLife(formShelfLife)) {
@@ -441,7 +421,7 @@ export default {
                     }
                 }
 
-                if (this.$refs.keepFridgeYes.checked == true) {
+                if (this.product.keepFridge) {
 
                     this.hasErrorShelfLifeFridge = false
                     this.$refs.errorShelfLifeFridge.innerHTML = ''
@@ -452,7 +432,7 @@ export default {
                     }
                 }
 
-                if (this.$refs.keepFreezerYes.checked == true) {
+                if (this.product.keepFreezer) {
 
                     this.hasErrorShelfLifeFreezer = false
                     this.$refs.errorShelfLifeFreezer.innerHTML = ''
@@ -465,52 +445,12 @@ export default {
             }
 
             if (!this.anyErrors()) {
-                let newProduct = new Object()
-                newProduct.name = this.$refs.addProductFormName.value
-                newProduct.description = this.$refs.addProductFormDescription.value
-                newProduct.categoryId = this.$refs.addProductFormCategory.value
-                newProduct.quantity = this.$refs.addProductFormQuantity.value
-                newProduct.price = this.$refs.addProductFormPrice.value
-                
-                if (this.$refs.isPerishableYes.checked){
-                    newProduct.isPerishable = 1
-                }
-                else {
-                    newProduct.isPerishable = 0
-                }
-                
-                if (this.$refs.keepRoomYes.checked) {
-                    newProduct.keepRoom = 1
-                }
-                else {
-                    newProduct.keepRoom = 0
-                }
-
-                newProduct.shelfLifeRoom = this.$refs.addProductFormShelfLifeRoom.value
-
-                if (this.$refs.keepFridgeYes.checked){
-                    newProduct.keepFridge = 1
-                }
-                else {
-                    newProduct.keepFridge = 0
-                }
-
-                newProduct.shelfLifeFridge = this.$refs.addProductFormShelfLifeFridge.value
-
-                if (this.$refs.keepFreezerYes.checked){
-                    newProduct.keepFreezer = 1
-                }
-                else {
-                    newProduct.keepFreezer = 0
-                }
-
-                newProduct.shelfLifeFreezer = this.$refs.addProductFormShelfLifeFreezer .value
 
                 if (this.$refs.addProductFormPic.files.length == 1) {
-                    newProduct.image = this.generateBase64(this.$refs.addProductFormPic.files[0])
+                    this.product.image = this.generateBase64(this.$refs.addProductFormPic.files[0])
                     }
-                    
-                this.addNewProduct(newProduct)
+                
+              
                 return true
             }
 
@@ -518,7 +458,12 @@ export default {
                 return false
             }
         },
-        
+        addProduct() {
+          let product = this.product
+          if(this.validateForm()) {
+            this.addNewProduct(product).then(() => this.$router.push('/dashboard'))
+          }
+        },
         ...mapActions('product', [
             'addNewProduct'
         ])
@@ -526,19 +471,21 @@ export default {
     },
     data() {
         return {
-            name:'',
-            description: '',
-            categoryId: '',
-            quantity: '',
-            price: '',
-            isPerishable: false,
-            keepRoom: false,
-            shelfLifeRoom: '',
-            keepFridge: false,
-            shelfLifeFridge: '',
-            keepFreezer: false,
-            shelfLifeFreezer: '',
-            image: '',
+            product: {
+                name:'',
+                description: '',
+                categoryId: '',
+                quantity: '',
+                price: '',
+                isPerishable: false,
+                keepRoom: false,
+                shelfLifeRoom: '',
+                keepFridge: false,
+                shelfLifeFridge: '',
+                keepFreezer: false,
+                shelfLifeFreezer: '',
+                image: '',
+            },
             hasErrorName: false ,
             hasErrorDescription: false ,
             hasErrorCategory: false ,

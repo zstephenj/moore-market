@@ -15,15 +15,8 @@ namespace MooreMarket.Controllers
         private MooreMarketContext _context;
         public UserController(MooreMarketContext context)
         {
-            _context = context;
-            //some fake users
-            if (_context.Users.Count() == 0)
-            {
-                _context.Add(new UserModel("harryPotter", "password"));
-                _context.Add(new UserModel("malfoy", "ihateharrypotter"));
-                _context.SaveChanges();
-            }
-        }   
+            _context = context;           
+        }
         public ActionResult<IEnumerable<UserModel>> Login()
         {
             return _context.Users.ToList();

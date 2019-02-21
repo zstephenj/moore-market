@@ -9,24 +9,24 @@
 
 
       <div class=farmerNav>
-          <button>Add New Item</button>
+          <router-link to="/addproduct">Add New Item</router-link>
           <button>Add New Category</button>
       </div>
       
       <table class=itemSummary>
           <thead>
             <tr>
-              <th :key='columnTitle.something' v-for="columnTitle in columnTitles">{{ columnTitle }}</th>
+              <th :key='index' v-for="(columnTitle, index) in columnTitles">{{ columnTitle }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in items" :key="item.id">
+            <tr v-for="item in allProducts" :key="item.id">
               <td>{{item.name}}</td>
-              <td>{{item.category}}</td>
+              <td>{{item.category.name}}</td>
               <td>{{item.price}}</td>
               <td>{{item.quantity}}</td>
-              <td>{{item.code}}</td>
-              <td><a v-bind:href="'/products/edit/?id='+item.id">Edit</a> | <a v-bind:href="'/products/remove/?id='+item.id">Remove</a></td>  
+              <td>{{item.description}}</td>
+              <td><a v-bind:href="'/products/edit/?id='+item.id">Edit</a> | <button @click="removeProduct(item.id)">Remove</button></td>  
             </tr>
           </tbody>  
       </table>
@@ -36,6 +36,7 @@
 <script>
 import FeedBox from '../components/FeedBox.vue';
 import SummaryBox from '../components/SummaryBox.vue';
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'app',
@@ -43,49 +44,26 @@ export default {
       'FeedBox': FeedBox,
       'SummaryBox': SummaryBox
   },
+  created() {
+    this.getAllProductsFromApi()
+  },
+  computed: {
+    ...mapState('product', ['allProducts'])
+  },
+  methods: {
+    ...mapActions('product', [
+      'getAllProductsFromApi', 
+      'removeProductById']),
+    removeProduct(id) {
+      this.removeProductById(id)
+    },
+  },
   data() {
       return {
           columnTitles: ['Item', 'Category','Price', 'Quantity', 'Item Code', 'Edit/Remove'],
-          items: [{
-              id: 1,
-              name: "Fuji",
-              category: "apples",
-              price: 2.00,
-              quantity: 10,
-              code: 5000,
-          }, {
-              id: 2,
-              name: "Gala",
-              category: "apples",
-              price: 1.10,
-              quantity: 25,
-              code: 5001,
-          }, {
-              id: 3,
-              name: "Green",
-              category: "apples",
-              price: 0.70,
-              quantity: 30,
-              code: 5002,
-          }, {
-              id: 4,
-              name: "Honeycrisp",
-              category: "apples",
-              price: 0.40,
-              quantity: 13,
-              code: 5003,
-          }],
-          messages: [
-              'Last item purchased: banana',
-              'Customer 1 is looking for carrots',
-              'Food bank 2 needs spinach'
-          ],
-          sumBoxMessages: [
-              'Low Stock Alert(s): oranges',
-              'Sales Totals: $550.00',
-              'Best Selling Item: grapes'
-          ],          
-      }
+          messages: [],
+          sumBoxMessages: [],
+          }
   }
 }
 </script>

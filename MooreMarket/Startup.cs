@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MooreMarket.Data;
-using MySql.Data.EntityFrameworkCore.Extensions;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace MooreMarket
 {
@@ -23,12 +26,17 @@ namespace MooreMarket
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<MooreMarketContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("Default")));
+                options.UseMySql(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            List<string> allowedMethods = new List<string>{
+              "GET",
+              "POST"
+            };
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -40,6 +48,11 @@ namespace MooreMarket
             }
 
             app.UseHttpsRedirection();
+            // app.Use(async (context, next) => 
+            // {
+            //     context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:8080");
+            //     await next();
+            // });
             app.UseMvc();
         }
     }

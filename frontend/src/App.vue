@@ -5,26 +5,11 @@
 </template>
 
 <script>
-import UserLogin from './components/UserLogin.vue'
-import Dashboard from './components/Dashboard'
 
 export default {
   name: 'app',
   components: {
-    UserLogin,
-    Dashboard
   },
-  data() {
-    return {
-      user: null
-    }
-  },
-  beforeCreate: function () {
-    if (this.$store.state.currentUser.isLoggedIn === true)
-      this.$router.push('/dashboard')
-    else
-      this.$router.push('/login')
-  }
 }
 </script>
 
@@ -33,8 +18,8 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  text-align: center;
   margin-top: 60px;
 }
 </style>
