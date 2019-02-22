@@ -211,8 +211,11 @@
                 </div>
             </div>  
 
+            <div class="form-group form-row align-items-center justify-content-center">
+
             <button class="btn btn-success" type='button' @click="addProduct()"> Add Product </button>
             
+            </div>
         </form>
     </div>
 </template>

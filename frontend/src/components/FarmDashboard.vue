@@ -4,16 +4,23 @@
           <h1>Vendor-Mart</h1>
       </div>
 
-      <FeedBox :messages="messages"></FeedBox>
-      <SummaryBox :sumBoxMessages="sumBoxMessages"></SummaryBox>
+      <div class="card-deck mx-2">
+        <FeedBox :messages="messages"></FeedBox>
 
+        <div class="card">
+          <div class="card-body">
+            <p><router-link to="/addproduct"><button type="button" class="btn btn-success btn-lg">Add New Item</button></router-link></p>
+            <button type="button" class="btn btn-success btn-lg" disabled>Add New Category</button>
+          </div>
+        </div>
+        <SummaryBox :sumBoxMessages="sumBoxMessages"></SummaryBox>
+        
+      </div>
 
       <div class=farmerNav>
-          <router-link to="/addproduct">Add New Item</router-link>
-          <button>Add New Category</button>
       </div>
       
-      <table class=itemSummary>
+      <table class="table table-striped">
           <thead>
             <tr>
               <th :key='index' v-for="(columnTitle, index) in columnTitles">{{ columnTitle }}</th>
