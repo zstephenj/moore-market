@@ -12,7 +12,7 @@ export default new Router({
   mode: 'history',
   routes: [{
     name: 'Homepage',
-    path: '/home',
+    path: '/',
     component: HelloWorld,
   }, {
     name: 'Dashboard',
