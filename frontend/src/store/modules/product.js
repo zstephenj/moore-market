@@ -5,7 +5,6 @@ const product = {
     state: { 
         newProduct: null,
         allProducts: [],
-        farmerProducts: [],
     },
     mutations: {
         setNewProduct(state, product) {
@@ -21,9 +20,6 @@ const product = {
         addEditedProduct(state, idx, product) {
             state.allProducts.splice(idx, 1, product)
         },
-        setFarmerProducts(state, products) {
-          state.farmerProducts = products
-        }
     },
     actions: { 
         addNewProduct({ commit }, product) {
@@ -44,10 +40,6 @@ const product = {
             return axios.put('/api/products/edit/'+product.id, product)
               .then(() => commit('addEditedProduct', idx, product))
         },
-        getFarmerProducts({ commit }, id) {
-          axios.get('/api/farmers/'+id)
-            .then(response => commit('setFarmerProducts', response.data.products))
-        }
     },
     getters: {
       //this syntax lets us call getters with a parameter

@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 
 const user = {
     namespaced: true,
@@ -8,18 +8,10 @@ const user = {
             accountType: "farmer",
             isLoggedIn: true,
         },
-        allFarmers: [],
     },
     mutations: {
-        setFarmers(state, farmers) {
-          state.allFarmers = farmers
-        },
     },
     actions: {
-        getFarmers({ commit }) {
-          axios.get('/api/farmers')
-            .then(response => commit('setFarmers', response.data))
-        },
     },
     getters: {
     },
