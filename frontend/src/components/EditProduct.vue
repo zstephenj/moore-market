@@ -30,7 +30,7 @@ export default {
     ...mapActions('product', ['editProductById']),
     sendEdit(editedProduct) {
       this.editProductById(editedProduct)
-      this.$router.push('/dashboard')
+        .then(() => this.$router.push('/dashboard'))
     }
   },
   computed: {
