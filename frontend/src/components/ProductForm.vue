@@ -197,7 +197,6 @@ export default {
         }
       }
       if(!this.checkErrors()) {
-        console.dir(this.product)
         this.$emit('formValid', this.product)
         return true
       }

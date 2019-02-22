@@ -17,6 +17,8 @@ namespace MooreMarket.Models
         private string salt;
         public AccountType AccountType { get; set; }
 
+        public IList<Product> Products { get; set; }
+
         public UserModel() 
         {
             AccountType = AccountType.User;
