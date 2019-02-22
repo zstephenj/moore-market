@@ -18,22 +18,24 @@ namespace MooreMarket.Controllers
       _context = context;
     }
 
-    [HttpGet("farmers")]
+    [HttpGet]
     public ActionResult<IList<UserModel>> GetAllFarmers()
     {
       return _context.Users
-        .Include(u => u.Products)
         .Where(u => u.AccountType == AccountType.Farmer)
         .ToList();
     }
 
-    [HttpGet("farmers/{id}")]
-    public ActionResult<IList<Product>> GetFarmerProducts(int id)
+    [HttpGet("{id}")]
+    public ActionResult<UserModel> GetFarmerProducts(int id)
     {
-      var farmerProducts = _context.Products.Where(u => u.ID == id).ToList();
+      var farmerProducts = _context.Users
+                .Include(u => u.Products)
+                .SingleOrDefault(u => u.ID == id);
+
       if(farmerProducts == null)
       {
-        return NoContent();
+        return NotFound();
       }
 
       return farmerProducts;
