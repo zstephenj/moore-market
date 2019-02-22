@@ -5,10 +5,10 @@ const product = {
     state: { 
         newProduct: null,
         allProducts: [],
+        farmerProducts: [],
     },
-
     mutations: {
-        setNewProduct (state, product) {
+        setNewProduct(state, product) {
             state.newProduct = product
             state.allProducts.push(product)
         },
@@ -20,6 +20,9 @@ const product = {
         },
         addEditedProduct(state, idx, product) {
             state.allProducts.splice(idx, 1, product)
+        },
+        setFarmerProducts(state, products) {
+          state.farmerProducts = products
         }
     },
     actions: { 
@@ -40,6 +43,10 @@ const product = {
             let idx = getters.getProductIndex(product.id)
             return axios.put('/api/products/edit/'+product.id, product)
               .then(() => commit('addEditedProduct', idx, product))
+        },
+        getFarmerProducts({ commit }, id) {
+          axios.get('/api/farmers/'+id)
+            .then(response => commit('setFarmerProducts', response.data.products))
         }
     },
     getters: {

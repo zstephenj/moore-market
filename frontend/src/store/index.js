@@ -3,13 +3,15 @@ import Vue from 'vue';
 
 import product from  './modules/product'
 import user from './modules/user'
+import farmer from './modules/farmer'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
     modules: {
-        product: product,
-        user: user
+        product,
+        user,
+        farmer,
     }
 })
 

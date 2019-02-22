@@ -6,6 +6,8 @@ import Dashboard from '../components/Dashboard.vue'
 import AddProduct from  '../components/AddProduct.vue'
 import ProductForm from '../components/ProductForm.vue'
 import EditProduct from '../components/EditProduct.vue'
+import BrowseFarmers from '../components/BrowseFarmers.vue'
+import BrowseInventory from '../components/BrowseInventory.vue'
 
 Vue.use(Router)
 
@@ -32,6 +34,15 @@ export default new Router({
     path: '/editproduct/:id',
     component: EditProduct,
     //this signifies that we can pass in paramaters as a prop on this component
+    props: true,
+  }, {
+    name: 'BrowseFarmers',
+    path: '/farmers',
+    component: BrowseFarmers,
+  }, {
+    name: 'BrowseInventory',
+    path: '/farmers/:id',
+    component: BrowseInventory,
     props: true,
   }],
 })

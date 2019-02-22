@@ -28,12 +28,9 @@
               <td>{{item.description}}</td>
               <td><router-link :to="{
                 name: 'EditProduct',
-                params: {
-                  id: item.id,
-                  }
-                }"
-                >
-                Edit</router-link> | <button @click="removeProduct(item.id)">Remove</button></td>  
+                params: { id: item.id, }
+              }">
+              Edit</router-link> | <button @click="removeProduct(item.id)">Remove</button></td>  
             </tr>
           </tbody>  
       </table>

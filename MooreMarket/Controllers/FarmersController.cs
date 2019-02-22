@@ -30,8 +30,8 @@ namespace MooreMarket.Controllers
     public ActionResult<UserModel> GetFarmerProducts(int id)
     {
       var farmerProducts = _context.Users
-                .Include(u => u.Products)
-                .SingleOrDefault(u => u.ID == id);
+        .Include(u => u.Products)
+        .SingleOrDefault(u => u.ID == id);
 
       if(farmerProducts == null)
       {
