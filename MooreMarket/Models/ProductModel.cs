@@ -20,6 +20,9 @@ namespace MooreMarket.Models
         public string ShelfLifeFreezer {get; set;}
         public string Image {get;set;}
 
+        public int UserID { get; set; }
+        public UserModel User { get; set; }
+
         public Product()
         {
 
