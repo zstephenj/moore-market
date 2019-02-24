@@ -1,15 +1,20 @@
 <template>
   <div id="app">
+    <NavigationTwo></NavigationTwo>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Navigation from "./components/Navigation.vue"
+import NavigationTwo from "./components/NavigationTwo.vue"
 
 export default {
   name: 'app',
   components: {
-  }
+    Navigation,
+    NavigationTwo
+  },
 }
 </script>
 
@@ -18,8 +23,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  text-align: center;
 }
 </style>

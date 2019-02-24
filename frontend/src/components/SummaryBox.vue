@@ -1,10 +1,11 @@
 <template>
-    <div class=summaryBox>
-      <h2>Summary</h2>
-      <hr/>
-      <ul>
-          <li :key='message.id' v-for="message in sumBoxMessages">{{ message }}</li>
-      </ul>
+    <div class="card border-success mb-3">
+      <h4 class="card-header">Summary</h4>
+      <div class="card-body">
+        <ul>
+            <li :key='message.id' v-for="message in sumBoxMessages">{{ message }}</li>
+        </ul>
+      </div> 
     </div>
 </template>
 
@@ -28,15 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.summaryBox {
-    float: right;
-    border: 3px solid seagreen;
-    padding: 10px;
-    width: 300px;
-    margin: 15px;
-}
-.summaryBox ul {
-    text-align: left;
-}
+
 </style>
 

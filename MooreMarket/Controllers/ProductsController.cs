@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MooreMarket.Data;
@@ -9,7 +7,7 @@ using MooreMarket.Models;
 
 namespace MooreMarket.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -21,34 +19,15 @@ namespace MooreMarket.Controllers
         }
         
         //GET Products/
-        [HttpGet("")]
-        [HttpGet("/")]
+        [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         public IActionResult GetAllProducts()
         {
             IList<Product> allProducts = _context.Products.Include(p => p.Category).ToList();
-            /* Test API Products
-            if (_context.Products.Count() == 0)
-            {
-                ProductCategory TestCat1 = new ProductCategory("TestCategory1");
-                TestCat1.ID = 1;
-                ProductCategory TestCat2 = new ProductCategory("TestCategory2");
-                TestCat2.ID = 2;
-                _context.Categories.Add(TestCat1);
-                _context.Categories.Add(TestCat2);
-                _context.SaveChanges();
-                Product TestProduct1 = new Product("TestProduct1N", "TestProduct1D", 1, 8, 88, 0, 0, "", 0, "", 0, "", "img1data");
-                TestProduct1.CategoryID = 1;
-                TestProduct1.Category = TestCat1;
-                Product TestProduct2 = new Product("TestProduct2N", "TestProduct2D", 2, 6, 66, 1, 1, "11", 1, "11", 1, "11", "img2data");
-                TestProduct2.CategoryID = 2;
-                TestProduct2.Category = TestCat2;
-                _context.Products.Add(TestProduct1);
-                _context.Products.Add(TestProduct2);
-                _context.SaveChanges();
-            }
-            */
+
+
+            
             if (allProducts.Count == 0)
             {
                 return NoContent();
@@ -80,31 +59,46 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult Add(Product newProduct)
         {
+<<<<<<< HEAD
             ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == newProduct.CategoryID);
             newProduct.Category = newProductCategory; 
 
             if (newProduct == null)
+=======
+            ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == product.CategoryID);
+            product.Category = newProductCategory;              
+
+            if (product.Name == null)
+>>>>>>> upstream/master
             {
                 return NotFound();
             }
 
-            if (newProduct.Name == "")
+            if (product.Name == "")
             {
-                return BadRequest(newProduct);
+                return BadRequest(product);
             }
 
-            _context.Products.Add(newProduct);
+            _context.Products.Add(product);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetProduct), new { id = newProduct.ID }, newProduct);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.ID }, product);
         }
 
+<<<<<<< HEAD
         //PUT Products/Edit/{id}
+=======
+        //PUT Products/{id}/Edit
+>>>>>>> upstream/master
         [HttpPut("Edit/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult Edit(int id, Product product)
+<<<<<<< HEAD
         {
+=======
+        {        
+>>>>>>> upstream/master
             product.ID = id;
 
             if (product.Name == "")
@@ -116,10 +110,14 @@ namespace MooreMarket.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(GetProduct), new { id = id});
+            return NoContent();
         }
 
+<<<<<<< HEAD
         //DELETE Products/Remove/{id}
+=======
+        //DELETE Products/{id}/Remove
+>>>>>>> upstream/master
         [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
@@ -128,7 +126,7 @@ namespace MooreMarket.Controllers
             _context.Products.Remove(product);
             _context.SaveChanges();
 
-            return Ok();
+            return NoContent();
         }
     }
 }

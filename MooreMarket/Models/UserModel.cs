@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using MooreMarket.Data;
 
 namespace MooreMarket.Models
