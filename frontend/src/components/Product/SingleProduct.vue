@@ -1,43 +1,89 @@
 <template>
-    <div class='container-fluid'>
+
+    <div class='container-fluid' style="background: linear-gradient(-90deg, #84CF6A, #16C080); color: #001f3f;">
+
         <div class='row align-items-start justify-content-center'>
-            
-            <div class="card col-md-6" style='border-color: Green; background-color: #2ECC40; color: #001f3f;'>
 
-                <div class='card-header' style='background-color: LightGreen'>
-                    <h2 style=''> {{product.name}} </h2>
+            <div class='col-md-6'>
+
+                <div class='my-4'>
+
+                    <img :src='product.image' >
+                    <hr style='border-color: #001f3f' />
+
                 </div>
 
-                <div class='justify-content-center'>
-                    <img class="card-img-top img-thumbnail" style='border-color: DarkGreen; max-width: 50%;' :src='product.image' alt="Card image cap">
-                </div>
-
-                <div class="card-body">
-                    <h5 class="card-title d-flex justify-content-start" style='background-color: #3D9970; text-indent: 0.25em;border: solid; border-color: darkgreen;'> About this product </h5>
-                    <p class="card-text d-flex justify-content-start" style='text-indent: 2em'>{{product.description}}</p>
-                </div>
-
-                <ul class="list-group list-group-flush" v-if='product.isPerishable === 1'>
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
                 <div>
-                    <input type='checkbox' @change='test' >
-                </div>
-            </div>  
 
-            <div class='card col-md-4' style='border-color: Green; background-color: LightGreen; color: DarkGreen;' >
-                <div class='card-body'>
-                    <p>sdfsadf</p>
+                    <div>
+
+                        <h5 align='left' style='font-weight: 588;'> About this item:  </h5>
+                        <p style='text-align:left;'> {{product.description}} </p>
+
+                    </div>
+
                 </div>
 
             </div>
+
+            <div class='col-md-4' style='text-align:left;'>
+
+                <div class='my-4'>
+
+                    <h3 style='font-weight: 555; text-align:left;'> {{product.name}} </h3>
+
+                </div>
+
+                <div class='my-3'>
+
+                    <h5> Price: 
+                        <span style='font-size: 24px; font-weight: 588;'> ${{product.price}} </span>
+
+                        <span v-if='product.quantity > 10' class="badge badge-success">In Stock</span>
+                        <span v-else-if='product.quantity === 0' class="badge badge-danger">Out of Stock</span>
+                        <span v-else class="badge badge-warning">Only {{product.quantity}} left!</span>
+    
+                    </h5>
+
+                </div>
+
+
+                <form>
+
+                    <div class='form-group row my-4'>
+                        <label for='addCartQuantity' class='col-md-2 col-form-label' style='font-size: 18px;'>Quantity: </label>
+                        <div class='col-md-3'>
+                            <input type='number' class='form-control' id='addCartQuantity' value='1'>
+                        </div>
+                    </div>
+
+                    <!-- donate to pantry option? -->
+
+                    <button type='button' class='btn btn-block btn-success'> Add to Cart </button>
+                    
+                </form>
+
+                <hr style='border-color: #001f3f' />
+
+                <!-- Add Farmer info div, pull in product.farmerID & product.farmer, href to farmer store etc. -->
+
+            </div>
+
         </div>
+
+        <div class='row justify-content-start'>
+
+            <div class='col-md-6 '>
+
+                <div class='ml-3'>
+                    <h5 align='left' style='font-weight: 588;'> Other products in {{product.category.name}}: </h5>
+                    <!-- Add ProductSearchResult cards? -->
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 </template>
 
@@ -56,9 +102,7 @@ export default {
     },
 
     methods: {
-        test() {
-            console.log(this.product)
-        }
+
     },
 
 
@@ -76,8 +120,5 @@ export default {
 </script>
 
 <style>
-.hide-form {
-  display: none;
-}
 
 </style>
