@@ -37,10 +37,9 @@ const product = {
         getNewProduct (state) {
             return state.newProduct
         },
-        getProductById(state, id) {
+        getProductById: (state) => (id) => {
             return state.allProducts.find(p => p.id === id)
         }
-        
     }
 }
 
