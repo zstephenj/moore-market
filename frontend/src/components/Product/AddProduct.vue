@@ -525,7 +525,7 @@ export default {
                 if (this.$refs.addProductFormPic.files.length == 1) {
                    newProduct.image = this.image
                 }
-
+                console.log(newProduct.image)
                 this.addNewProduct(newProduct)
                 return true
             }
