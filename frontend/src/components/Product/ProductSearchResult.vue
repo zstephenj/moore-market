@@ -1,5 +1,5 @@
 <template>
-    <div class='container-fluid'>
+    <div v-if='getProduct(productIds[0])' class='container-fluid'>
 
         <div v-for='num in numProductIds' :key='num'>
 

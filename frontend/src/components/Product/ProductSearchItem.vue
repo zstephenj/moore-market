@@ -9,7 +9,7 @@
 
         <div class="card-body">
             
-            <div style='height: 3 em;'>
+            <div style='height: 3em;'>
                     <router-link :to='productURL' class='moore-navy' style='font-size:18px;'> {{product.name}} </router-link>
             </div>
             
