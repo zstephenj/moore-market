@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if='getProduct(productIds[0])'>
-                    <farmer-product-item v-for='id in productIds' :key='id' :product='getProduct(id)'> </farmer-product-item>
+                <template v-if='getProductById(productIds[0])'>
+                    <farmer-product-item v-for='id in productIds' :key='id' :product='getProductById(id)'> </farmer-product-item>
                 </template>
             </tbody>
         </table>
@@ -45,9 +45,7 @@ export default {
     },
 
     methods: {
-        getProduct(id) {
-            return this.getProductById(id)
-        }
+        
     },
 
     created() {

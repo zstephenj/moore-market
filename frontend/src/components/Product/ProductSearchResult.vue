@@ -1,5 +1,5 @@
 <template>
-    <div v-if='getProduct(productIds[0])' class='container-fluid'>
+    <div v-if='getProductById(productIds[0])' class='container-fluid'>
 
         <div v-for='num in numProductIds' :key='num'>
 
@@ -8,15 +8,15 @@
                 <div class='row'>
 
                     <div class='col-md-3'>
-                        <product-search-item :product='getProduct(productIds[num-1])'> </product-search-item>
+                        <product-search-item :product='getProductById(productIds[num-1])'> </product-search-item>
                     </div>
 
                     <div class='col-md-3'>
-                        <product-search-item v-if='(num + 1) <= numProductIds' :product='getProduct(productIds[num])'> </product-search-item>
+                        <product-search-item v-if='(num + 1) <= numProductIds' :product='getProductById(productIds[num])'> </product-search-item>
                     </div>
                     
                     <div class='col-md-3'>
-                        <product-search-item v-if='(num + 2) <= numProductIds' :product='getProduct(productIds[num+1])'> </product-search-item>
+                        <product-search-item v-if='(num + 2) <= numProductIds' :product='getProductById(productIds[num+1])'> </product-search-item>
                     </div>
 
                 </div>
@@ -67,10 +67,6 @@ export default {
     },
 
     methods: {
-        getProduct(id) {
-
-            return this.getProductById(id)
-        }
         
     }
 
