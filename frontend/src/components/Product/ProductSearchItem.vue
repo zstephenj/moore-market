@@ -7,10 +7,10 @@
         </a>
 
         <hr style='border-color: #001f3f' />
-            
+
         <div class="card-body">
             
-            <div style='height: 3rem;'>
+            <div style='height: 3 em;'>
                 <a :href='productURL'>
                     <h5 class="card-title moore-navy">{{product.name}}</h5>
                 </a>
@@ -29,11 +29,11 @@
             </div>
 
             <div>
-                <h7> Listed by:  
+                <h6> Listed by:  
                     <a :href='farmerURL'>
                         <span class='moore-navy'> [FarmerName] </span>
                     </a>
-                </h7>
+                </h6>
             </div>
         </div>
 
@@ -47,11 +47,11 @@ export default {
 
     props: ['product'],
 
-    data(){
-            return {
-                productURL: '../product/' + this.product.id ,
-                farmerURL: '../vendor/' + this.product.farmerid
-            }
+    data() {
+        return {
+            productURL: '../product/' + this.product.id ,
+            farmerURL: '../vendor/' //+ this.product.farmerid
+        }
     }
 }
 </script>

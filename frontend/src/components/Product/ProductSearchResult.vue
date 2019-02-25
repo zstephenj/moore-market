@@ -10,9 +10,11 @@
                     <div class='col-md-3'>
                         <product-search-item :product='getProduct(productIds[num-1])'> </product-search-item>
                     </div>
+
                     <div class='col-md-3'>
                         <product-search-item v-if='(num + 1) <= numProductIds' :product='getProduct(productIds[num])'> </product-search-item>
                     </div>
+                    
                     <div class='col-md-3'>
                         <product-search-item v-if='(num + 2) <= numProductIds' :product='getProduct(productIds[num+1])'> </product-search-item>
                     </div>
