@@ -59,8 +59,8 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult Add(Product product)
         {
-            ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == product.CategoryID);
-            product.Category = newProductCategory;              
+            ProductCategory ProductCategory = _context.Categories.SingleOrDefault(c => c.ID == product.CategoryID);
+            product.Category = ProductCategory;              
 
             if (product.Name == null)
             {
