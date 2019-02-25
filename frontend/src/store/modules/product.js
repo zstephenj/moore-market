@@ -6,9 +6,8 @@ const product = {
         newProduct: null,
         allProducts: [],
     },
-
     mutations: {
-        setNewProduct (state, product) {
+        setNewProduct(state, product) {
             state.newProduct = product
             state.allProducts.push(product)
         },
@@ -18,7 +17,10 @@ const product = {
         },
 
         removeProductByIndex(state, idx) {
-          delete state.allProducts[idx]
+            state.allProducts.splice(idx, 1)
+        },
+        addEditedProduct(state, idx, product) {
+            state.allProducts.splice(idx, 1, product)
         },
 
         updateProduct (state, product) {
@@ -28,32 +30,32 @@ const product = {
     },
     actions: { 
         addNewProduct({ commit }, product) {
-            axios.post('/api/products/add', product)
-            return commit('setNewProduct', product)
+            return axios.post('/api/products/add', product)
+              .then(() => commit('setNewProduct', product))
         },
 
         getAllProductsFromApi({ commit }) {
-            axios.get('/api/products').then(response => commit('updateAllProducts', response.data))
+            return axios.get('/api/products')
+              .then(response => commit('updateAllProducts', response.data))
         },
-
-        removeProductById({ commit, state }, id) {
-            axios.delete('/api/products/remove/'+ id)
-            let idx = state.allProducts.findIndex(p => p.id === id)
-            return commit('removeProductByIndex', idx)            
+        removeProductById({ commit, getters }, id) {
+            let idx = getters.getProductIndex(id)
+            return axios.delete('/api/products/remove/'+ id)
+              .then(() => commit('removeProductByIndex', idx))   
         },
-
-        editProduct( {commit}, product ) {
-            return axios.put('/api/products/edit/' + product.id, product)
-            .then (res => commit('updateProduct', res.data))
-
-        }
-    },  
+        editProductById({ commit, getters }, product) {
+            let idx = getters.getProductIndex(product.id)
+            return axios.put('/api/products/edit/'+ product.id, product)
+              .then((res) => commit('addEditedProduct', idx, res.data))
+        },
+    },
     getters: {
-        getNewProduct (state) {
-            return state.newProduct
-        },
+      //this syntax lets us call getters with a parameter
         getProductById: (state) => (id) => {
             return state.allProducts.find(p => p.id === id)
+        },
+        getProductIndex: (state) => (id) => {
+            return state.allProducts.findIndex(p => p.id === id)
         }
     }
 }

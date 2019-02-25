@@ -132,6 +132,11 @@ export default {
   name: 'ProductForm',
   props: ['productId', 'formType', 'productToEdit'],
   computed: {
+    //not sure if this is actually necessary
+    product() {
+      const newProduct = this.productToEdit
+      return newProduct
+    }
   },
   methods: {
     validateForm() {
@@ -189,6 +194,7 @@ export default {
         }
       }
       if(!this.checkErrors()) {
+        this.$emit('formValid', this.product)
         return true
       }
 
@@ -212,21 +218,21 @@ export default {
 
   data() {
     return {
-      product: {
-        name:'',
-        description: '',
-        categoryId: 0,
-        quantity: 0,
-        price: 0,
-        isPerishable: false,
-        keepRoom: false,
-        shelfLifeRoom: '',
-        keepFridge: false,
-        shelfLifeFridge: '',
-        keepFreezer: false,
-        shelfLifeFreezer: '',
-        image: '',
-      },
+      // product: {
+      //   name:'',
+      //   description: '',
+      //   categoryId: 0,
+      //   quantity: 0,
+      //   price: 0,
+      //   isPerishable: false,
+      //   keepRoom: false,
+      //   shelfLifeRoom: '',
+      //   keepFridge: false,
+      //   shelfLifeFridge: '',
+      //   keepFreezer: false,
+      //   shelfLifeFreezer: '',
+      //   image: '',
+      // },
       isPerishableYorN: '',
       isRoomTempYorN: '',
       isFridgeYorN: '',

@@ -24,6 +24,12 @@ namespace MooreMarket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc()
+                .AddJsonOptions(
+                options => options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<MooreMarketContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("Default")));
@@ -48,11 +54,6 @@ namespace MooreMarket
             }
 
             app.UseHttpsRedirection();
-            // app.Use(async (context, next) => 
-            // {
-            //     context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:8080");
-            //     await next();
-            // });
             app.UseMvc();
         }
     }
