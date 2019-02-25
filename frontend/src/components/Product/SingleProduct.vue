@@ -1,6 +1,6 @@
 <template>
 
-    <div class='container-fluid' style="background: linear-gradient(-90deg, #84CF6A, #16C080); color: #001f3f;">
+    <div class='container-fluid moore-gradient moore-navy'>
 
         <div class='row align-items-start justify-content-center'>
 
@@ -19,6 +19,35 @@
 
                         <h5 align='left' style='font-weight: 588;'> About this item:  </h5>
                         <p style='text-align:left;'> {{product.description}} </p>
+
+                        <div v-if='product.isPerishable === 1'>
+
+                            <h6 align='left' style='text-indent: 1em; font-weight: 555;'> Food Storage Recommendations
+
+                                <a v-if='!showStorage' @click='changeShowStorage()'  class="badge badge-pill badge-success ml-3">Show Info</a>
+                                <a v-if='showStorage' @click='changeShowStorage()'  class="badge badge-pill badge-success ml-3">Hide Info</a>
+                    
+                            </h6>
+                            
+                            <div v-show='showStorage'>
+
+                                <h6 v-if='product.keepRoom === 1' align='left' style='text-indent: 2em; font-weight: 444;'> Room Temperature: 
+                                    <span> {{product.shelfLifeRoom}} </span>
+                                </h6>
+
+                                <h6 v-if='product.keepFridge === 1' align='left' style='text-indent: 2em; font-weight: 444;'> Refrigerator: 
+                                    <span> {{product.shelfLifeRoom}} </span>
+                                </h6>
+
+                                <h6 v-if='product.keepFreezer === 1' align='left' style='text-indent: 2em; font-weight: 444;'> Freezer: 
+                                    <span> {{product.shelfLifeRoom}} </span>
+                                </h6>
+
+                            </div>
+
+                        </div>
+
+                        <hr style='border-color: #001f3f' />
 
                     </div>
 
@@ -97,12 +126,17 @@ export default {
 
     data(){
             return {
-                product: []
+                product: [],
+                showStorage: false
             }
     },
 
     methods: {
-
+        changeShowStorage(){
+            
+            this.showStorage = !this.showStorage
+            console.log(showStorage)
+        }
     },
 
 
