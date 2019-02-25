@@ -127,7 +127,7 @@ export default {
                 let editedProduct = this.product
                 editedProduct.price = this.newValue.price
                 console.log(editedProduct)
-                this.editProduct(editedProduct)
+                this.editProductById(editedProduct)
                 this.isEditing.price = false
                 return true
             }
@@ -141,7 +141,7 @@ export default {
                 let editedProduct = this.product
                 editedProduct.quantity = this.newValue.quantity
                 console.log(editedProduct)
-                this.editProduct(editedProduct)
+                this.editProductById(editedProduct)
                 this.isEditing.quantity = false
                 return true
             }
@@ -199,7 +199,7 @@ export default {
         },
 
         ...mapActions('product', [
-            'editProduct',
+            'editProductById',
             'removeProductById'
         ])
     }

@@ -23,10 +23,6 @@ const product = {
             state.allProducts.splice(idx, 1, product)
         },
 
-        updateProduct (state, product) {
-            let idx = state.allProducts.findIndex(p => p.id === product.id)
-            state.allProducts[idx] = product
-        }
     },
     actions: { 
         addNewProduct({ commit }, product) {
