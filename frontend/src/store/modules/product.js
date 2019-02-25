@@ -13,7 +13,7 @@ const product = {
             state.allProducts.push(product)
         },
 
-        updateProducts(state, products) {
+        updateAllProducts(state, products) {
             state.allProducts = products
         },
 
@@ -21,7 +21,7 @@ const product = {
           delete state.allProducts[idx]
         },
 
-        setEditProduct (state, product) {
+        updateProduct (state, product) {
             let idx = state.allProducts.findIndex(p => p.id === product.id)
             state.allProducts[idx] = product
         }
@@ -33,7 +33,7 @@ const product = {
         },
 
         getAllProductsFromApi({ commit }) {
-            axios.get('/api/products').then(response => commit('updateProducts', response.data))
+            axios.get('/api/products').then(response => commit('updateAllProducts', response.data))
         },
 
         removeProductById({ commit, state }, id) {
@@ -43,9 +43,9 @@ const product = {
         },
 
         editProduct( {commit}, product ) {
-            axios.put('/api/products/edit/' + product.id, product)
-            .then (res => commit('setEditProduct', res.data))
-            
+            return axios.put('/api/products/edit/' + product.id, product)
+            .then (res => commit('updateProduct', res.data))
+
         }
     },  
     getters: {
