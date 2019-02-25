@@ -1,18 +1,32 @@
 <template>
     <div>
       <h1>This will be the User Dashboard</h1>
-      <div>
-        <h4>Product List</h4>
-        <ul>
-          <li v-for="product in allProducts" :key="product.id">{{ product.name }}</li>
-        </ul>
-      </div>
-      <div> 
-        <h4>Farmer List</h4>
-        <ul>
-          <li v-for="farmer in allFarmers" :key="farmer.id">{{ farmer.username }}</li>
-        </ul>
-      </div>
+      <div class="row">
+        <div class="col-8">
+          <h4>Product List</h4>
+          <ul class="list-unstyled">
+            <li v-for="product in allProducts" :key="product.id" class="media text-left border border-success mx-1 my-2">
+              <img src="https://via.placeholder.com/64" class="mr-3">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">{{ product.name }} | ${{ product.price }}</h5>
+                {{ product.description }}
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-4"> 
+          <h4>Farmer List</h4>
+          <div v-for="farmer in allFarmers" :key="farmer.id" class="card mx-2 my-2">
+            <img src="https://via.placeholder.com/75x35?text=farmer+logo" width="50" class="card-img-top" >
+            <div class="card-body">
+              <h5 class="card-title">{{ farmer.username }}</h5>
+              <p class="card-text">Brief description of farmer's inventory, address or area of town</p>
+              <router-link :to="{name: 'BrowseInventory', params: { id: farmer.id },}"       
+                class="btn btn-primary">Visit {{ farmer.username}}'s storefront</router-link>
+            </div>
+          </div>
+        </div>
+      </div>  
     </div>
 </template>
 
@@ -20,7 +34,7 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  name: 'userdashbaord',
+  name: 'userdashboard',
   components: {
       
   },
