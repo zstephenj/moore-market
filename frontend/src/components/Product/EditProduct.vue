@@ -1,13 +1,15 @@
 <template>
-  <div class='container-fluid'>
+  <div class='container-fluid moore-gradient moore-navy'>
+    <p> {{productId}} </p>
+    <p> {{}} </p>
+    <product-form v-if='productId' :productToEdit='getProductById(productId)' :productId='productId' :formType='formType'> </product-form>
 
-    <product-form :product='product'> </product-form>
-    
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import axios from 'axios'
 
 import ProductForm from './ProductForm.vue'
 
@@ -22,26 +24,38 @@ export default {
 
   data() {
     return {
-      productId: this.$route.params.id,
-      product: null,
+      productId: parseInt(this.$route.params.id),
+      formType: 'edit',
+      product: 'nochangeyet'
     }
   },
 
+  methods: {
+
+  },
+
+  computed: {
+      ...mapGetters('product', ['getProductById']),
+      
+    },
+
   created() {
-    let getUrl = 'http://my-json-server.typicode.com/zstephenj/moore-market-fakejson2/products/'
+        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
+        let getUrl = 'http://my-json-server.typicode.com/zstephenj/moore-market-fakejson2/products/'
         
         axios.get(getUrl)
         .then (res => this.$store.state.product.allProducts = res.data)
         .catch (error => console.log(error))
-    console.log(productId)
-    this.product = this.getProductById(productId)
-  },
 
-  methods: {
-    ...mapGetters('product', ['getProductById']),
-    ...mapActions('product', ['editProduct'])
-  },
-
+        
+    },
+  
+  mounted(){
+    console.log (this.product)  
+    this.product = this.getProductById(this.productId)
+    console.log (this.product)
+  }
+  
   
 }
 </script>

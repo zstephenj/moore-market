@@ -126,14 +126,11 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'ProductForm',
-  props: {
-    productToEdit: {
-      type: Object,
-      required: false,
-    }
-  },
+  props: ['productId', 'formType', 'productToEdit'],
   computed: {
   },
   methods: {
@@ -212,6 +209,7 @@ export default {
       return false
     }
   },
+
   data() {
     return {
       product: {
@@ -250,7 +248,21 @@ export default {
         keepFreezerError: false,
         keepFreezerErrorMsg: '',
       },
+      
     }
+  },
+
+  computed: {
+    
+  },
+  
+  mounted(){
+    if (this.formType === 'edit'){
+      console.log('yay')
+      console.log(this.productToEdit)
+      console.log('f')
+    }
+    
   }
 }
 </script>
