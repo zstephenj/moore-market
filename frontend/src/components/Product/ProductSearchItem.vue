@@ -1,19 +1,18 @@
 <template>
     <div class="card my-3 moore-gradient moore-navy " style="border-color: #001f3f; ">
 
-        <a :href='productURL'>
-            <img v-if='product.image'  class="card-img-top" :src='product.image' alt="Card image cap">
-            <img v-if='!product.image'  class="card-img-top" src='../../assets/no_image.png' alt="No image card cap">
-        </a>
+            <img v-if='product.image' @click='goToProduct(product.id)'  class="card-img-top mousePointer" :src='product.image' alt="Card image cap">
+            <img v-if='!product.image' @click='goToProduct(product.id)'  class="card-img-top mousePointer" src='../../assets/no_image.png' alt="No image card cap">
+
 
         <hr style='border-color: #001f3f' />
 
         <div class="card-body">
             
             <div style='height: 3 em;'>
-                <a :href='productURL'>
-                    <h5 class="card-title moore-navy">{{product.name}}</h5>
-                </a>
+
+                    <h5 @click='goToProduct(product.id)' class="card-title moore-navy mousePointer">{{product.name}}</h5>
+
             </div>
             
             <div class='my-3 card-text'>
@@ -30,9 +29,9 @@
 
             <div>
                 <h6> Listed by:  
-                    <a :href='farmerURL'>
-                        <span class='moore-navy'> [FarmerName] </span>
-                    </a>
+
+                        <span @click='goToFarmer(product.farmerid)' class='moore-navy mousePointer'> [FarmerName] </span>
+
                 </h6>
             </div>
         </div>
@@ -52,10 +51,24 @@ export default {
             productURL: '../product/' + this.product.id ,
             farmerURL: '../vendor/' //+ this.product.farmerid
         }
+    },
+
+    methods:{
+        goToProduct(id) {
+            this.$router.push({ name: 'SingleProduct', params:{id:id} })
+        },
+        goToFarmer(id) {
+            this.$route.push({ name: 'Farmer', params:{id:id} })
+        }
     }
 }
 </script>
 
-<style scoped>
-
+<style>
+.mousePointer {
+    cursor: pointer;
+}
+.mousePointer:hover {
+    text-decoration:underline;
+}
 </style>

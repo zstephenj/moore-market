@@ -28,7 +28,7 @@
                                 <a v-if='showStorage' @click='changeShowStorage()'  class="badge badge-pill badge-success ml-3">Hide Info</a>
                     
                             </h6>
-                            
+
                             <div v-show='showStorage'>
 
                                 <h6 v-if='product.keepRoom === 1' align='left' style='text-indent: 2em; font-weight: 444;'> Room Temperature: 
@@ -133,9 +133,7 @@ export default {
 
     methods: {
         changeShowStorage(){
-            
             this.showStorage = !this.showStorage
-            console.log(showStorage)
         }
     },
 
