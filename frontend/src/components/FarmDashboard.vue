@@ -20,7 +20,9 @@
       <div class=farmerNav>
       </div>
       
-      <table class="table table-striped">
+      <farmer-product-dash></farmer-product-dash>
+
+      <!-- <table class="table table-striped">
           <thead>
             <tr>
               <th :key='index' v-for="(columnTitle, index) in columnTitles">{{ columnTitle }}</th>
@@ -36,23 +38,27 @@
               <td><a v-bind:href="'/products/edit/?id='+item.id">Edit</a> | <button @click="removeProduct(item.id)">Remove</button></td>  
             </tr>
           </tbody>  
-      </table>
+      </table> -->
   </div>
 </template>
 
 <script>
 import FeedBox from '../components/FeedBox.vue';
 import SummaryBox from '../components/SummaryBox.vue';
+import FarmerProductDash from '../components/Product/FarmerProductDash.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'app',
   components: {
       'FeedBox': FeedBox,
-      'SummaryBox': SummaryBox
+      'SummaryBox': SummaryBox,
+      FarmerProductDash
+
   },
   created() {
-    this.getAllProductsFromApi()
+    // disabled for testing through fakeJSON
+    //this.getAllProductsFromApi()
   },
   computed: {
     ...mapState('product', ['allProducts'])
