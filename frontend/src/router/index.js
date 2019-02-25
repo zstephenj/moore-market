@@ -4,7 +4,8 @@ import Router from 'vue-router'
 import HelloWorld from '../components/HelloWorld.vue'
 import Dashboard from '../components/Dashboard.vue'
 import AddProduct from  '../components/Product/AddProduct.vue'
-import ProductForm from '../components/ProductForm.vue'
+import EditProduct from '../components/Product/EditProduct.vue'
+import ProductForm from '../components/Product/ProductForm.vue'
 import SingleProduct from '../components/Product/SingleProduct.vue'
 import ProductSearchResult from '../components/Product/ProductSearchResult.vue'
 
@@ -35,6 +36,10 @@ export default new Router({
     name: 'ProductSearchResult',
     path: '/productsearchresult',
     component: ProductSearchResult
+  }, {
+    name: 'EditProduct',
+    path: '/product/edit/:id',
+    component: EditProduct
   }], 
 
 })
