@@ -43,8 +43,8 @@ const product = {
         },
 
         editProduct( {commit}, product ) {
-            axios.put('/api/products/edit/' + product.id)
-            .then(res => commit('setEditProduct', res.data))
+            axios.put('/api/products/edit/' + product.id, product)
+            .then (res => commit('setEditProduct', res.data))
             
         }
     },  
