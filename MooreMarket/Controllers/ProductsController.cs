@@ -57,19 +57,12 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult Add(Product newProduct)
+        public IActionResult Add(Product product)
         {
-<<<<<<< HEAD
-            ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == newProduct.CategoryID);
-            newProduct.Category = newProductCategory; 
-
-            if (newProduct == null)
-=======
             ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == product.CategoryID);
             product.Category = newProductCategory;              
 
             if (product.Name == null)
->>>>>>> upstream/master
             {
                 return NotFound();
             }
@@ -85,20 +78,12 @@ namespace MooreMarket.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = product.ID }, product);
         }
 
-<<<<<<< HEAD
         //PUT Products/Edit/{id}
-=======
-        //PUT Products/{id}/Edit
->>>>>>> upstream/master
         [HttpPut("Edit/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult Edit(int id, Product product)
-<<<<<<< HEAD
         {
-=======
-        {        
->>>>>>> upstream/master
             product.ID = id;
 
             if (product.Name == "")
@@ -110,14 +95,10 @@ namespace MooreMarket.Controllers
 
             _context.SaveChanges();
 
-            return NoContent();
+            return Ok(product);
         }
 
-<<<<<<< HEAD
         //DELETE Products/Remove/{id}
-=======
-        //DELETE Products/{id}/Remove
->>>>>>> upstream/master
         [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
