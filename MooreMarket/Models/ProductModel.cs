@@ -2,11 +2,11 @@ namespace MooreMarket.Models
 {
     public class Product
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
         public ProductCategory Category { get; set; }
         
         public int Quantity {get; set;}
@@ -20,6 +20,9 @@ namespace MooreMarket.Models
         public string ShelfLifeFreezer {get; set;}
         public string Image {get;set;}
 
+        public int UserId { get; set; }
+        public UserModel User { get; set; }
+
         public Product()
         {
 
@@ -28,7 +31,7 @@ namespace MooreMarket.Models
         {
             Name = name;
             Description = description;
-            CategoryID = categoryId;
+            CategoryId = categoryId;
             Quantity = quantity;
             Price = price;
             IsPerishable = isPerishable;

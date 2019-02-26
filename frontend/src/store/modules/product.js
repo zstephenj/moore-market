@@ -6,41 +6,49 @@ const product = {
         newProduct: null,
         allProducts: [],
     },
-
     mutations: {
-        setNewProduct (state, product) {
+        setNewProduct(state, product) {
             state.newProduct = product
             state.allProducts.push(product)
         },
-        updateProducts(state, products) {
+
+        updateAllProducts(state, products) {
             state.allProducts = products
         },
+
         removeProductByIndex(state, idx) {
             state.allProducts.splice(idx, 1)
         },
         addEditedProduct(state, idx, product) {
             state.allProducts.splice(idx, 1, product)
-        }
+        },
+
     },
     actions: { 
         addNewProduct({ commit }, product) {
             return axios.post('/api/products/add', product)
-              .then(() => commit('setNewProduct', product))
+              .then((res) => commit('setNewProduct', res.data))
         },
+
         getAllProductsFromApi({ commit }) {
-            axios.get('/api/products')
-              .then(response => commit('updateProducts', response.data))
+            return axios.get('/api/products')
+              .then(response => commit('updateAllProducts', response.data))
+        },
+        getAllProductsFromTest({ commit }, db) {
+            let testURL = 'http://my-json-server.typicode.com/zstephenj/moore-market-fakejson' + db + '/products/'
+            return axios.get(testURL)
+              .then(response => commit('updateAllProducts', response.data))
         },
         removeProductById({ commit, getters }, id) {
             let idx = getters.getProductIndex(id)
-            axios.delete('/api/products/remove/'+id)
+            return axios.delete('/api/products/remove/'+ id)
               .then(() => commit('removeProductByIndex', idx))   
         },
         editProductById({ commit, getters }, product) {
             let idx = getters.getProductIndex(product.id)
-            return axios.put('/api/products/edit/'+product.id, product)
-              .then(() => commit('addEditedProduct', idx, product))
-        }
+            return axios.put('/api/products/edit/'+ product.id, product)
+              .then((res) => commit('addEditedProduct', idx, res.data))
+        },
     },
     getters: {
       //this syntax lets us call getters with a parameter

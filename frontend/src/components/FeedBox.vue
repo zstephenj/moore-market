@@ -1,10 +1,11 @@
 <template>
-    <div class=feedBox>
-      <h2>The Feed</h2>
-      <hr/>
-      <ul>
-          <li :key='message.id' v-for="message in messages">{{ message }}</li>
-      </ul>
+    <div class="card border-success mx-2 mb-3">
+      <h4 class="card-header">The Feed</h4>
+      <div class="card-body">
+        <ul>
+            <li :key='message.id' v-for="message in messages">{{ message }}</li>
+        </ul>
+      </div>  
     </div>
 </template>
 
@@ -28,16 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.feedBox {
-    float: left;
-    border: 3px solid seagreen;
-    padding: 10px;
-    width: 300px;
-    margin: 15px;
-    
-}
-.feedBox ul {
-    text-align: left;
-}
+
 </style>
 

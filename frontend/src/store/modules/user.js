@@ -1,3 +1,5 @@
+
+
 const user = {
     namespaced: true,
     state: {
@@ -5,18 +7,13 @@ const user = {
             username: "user",
             accountType: "farmer",
             isLoggedIn: true,
-        }
+        },
     },
     mutations: {
-        
     },
     actions: {
-        
     },
     getters: {
-        isLoggedIn(state) {
-            return state.user.isLoggedIn
-        },
     },
 }
 

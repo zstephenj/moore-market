@@ -12,14 +12,15 @@ namespace MooreMarket.Models
   public class UserModel
     {
         public string Username { get; set; }
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Password { get; set; }
         private string salt;
-        public AccountType AccountType { get; set; }
+        public AccountType AccountType { get; set; } = AccountType.User;
+
+        public IList<Product> Products { get; set; }
 
         public UserModel() 
         {
-            AccountType = AccountType.User;
             salt = Hash.MakeSalt(); 
         }
         public UserModel(string username, string password)

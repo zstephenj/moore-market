@@ -4,70 +4,52 @@
           <h1>Vendor-Mart</h1>
       </div>
 
-      <FeedBox :messages="messages"></FeedBox>
-      <SummaryBox :sumBoxMessages="sumBoxMessages"></SummaryBox>
+      <div class="card-deck mx-2">
+        <FeedBox :messages="messages"></FeedBox>
 
+        <div class="card">
+          <div class="card-body">
+            <p><router-link to="/product/add"><button type="button" class="btn btn-success btn-lg">Add New Item</button></router-link></p>
+            <button type="button" class="btn btn-success btn-lg" disabled>Add New Category</button>
+          </div>
+        </div>
+        <SummaryBox :sumBoxMessages="sumBoxMessages"></SummaryBox>
+        
+      </div>
 
       <div class=farmerNav>
-          <router-link to="/addproduct">Add New Item</router-link>
-          <button>Add New Category</button>
       </div>
       
-      <table class=itemSummary>
-          <thead>
-            <tr>
-              <th :key='index' v-for="(columnTitle, index) in columnTitles">{{ columnTitle }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in allProducts" :key="item.id">
-              <td>{{item.name}}</td>
-              <td>{{item.category.name}}</td>
-              <td>{{item.price}}</td>
-              <td>{{item.quantity}}</td>
-              <td>{{item.description}}</td>
-              <td><router-link :to="{
-                name: 'EditProduct',
-                params: {
-                  id: item.id,
-                  }
-                }"
-                >
-                Edit</router-link> | <button @click="removeProduct(item.id)">Remove</button></td>  
-            </tr>
-          </tbody>  
-      </table>
+      <farmer-product-dash></farmer-product-dash>
+
   </div>
 </template>
 
 <script>
 import FeedBox from '../components/FeedBox.vue';
 import SummaryBox from '../components/SummaryBox.vue';
+import FarmerProductDash from '../components/Product/FarmerProductDash.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  name: 'app',
+  name: 'FarmDashboard',
   components: {
       'FeedBox': FeedBox,
-      'SummaryBox': SummaryBox
+      'SummaryBox': SummaryBox,
+      FarmerProductDash
+
   },
   created() {
-    this.getAllProductsFromApi()
+  
   },
   computed: {
-    ...mapState('product', ['allProducts'])
+    
   },
   methods: {
-    ...mapActions('product', [
-      'getAllProductsFromApi', 
-      'removeProductById']),
-    removeProduct(id) {
-      this.removeProductById(id)
-    },
+    
   },
   data() {
       return {
-          columnTitles: ['Item', 'Category','Price', 'Quantity', 'Item Code', 'Edit/Remove'],
           messages: [],
           sumBoxMessages: [],
           }
