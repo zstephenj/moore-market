@@ -24,7 +24,7 @@ export default new Router({
     path: '/dashboard',
     component: Dashboard,
   }, {
-    path: '/addproduct',
+    path: '/product/add',
     name: 'AddProduct',
     component: AddProduct,
   }, {

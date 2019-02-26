@@ -9,7 +9,7 @@
 
         <div class="card">
           <div class="card-body">
-            <p><router-link to="/addproduct"><button type="button" class="btn btn-success btn-lg">Add New Item</button></router-link></p>
+            <p><router-link to="{ name: 'AddProduct' }"><button type="button" class="btn btn-success btn-lg">Add New Item</button></router-link></p>
             <button type="button" class="btn btn-success btn-lg" disabled>Add New Category</button>
           </div>
         </div>
@@ -22,27 +22,6 @@
       
       <farmer-product-dash></farmer-product-dash>
 
-      <!-- <table class="table table-striped">
-          <thead>
-            <tr>
-              <th :key='index' v-for="(columnTitle, index) in columnTitles">{{ columnTitle }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in allProducts" :key="item.id">
-              <td>{{item.name}}</td>
-              <td>{{item.category.name}}</td>
-              <td>{{item.price}}</td>
-              <td>{{item.quantity}}</td>
-              <td>{{item.description}}</td>
-              <td><router-link :to="{
-                name: 'EditProduct',
-                params: { id: item.id, }
-              }">
-              Edit</router-link> | <button @click="removeProduct(item.id)">Remove</button></td>  
-            </tr>
-          </tbody>  
-      </table> -->
   </div>
 </template>
 
@@ -53,7 +32,7 @@ import FarmerProductDash from '../components/Product/FarmerProductDash.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  name: 'app',
+  name: 'FarmDashboard',
   components: {
       'FeedBox': FeedBox,
       'SummaryBox': SummaryBox,
@@ -61,23 +40,16 @@ export default {
 
   },
   created() {
-    // disabled for testing through fakeJSON
-    //this.getAllProductsFromApi()
+  
   },
   computed: {
-    ...mapState('product', ['allProducts'])
+    
   },
   methods: {
-    ...mapActions('product', [
-      'getAllProductsFromApi', 
-      'removeProductById']),
-    removeProduct(id) {
-      this.removeProductById(id)
-    },
+    
   },
   data() {
       return {
-          columnTitles: ['Item', 'Category','Price', 'Quantity', 'Item Code', 'Edit/Remove'],
           messages: [],
           sumBoxMessages: [],
           }
