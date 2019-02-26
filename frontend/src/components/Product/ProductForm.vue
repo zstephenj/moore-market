@@ -135,6 +135,24 @@
 
       </div> 
 
+      <div class="form-group">
+          <div class='row align-items-center justify-content-center'>
+              <label for='pic' class="col-md-2 col-form-label left-align"> Upload a Picture: </label>
+              <div class="col-md-4">
+                  <input class="form-control-file" type='file' name='pic' accept='image/*' id='pic' @change='generateBase64'>
+              </div>
+          </div>
+
+          <div v-if='product.image'> 
+              <div class='row align-items-center justify-content-center'>
+                  <label class="col-md-2 col-form-label left-align"> Uploaded Picture: </label>
+                  <div class="col-md-4">
+                      <img :src='product.image' class='image img-thumbnail' id='displayedImage'>
+                  </div>
+              </div>
+          </div>
+      </div>  
+
       <div class="center-align">
         <button class="btn btn-primary" type="button" @click="validateForm()">Submit</button>
       </div>
@@ -159,10 +177,7 @@ export default {
   methods: {
     validateForm() {
       let noErrorMsg = ''
-      console.log(this.product.categoryId)
-      let cat = this.allCategories[0].id
-      console.log(typeof(cat))
-      console.log(typeof(this.product.categoryId))
+
       if(this.product.name === '') {
         this.errors.nameErrorMsg = 'You must provide a name'
         this.errors.nameError = true
@@ -214,8 +229,16 @@ export default {
           this.errors.keepFreezerErrorMsg = noErrorMsg
           this.errors.keepFreezerError = false
         }
+        if(this.product.image.length > 999999) {
+          this.errors.imageErrorMsg = 'Image file is too large'
+          this.errors.imageError = true
+        } else {
+          this.errors.imageErrorMsg = noErrorMsg
+          this.errors.imageError = false
+        }
       }
       if(!this.checkErrors()) {
+        console.log(this.product)
         this.$emit('formValid', this.product)
         return true
       }
@@ -223,19 +246,31 @@ export default {
       //if we make it here there must be an error
       return false
     },
+
     checkErrors() {
-      if(this.errors.nameError ||
-      this.descriptionError ||
-      this.categoryError ||
-      this.priceError ||
-      this.keepRoomError ||
-      this.keepFridgeError ||
-      this.keepFreezerError) {
+      if (this.errors.nameError ||
+      this.errors.descriptionError ||
+      this.errors.categoryError ||
+      this.errors.priceError ||
+      this.errors.keepRoomError ||
+      this.errors.keepFridgeError ||
+      this.errors.keepFreezerError ||
+      this.errors.imageError) {
         return true
       }
 
       return false
-    }
+    },
+
+    generateBase64(event) {
+
+      let reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      
+      reader.onload = () => {
+              this.product.image = reader.result
+              }
+    },
   },
 
   data() {
@@ -243,7 +278,7 @@ export default {
       product: {
         name:'',
         description: '',
-        categoryId: 1,
+        categoryId: 0,
         quantity: 0,
         price: 0,
         isPerishable: 0,
@@ -271,6 +306,8 @@ export default {
         keepFridgeErrorMsg: '',
         keepFreezerError: false,
         keepFreezerErrorMsg: '',
+        imageError: false,
+        imageErrorMsg: '',
       },
       allCategories: [
         { id: 1, name: 'Category 1'},
@@ -286,9 +323,6 @@ export default {
 
   mounted(){
     if (this.formType === 'edit'){
-      console.log('yay')
-      console.log(this.productToEdit)
-      console.log('f')
       this.product = this.productToEdit
     }
     
