@@ -235,7 +235,7 @@
 import {mapActions} from 'vuex'
 
 export default {
-    name: "AddProduct",
+    name: "OldAddProduct",
 
     props: ["categories"],
 

@@ -9,7 +9,7 @@
 
         <div class="card">
           <div class="card-body">
-            <p><router-link to="{ name: 'AddProduct' }"><button type="button" class="btn btn-success btn-lg">Add New Item</button></router-link></p>
+            <p><router-link to="/product/add"><button type="button" class="btn btn-success btn-lg">Add New Item</button></router-link></p>
             <button type="button" class="btn btn-success btn-lg" disabled>Add New Category</button>
           </div>
         </div>
