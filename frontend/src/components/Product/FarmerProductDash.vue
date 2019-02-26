@@ -8,7 +8,7 @@
                     <th scope='col'>Category</th>
                     <th scope='col'>Price</th>
                     <th scope='col'>Quantity</th>
-                    <th scope='col'>Edit/Remove</th>    
+                    <th scope='col'>Edit/Delete</th>    
                 </tr>
             </thead>
             <tbody>

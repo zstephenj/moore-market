@@ -74,8 +74,11 @@
         <td> 
             
             <div class="btn-group" role="group">
-                <router-link :to='editProductURL'><button type="button" class="btn btn-success"> Edit </button></router-link>
-                <button @click='removeProductById(product.id)' type="button" class="btn btn-danger">Delete</button>
+                <router-link v-if='!isDeleting' :to='editProductURL'><button type="button" class="btn btn-success"> Edit </button></router-link>
+                <button v-if='!isDeleting' @click='changeIsDeleting()' type="button" class="btn btn-danger"> Delete </button>
+                
+                <button v-if='isDeleting' @click='removeProductById(product.id)' type="button" class="btn btn-danger"> Confirm </button>
+                <button v-if='isDeleting' @click='changeIsDeleting()' type="button" class="btn btn-secondary"> Cancel </button>
             </div>
 
          </td>
@@ -99,6 +102,8 @@ export default {
                 quantity: false
             },
 
+            isDeleting: false,
+
             error: {
                 price: false,
                 priceMsg: '',
@@ -120,6 +125,9 @@ export default {
 
         changeIsEditingQuantity(){
             this.isEditing.quantity = !this.isEditing.quantity
+        },
+        changeIsDeleting(){
+            this.isDeleting = !this.isDeleting
         },
 
         editProductPrice() {
