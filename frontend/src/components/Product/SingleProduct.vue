@@ -1,6 +1,6 @@
 <template>
 
-    <div class='container-fluid moore-gradient moore-navy'>
+    <div v-if='productId' class='container-fluid moore-gradient moore-navy'>
 
         <div class='row align-items-start justify-content-center'>
 
@@ -118,6 +118,7 @@
 
 <script>
 import axios from 'axios'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
     name: "SingleProduct",
@@ -126,12 +127,27 @@ export default {
 
     data(){
             return {
+                productId: parseInt(this.$route.params.id) ,
                 product: [],
                 showStorage: false
             }
     },
 
+    computed: {
+        ...mapGetters('product', [
+            'getProductById'
+        ]),
+
+        getProduct(){
+            return this.getProductById(this.productId)
+        }
+    },
+
     methods: {
+        ...mapActions('product', [
+            'getAllProductsFromTest'
+        ]),
+
         changeShowStorage(){
             this.showStorage = !this.showStorage
         }
@@ -140,14 +156,18 @@ export default {
 
     created() {
         
-        let getUrl = 'http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/' + this.$route.params.id
-        
-        axios.get(getUrl)
-        .then (res => this.product = res.data)
-        .catch (error => console.log(error))
-        
-    }
+        let db = ''
+        this.getAllProductsFromTest(db)
+        console.log(this.productId)
 
+        console.log(this.product)
+    },
+
+    mounted() {
+        console.log(this.getProduct)
+        this.product = this.getProduct
+
+    }
 }
 </script>
 

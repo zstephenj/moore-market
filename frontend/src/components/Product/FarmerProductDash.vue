@@ -45,17 +45,15 @@ export default {
     },
 
     methods: {
-        
+        ...mapActions('product', [
+            'getAllProductsFromTest'
+        ])
     },
 
     created() {
         // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        let getUrl = 'http://my-json-server.typicode.com/zstephenj/moore-market-fakejson2/products/'
-        
-        axios.get(getUrl)
-        .then (res => this.$store.state.product.allProducts = res.data)
-        .catch (error => console.log(error))
-
+        let db = '2'
+        this.getAllProductsFromTest(db)
         
     },
 }

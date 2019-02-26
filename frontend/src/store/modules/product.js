@@ -34,6 +34,11 @@ const product = {
             return axios.get('/api/products')
               .then(response => commit('updateAllProducts', response.data))
         },
+        getAllProductsFromTest({ commit }, db) {
+            let testURL = 'http://my-json-server.typicode.com/zstephenj/moore-market-fakejson' + db + '/products/'
+            return axios.get(testURL)
+              .then(response => commit('updateAllProducts', response.data))
+        },
         removeProductById({ commit, getters }, id) {
             let idx = getters.getProductIndex(id)
             return axios.delete('/api/products/remove/'+ id)
