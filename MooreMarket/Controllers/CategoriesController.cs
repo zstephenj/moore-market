@@ -41,7 +41,7 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetCategory(int id)
         {
-            ProductCategory category = _context.Categories.Single(c => c.ID == id);
+            ProductCategory category = _context.Categories.Single(c => c.Id == id);
 
             if(category.Name == "")
             {
@@ -57,53 +57,51 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(400)]
         public IActionResult Add(ProductCategory category)
         {
-            ProductCategory newCategory = new ProductCategory(category.Name);
-
-            if (newCategory.Name == "")
+            //Validate category data
+            if (category.Name == "")
             {
-                return BadRequest(newCategory);
+                return BadRequest(category);
             }
 
-            _context.Categories.Add(newCategory);
+            _context.Categories.Add(category);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetCategory), new { id = newCategory.ID }, newCategory);
+            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
         }
 
-        //PUT Categories/{id}/Edit
-        [HttpPut("{id}/Edit")]
+        //PUT Categories/Edit/{id}
+        [HttpPut("Edit/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult Edit(int id, ProductCategory category)
         {
-            ProductCategory newCategory = category;
-            ProductCategory oldCategory = _context.Categories.SingleOrDefault(c => c.ID == id);
+            ProductCategory oldCategory = _context.Categories.SingleOrDefault(c => c.Id == id);
 
             if (oldCategory == null)
             {
                 return NotFound();
 
             }
-            
-            if (newCategory.Name == "")
+
+            if (category.Name == "")
             {
-                return BadRequest(newCategory);
+                return BadRequest(category);
             }
 
             
-            oldCategory.Name = newCategory.Name;
+            oldCategory.Name = category.Name;
 
             _context.SaveChanges();
 
             return RedirectToAction(nameof(GetCategory), new { id = id});
         }
 
-        //DELETE Categories/{id}/Remove
-        [HttpDelete("{id}/Remove")]
+        //DELETE Categories/Remove/{id}
+        [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
-            ProductCategory category = _context.Categories.SingleOrDefault(c => c.ID == id);
+            ProductCategory category = _context.Categories.SingleOrDefault(c => c.Id == id);
             _context.Categories.Remove(category);
 
             _context.SaveChanges();
