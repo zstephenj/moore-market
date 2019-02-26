@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if='productId' class='container-fluid moore-gradient moore-navy'>
+    <div v-if='getProduct' class='container-fluid moore-gradient moore-navy'>
 
         <div class='row align-items-start justify-content-center'>
 
@@ -139,13 +139,15 @@ export default {
         ]),
 
         getProduct(){
-            return this.getProductById(this.productId)
+            let gotProduct = this.getProductById(this.productId)
+            this.product = gotProduct
+            return gotProduct
         }
     },
 
     methods: {
         ...mapActions('product', [
-            'getAllProductsFromTest'
+            'getAllProductsFromTest'  // to be replaced by 'getAllProductsFromAPI'
         ]),
 
         changeShowStorage(){
@@ -155,19 +157,11 @@ export default {
 
 
     created() {
-        
+        // to be replaced by this.getAllProductsFromAPI
         let db = ''
         this.getAllProductsFromTest(db)
-        console.log(this.productId)
-
-        console.log(this.product)
+        
     },
-
-    mounted() {
-        console.log(this.getProduct)
-        this.product = this.getProduct
-
-    }
 }
 </script>
 

@@ -130,13 +130,13 @@ import {mapGetters} from 'vuex'
 
 export default {
   name: 'ProductForm',
-  props: ['productId', 'formType', 'productToEdit'],
+  props: ['formType', 'productToEdit'],
   computed: {
     //not sure if this is actually necessary
-    product() {
-      const newProduct = this.productToEdit
-      return newProduct
-    }
+    // product() {
+    //   const newProduct = this.productToEdit
+    //   return newProduct
+    // }
   },
   methods: {
     validateForm() {
@@ -218,21 +218,21 @@ export default {
 
   data() {
     return {
-      // product: {
-      //   name:'',
-      //   description: '',
-      //   categoryId: 0,
-      //   quantity: 0,
-      //   price: 0,
-      //   isPerishable: false,
-      //   keepRoom: false,
-      //   shelfLifeRoom: '',
-      //   keepFridge: false,
-      //   shelfLifeFridge: '',
-      //   keepFreezer: false,
-      //   shelfLifeFreezer: '',
-      //   image: '',
-      // },
+      product: {
+        name:'',
+        description: '',
+        categoryId: 0,
+        quantity: 0,
+        price: 0,
+        isPerishable: false,
+        keepRoom: false,
+        shelfLifeRoom: '',
+        keepFridge: false,
+        shelfLifeFridge: '',
+        keepFreezer: false,
+        shelfLifeFreezer: '',
+        image: '',
+      },
       isPerishableYorN: '',
       isRoomTempYorN: '',
       isFridgeYorN: '',
@@ -261,12 +261,13 @@ export default {
   computed: {
     
   },
-  
+
   mounted(){
     if (this.formType === 'edit'){
       console.log('yay')
       console.log(this.productToEdit)
       console.log('f')
+      this.product = this.productToEdit
     }
     
   }
