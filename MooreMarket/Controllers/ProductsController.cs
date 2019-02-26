@@ -42,7 +42,7 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetProduct(int id)
         {
-            Product product = _context.Products.SingleOrDefault(p => p.ID == id);
+            Product product = _context.Products.SingleOrDefault(p => p.Id == id);
 
             if(product == null)
             {
@@ -59,7 +59,7 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult Add(Product product)
         {
-            ProductCategory ProductCategory = _context.Categories.SingleOrDefault(c => c.ID == product.CategoryID);
+            ProductCategory ProductCategory = _context.Categories.SingleOrDefault(c => c.Id == product.CategoryId);
             product.Category = ProductCategory;              
 
             if (product.Name == null)
@@ -75,7 +75,7 @@ namespace MooreMarket.Controllers
             _context.Products.Add(product);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetProduct), new { id = product.ID }, product);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
         //PUT Products/Edit/{id}
@@ -84,7 +84,9 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(400)]
         public IActionResult Edit(int id, Product product)
         {
-            product.ID = id;
+            product.Id = id;
+            ProductCategory ProductCategory = _context.Categories.SingleOrDefault(c => c.Id == product.CategoryId);
+            product.Category = ProductCategory;
 
             if (product.Name == "")
             {
@@ -102,7 +104,7 @@ namespace MooreMarket.Controllers
         [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
-            Product product = _context.Products.SingleOrDefault(p => p.ID == id);
+            Product product = _context.Products.SingleOrDefault(p => p.Id == id);
 
             _context.Products.Remove(product);
             _context.SaveChanges();

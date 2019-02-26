@@ -41,7 +41,7 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetCategory(int id)
         {
-            ProductCategory category = _context.Categories.Single(c => c.ID == id);
+            ProductCategory category = _context.Categories.Single(c => c.Id == id);
 
             if(category.Name == "")
             {
@@ -66,7 +66,7 @@ namespace MooreMarket.Controllers
             _context.Categories.Add(category);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetCategory), new { id = category.ID }, category);
+            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
         }
 
         //PUT Categories/Edit/{id}
@@ -76,7 +76,7 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult Edit(int id, ProductCategory category)
         {
-            ProductCategory oldCategory = _context.Categories.SingleOrDefault(c => c.ID == id);
+            ProductCategory oldCategory = _context.Categories.SingleOrDefault(c => c.Id == id);
 
             if (oldCategory == null)
             {
@@ -101,7 +101,7 @@ namespace MooreMarket.Controllers
         [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
-            ProductCategory category = _context.Categories.SingleOrDefault(c => c.ID == id);
+            ProductCategory category = _context.Categories.SingleOrDefault(c => c.Id == id);
             _context.Categories.Remove(category);
 
             _context.SaveChanges();

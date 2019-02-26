@@ -36,7 +36,7 @@ namespace MooreMarket.Controllers
             _context.Add(newUser);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(Login), new { id = newUser.ID }, newUser);
+            return CreatedAtAction(nameof(Login), new { id = newUser.Id }, newUser);
         }
     }
 }
