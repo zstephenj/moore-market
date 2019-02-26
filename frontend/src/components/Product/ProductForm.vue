@@ -246,19 +246,19 @@ export default {
         
         if(this.formType === 'add') {
           let res = this.addNewProduct(this.product)
-          
-          let productId = res.data.id
-
-          this.$router.push({ path: `/product/${productId}`})
-          
+          if (res.data != '') {
+            let productId = res.data.id
+            this.$router.push({ path: `/product/${productId}`})
+          }
         }
 
         if(this.formType === 'edit') {
           let res = this.editProductById(this.product)
           
-          let productId = res.data.id
-          
-          this.$router.push({ path: `/product/${productId}`})
+          if (res.data != '') {
+            let productId = res.data.id
+            this.$router.push({ path: `/product/${productId}`})
+          }
         }
       }
 
