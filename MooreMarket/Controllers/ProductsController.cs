@@ -42,9 +42,9 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetProduct(int id)
         {
-            Product product = _context.Products.SingleOrDefault(p => p.ID == id);
+            Product product = _context.Products.SingleOrDefault(p => p.Id == id);
 
-            if(product.Name == null)
+            if(product == null)
             {
                 return NotFound();
             }
@@ -59,8 +59,8 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(404)]
         public IActionResult Add(Product product)
         {
-            ProductCategory newProductCategory = _context.Categories.SingleOrDefault(c => c.ID == product.CategoryID);
-            product.Category = newProductCategory;              
+            ProductCategory ProductCategory = _context.Categories.SingleOrDefault(c => c.Id == product.CategoryId);
+            product.Category = ProductCategory;              
 
             if (product.Name == null)
             {
@@ -75,16 +75,18 @@ namespace MooreMarket.Controllers
             _context.Products.Add(product);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetProduct), new { id = product.ID }, product);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
-        //PUT Products/{id}/Edit
+        //PUT Products/Edit/{id}
         [HttpPut("Edit/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult Edit(int id, Product product)
-        {        
-            product.ID = id;
+        {
+            product.Id = id;
+            ProductCategory ProductCategory = _context.Categories.SingleOrDefault(c => c.Id == product.CategoryId);
+            product.Category = ProductCategory;
 
             if (product.Name == "")
             {
@@ -95,14 +97,14 @@ namespace MooreMarket.Controllers
 
             _context.SaveChanges();
 
-            return NoContent();
+            return Ok(product);
         }
 
-        //DELETE Products/{id}/Remove
+        //DELETE Products/Remove/{id}
         [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
-            Product product = _context.Products.SingleOrDefault(p => p.ID == id);
+            Product product = _context.Products.SingleOrDefault(p => p.Id == id);
 
             _context.Products.Remove(product);
             _context.SaveChanges();

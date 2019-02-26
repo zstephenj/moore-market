@@ -26,4 +26,12 @@ export default {
   color: #2c3e50;
   text-align: center;
 }
+
+.moore-gradient {
+  background: linear-gradient(-90deg, #84CF6A, #16C080);
+}
+
+.moore-navy {
+  color: #001f3f;
+}
 </style>

@@ -19,7 +19,7 @@
                     <router-link to="/dashboard" class="nav-link" >Dashboard</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/addproduct" class="nav-link" >Add Product</router-link>
+                    <router-link to="/product/add" class="nav-link" >Add Product</router-link>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

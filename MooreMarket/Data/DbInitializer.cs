@@ -51,9 +51,9 @@ namespace MooreMarket.Data
             if (context.Products.Count() == 0)
             {
                 ProductCategory TestCat1 = new ProductCategory("TestCategory1");
-                TestCat1.ID = 1;
+                TestCat1.Id = 1;
                 ProductCategory TestCat2 = new ProductCategory("TestCategory2");
-                TestCat2.ID = 2;
+                TestCat2.Id = 2;
                 context.Categories.Add(TestCat1);
                 context.Categories.Add(TestCat2);
                 context.SaveChanges();
@@ -62,44 +62,44 @@ namespace MooreMarket.Data
                 {
                     Name = "farmer1's Product1",
                     Description = "farmer1 product1 description",
-                    CategoryID = 2,
+                    CategoryId = 2,
                     Quantity = 1,
                     Price = 5.50f,
                     IsPerishable = false,
-                    UserID = 1
+                    UserId = 1
                 };
 
                 Product farmer1Product2 = new Product
                 {
                     Name = "farmer1's Product2",
                     Description = "farmer1's product2 description",
-                    CategoryID = 2,
+                    CategoryId = 2,
                     Quantity = 1,
                     Price = 5.50f,
                     IsPerishable = false,
-                    UserID = 1
+                    UserId = 1
                 };
 
                 Product farmer2Product1 = new Product
                 {
                     Name = "farmer2's product1",
                     Description = "farmer2's product1 description",
-                    CategoryID = 1,
+                    CategoryId = 1,
                     Quantity = 40,
                     Price = 10,
                     IsPerishable = false,
-                    UserID = 2
+                    UserId = 2
                 };
 
                 Product farmer2Product2 = new Product
                 {
                     Name = "farmer2's product2",
                     Description = "farmer2 product2 description",
-                    CategoryID = 1,
+                    CategoryId = 1,
                     Quantity = 40,
                     Price = 10,
                     IsPerishable = false,
-                    UserID = 2
+                    UserId = 2
                 };
 
                 context.Products.Add(farmer1Product1);

@@ -3,9 +3,11 @@ import Router from 'vue-router'
 
 import HelloWorld from '../components/HelloWorld.vue'
 import Dashboard from '../components/Dashboard.vue'
-import AddProduct from  '../components/AddProduct.vue'
-import ProductForm from '../components/ProductForm.vue'
-import EditProduct from '../components/EditProduct.vue'
+import AddProduct from  '../components/Product/AddProduct.vue'
+import EditProduct from '../components/Product/EditProduct.vue'
+import ProductForm from '../components/Product/ProductForm.vue'
+import SingleProduct from '../components/Product/SingleProduct.vue'
+import ProductSearchResult from '../components/Product/ProductSearchResult.vue'
 import BrowseFarmers from '../components/BrowseFarmers.vue'
 import BrowseInventory from '../components/BrowseInventory.vue'
 
@@ -22,19 +24,24 @@ export default new Router({
     path: '/dashboard',
     component: Dashboard,
   }, {
-    path: '/addproduct',
+    path: '/product/add',
     name: 'AddProduct',
     component: AddProduct,
   }, {
     path: '/productform',
     component: ProductForm,
   }, {
+    name: 'SingleProduct',
+    path: '/product/:id',
+    component: SingleProduct
+  }, {
+    name: 'ProductSearchResult',
+    path: '/productsearchresult',
+    component: ProductSearchResult
+  }, {
     name: 'EditProduct',
-    //:id is a paramater for this route that we can pass in
-    path: '/editproduct/:id',
-    component: EditProduct,
-    //this signifies that we can pass in paramaters as a prop on this component
-    props: true,
+    path: '/product/edit/:id',
+    component: EditProduct
   }, {
     name: 'BrowseFarmers',
     path: '/farmers',
