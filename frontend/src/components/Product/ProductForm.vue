@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'ProductForm',
@@ -175,6 +175,10 @@ export default {
     // }
   },
   methods: {
+    ...mapActions('product', [
+      'addNewProduct',
+      'editProductById'
+    ]),
     validateForm() {
       let noErrorMsg = ''
 
@@ -239,8 +243,23 @@ export default {
       }
       if(!this.checkErrors()) {
         console.log(this.product)
-        this.$emit('formValid', this.product)
-        return true
+        
+        if(this.formType === 'add') {
+          let res = this.addNewProduct(this.product)
+          
+          let productId = res.data.id
+
+          this.$router.push({ path: `/product/${productId}`})
+          
+        }
+
+        if(this.formType === 'edit') {
+          let res = this.editProductById(this.product)
+          
+          let productId = res.data.id
+          
+          this.$router.push({ path: `/product/${productId}`})
+        }
       }
 
       //if we make it here there must be an error

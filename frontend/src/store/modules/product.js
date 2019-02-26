@@ -27,7 +27,7 @@ const product = {
     actions: { 
         addNewProduct({ commit }, product) {
             return axios.post('/api/products/add', product)
-              .then(() => commit('setNewProduct', product))
+              .then((res) => commit('setNewProduct', res.data))
         },
 
         getAllProductsFromApi({ commit }) {
