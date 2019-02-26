@@ -1,6 +1,8 @@
 <template>
     <div>
       <h1>This will be the User Dashboard</h1>
+
+      <p>Your current position: Latitude({{latitude}}), Longitude({{longitude}})</p>
       <div class="row">
         <div class="col-8">
           <h4>Product List</h4>
@@ -38,19 +40,45 @@ export default {
   components: {
       
   },
+  data() {
+    return {
+      error: '',
+      latitude: '',
+      longitude: ''
+      }
+  },
+
   created() {
     this.getFarmers(),
     this.getAllProductsFromApi()
   },
+
+  mounted(){
+    this.getLocation()
+  },
+
   computed: {
     ...mapState('product', ['allProducts']),
     ...mapState('farmer', ['allFarmers'])
   },
+
   methods: {
     ...mapActions('product', ['getAllProductsFromApi']),
-    ...mapActions('farmer', ['getFarmers'])
+    ...mapActions('farmer', ['getFarmers']),
+    getLocation() {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      } else {
+        this.error = "Geolocation is not supported";
+      }
+    },  
+    showPosition(position) {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+      }
+    }
   }  
 
-}  
+
 </script>
 
