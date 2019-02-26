@@ -10,7 +10,7 @@
 
             <div v-if='!isEditing.price' style='margin-left: 5em;'>
                 ${{Number(product.price).toFixed(2)}}
-                <a @click='changeIsEditingPrice()' class='badge badge-success ml-3 mousePointer'> Quick Edit </a>
+                <a @click='changeIsEditingPrice()' class='badge badge-success ml-3 mousePointer' style='float:right;'> Quick Edit </a>
             </div>
 
             <form v-if='isEditing.price' >
@@ -40,7 +40,7 @@
 
                 {{Number(product.quantity).toFixed(0)}}
 
-                <a @click='changeIsEditingQuantity()' class='badge badge-success ml-3 mousePointer'> Quick Edit </a>
+                <a @click='changeIsEditingQuantity()' class='badge badge-success ml-3 mousePointer' style='float:right;'> Quick Edit </a>
                 
             </div>
 
