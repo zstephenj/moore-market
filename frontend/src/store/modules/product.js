@@ -24,18 +24,22 @@ const product = {
     },
     actions: { 
         addNewProduct({ commit }, product) {
-            return axios.post('/api/products/add', product).then(() => commit('setNewProduct', product))
+            return axios.post('/api/products/add', product)
+              .then(() => commit('setNewProduct', product))
         },
         getAllProductsFromApi({ commit }) {
-            axios.get('/api/products').then(response => commit('updateProducts', response.data))
+            axios.get('/api/products')
+              .then(response => commit('updateProducts', response.data))
         },
         removeProductById({ commit, getters }, id) {
             let idx = getters.getProductIndex(id)
-            axios.delete('/api/products/remove/'+id).then(() => commit('removeProductByIndex', idx))   
+            axios.delete('/api/products/remove/'+id)
+              .then(() => commit('removeProductByIndex', idx))   
         },
         editProductById({ commit, getters }, product) {
             let idx = getters.getProductIndex(product.id)
-            axios.put('/api/products/edit/'+product.id, product).then(() => commit('addEditedProduct', idx, product))
+            return axios.put('/api/products/edit/'+product.id, product)
+              .then(() => commit('addEditedProduct', idx, product))
         }
     },
     getters: {
