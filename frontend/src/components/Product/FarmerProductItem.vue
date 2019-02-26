@@ -9,7 +9,7 @@
         <td>
 
             <div v-if='!isEditing.price' style='margin-left: 5em;'>
-                {{Number(product.price).toFixed(2)}}
+                ${{Number(product.price).toFixed(2)}}
                 <a @click='changeIsEditingPrice()' class='badge badge-success ml-3 mousePointer'> Quick Edit </a>
             </div>
 
