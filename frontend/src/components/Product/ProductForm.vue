@@ -336,10 +336,6 @@ export default {
     }
   },
 
-  computed: {
-    
-  },
-
   mounted(){
     if (this.formType === 'edit'){
       this.product = this.productToEdit
