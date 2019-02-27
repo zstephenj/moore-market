@@ -10,7 +10,7 @@
             <li v-for="product in allProducts" :key="product.id" class="media text-left border border-success mx-1 my-2">
               <img src="https://via.placeholder.com/64" class="mr-3">
               <div class="media-body">
-                <h5 class="mt-0 mb-1">{{ product.name }} | ${{Number(product.price).toFixed(2)}}</h5>
+                <h5 class="mt-0 mb-1"><router-link :to="{name: 'SingleProduct', params: { id: product.id },}">{{ product.name }}</router-link>  ${{Number(product.price).toFixed(2)}}</h5>
                 {{ product.description }}
               </div>
             </li>
