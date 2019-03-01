@@ -147,7 +147,7 @@ export default {
             let lng = e.latLng.lng()
             let marketPlace = {lat: lat, lng: lng}
             console.log(this.allMarkets)
-            let market = this.allMarkets.find(m => m.position.geometry.location.lat() === lat && m.position.geometry.location.lng())
+            let market = this.allMarkets.find(m => m.position.gps === marketPlace)
             console.log(market)
         },
 
@@ -155,7 +155,7 @@ export default {
 
     async mounted() {
         let response = await this.getAllMarketsFromApi()
-        
+
         for(let idx in response.data) {
             console.log(this.allMarkets[1])
             let market = response.data[idx]
