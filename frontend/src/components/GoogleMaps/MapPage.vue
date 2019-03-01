@@ -1,12 +1,23 @@
 <template>
-    <div class='container-fluid'>
-        
-        <div>
-            <h2> Markets Near Me </h2>
+    <div class='container-fluid moore-gradient moore-navy'>
+        <div class='row'>
+
+            <div class='col'>
+
+            </div>
+
+            <div class='d-flex flex-column'>
+
+                <div class='p-3 flex-row'>
+                    <h2> Markets Near Me </h2>
+                    
+                </div>
+
+                <google-map class='pb-3 align-items-end flex-row'> </google-map>
+
+            </div>
+
         </div>
-
-        <google-map> </google-map>
-
     </div>
 </template>
 
