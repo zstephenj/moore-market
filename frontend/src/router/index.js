@@ -3,9 +3,10 @@ import Router from 'vue-router'
 
 import HelloWorld from '../components/HelloWorld.vue'
 import Dashboard from '../components/Dashboard.vue'
+import ProductHomePage from '../components/Product/ProductHomepage.vue'
+import ManageCategories from '../components/Product/ManageCategories.vue'
 import AddProduct from  '../components/Product/AddProduct.vue'
 import EditProduct from '../components/Product/EditProduct.vue'
-import ProductForm from '../components/Product/ProductForm.vue'
 import SingleProduct from '../components/Product/SingleProduct.vue'
 import ProductSearchResult from '../components/Product/ProductSearchResult.vue'
 import BrowseFarmers from '../components/BrowseFarmers.vue'
@@ -24,12 +25,17 @@ export default new Router({
     path: '/dashboard',
     component: Dashboard,
   }, {
+    name:'ProductHomePage',
+    path: '/product',
+    component: ProductHomePage,
+  }, {
+    name:'ManageCategories',
+    path: '/categories',
+    component: ManageCategories
+  }, {
     path: '/product/add',
     name: 'AddProduct',
     component: AddProduct,
-  }, {
-    path: '/productform',
-    component: ProductForm,
   }, {
     name: 'SingleProduct',
     path: '/product/:id',
