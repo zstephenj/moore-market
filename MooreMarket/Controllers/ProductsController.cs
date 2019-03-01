@@ -24,7 +24,10 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(204)]
         public IActionResult GetAllProducts()
         {
-            IList<Product> allProducts = _context.Products.Include(p => p.Category).ToList();
+            IList<Product> allProducts = _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.User)
+                .ToList();
 
 
             
@@ -122,7 +125,7 @@ namespace MooreMarket.Controllers
 
             var results = _context.Products
                 .Include(p => p.User)
-                .Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm))
+                .Where(p => p.Name.Contains(searchTerm) || p.User.Username.Contains(searchTerm))
                 .ToList();
 
             if(results == null)

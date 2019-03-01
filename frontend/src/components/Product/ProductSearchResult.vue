@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex-container">
       <div class="product-listing" v-for="(product, idx) in products" :key="idx">
         <product-search-item :product="product"></product-search-item>
       </div>
@@ -24,10 +24,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .product-listing {
-  display: inline-block;
   width: 33%;
 }
 
+</style>
+
+<style scoped>
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

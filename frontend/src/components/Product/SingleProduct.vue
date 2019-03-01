@@ -142,11 +142,13 @@ export default {
 
     methods: {
         ...mapActions('product', [
-            'getAllProductsFromTest'  // to be replaced by 'getAllProductsFromAPI'
+            'addProductToCart',  
         ]),
-
         changeShowStorage(){
             this.showStorage = !this.showStorage
+        },
+        addToCart() {
+            this.addProductToCart(this.product)
         }
     },
 }

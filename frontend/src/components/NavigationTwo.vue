@@ -53,7 +53,12 @@
 
 <script>
 export default {
-
+  name: 'NavigationTwo',
+  computed: {
+    cart() {
+      return this.$store.state.product.cart
+    }
+  }
 }
 </script>
 

@@ -26,34 +26,46 @@
                     
             </div>
 
-            <div>
+            <div v-if="product.user">
                 <h6> Listed by:  
 
-                        <span><router-link :to='productURL' class='moore-navy' style='font-size:16px;'>  [FarmerName] </router-link></span>
+                        <span><router-link :to="{
+                            name: 'BrowseInventory',
+                            params: { id: product.user.id },
+                          }" class='moore-navy' style='font-size:16px;'>{{ product.user.username }}</router-link></span>
 
                 </h6>
             </div>
+            <div v-if="farmer">
+              <h6> Listed by:  
+                <span><router-link :to="{
+                    name: 'BrowseInventory',
+                    params: { id: farmer.id },
+                  }" class='moore-navy' style='font-size:16px;'>{{ farmer.username }}</router-link></span>
+                </h6>
+            </div>
+            <button @click="addToCart()" class="btn btn-success">Add to Cart</button>
         </div>
-
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 
 export default {
     name: "ProductSearchItem",
-
-    props: ['product'],
-
+    props: ['product', 'farmer'],
     data() {
         return {
             productURL: '../product/' + this.product.id ,
-            farmerURL: '../vendor/' //+ this.product.farmerid
         }
     },
-
-    methods:{
-
+    methods: {
+      ...mapActions('product', ['addProductToCart']),
+      addToCart() {
+        this.addProductToCart(this.product)
+      }
     }
 }
 </script>
@@ -64,10 +76,5 @@ export default {
 }
 .mousePointer:hover {
     text-decoration:underline;
-}
-.product-listing {
-  display: inline-block;
-  width: 25%;
-  border-color: #001f3f; 
 }
 </style>

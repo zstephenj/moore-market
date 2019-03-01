@@ -5,10 +5,12 @@ const farmer = {
   state: {
     allFarmers: [],
     farmerProducts: [],
+    currentFarmer: null,
   },
   mutations: {
     setFarmerProducts(state, data) {
       state.farmerProducts = data
+      state.currentFarmer = data
     },
     setFarmers(state, farmers) {
       state.allFarmers = farmers
@@ -17,7 +19,7 @@ const farmer = {
   actions: {
     getFarmerProducts({ commit }, id) {
       axios.get('/api/farmers/'+id)
-        .then(response => commit('setFarmerProducts', response.data.products))
+        .then(response => commit('setFarmerProducts', response.data))
     },
     getFarmers({ commit }) {
       axios.get('/api/farmers')
