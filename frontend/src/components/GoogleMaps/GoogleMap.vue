@@ -15,12 +15,20 @@
       </gmap-autocomplete>
       <button @click="usePlace">Add</button>
     </label> -->
+    <div v-if='!isAddingLocation'>
+        <button @click='changeIsAddingLocation()' type='button' class='btn btn-warning'> Set Location </button>
+    </div>
+
+    <div v-if='isAddingLocation' class='d-flex justify-content-around'>
+        <button @click='changeIsAddingLocation()' type='button' class='btn btn-secondary'> Cancel </button>
+        <button @click='addNewLocation()' type='button' class='btn btn-success'> Confirm </button>
+    </div>
     <gmap-autocomplete @place_changed="setPlace">
     </gmap-autocomplete>
 
     <br/>
 
-    <gmap-map ref='mapRef' class='gmap'  :zoom="1" :center="{lat: 38.6270, lng: -90.1994}" :options="{mapTypeControl: false}">
+    <gmap-map ref='mapRef' class='gmap'  :zoom="3" :center='location' :options="{mapTypeControl: false}">
 
       <gmap-marker v-for="(marker, index) in markers"
         :key="index"
@@ -28,7 +36,7 @@
         />
 
       <gmap-marker
-        v-if="place && isEditing"
+        v-if="place && isAddingLocation"
         label="★"
         :position="{
           lat: place.geometry.location.lat(),
@@ -42,7 +50,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
     name: 'GoogleMap',
@@ -52,6 +60,8 @@ export default {
         return {
             markers: [],
             place: null,
+            isAddingLocation: false,
+            location: {lat: 38.6270, lng: -90.1994}
         }
     },
 
@@ -63,7 +73,10 @@ export default {
     },
 
     methods: {
-        
+        ...mapActions('user', [
+            'addLocation'
+        ]),
+
         setDescription(description) {
             this.description = description;
         },
@@ -84,8 +97,30 @@ export default {
 
             this.place = null;
             }
+        },
+
+        changeIsAddingLocation() {
+            this.isAddingLocation = !this.isAddingLocation
+        },
+        async addNewLocation() {
+            if (!this.place) {
+                console.log('error')
+            }
+            else {
+                await this.addLocation(this.place)
+                this.changeIsAddingLocation()
+                this.$refs.mapRef.$mapPromise.then((map) => {
+                    map.panTo({lat: this.place.geometry.location.lat(), lng: this.place.geometry.location.lng()})
+                })
+            }
         }
-  }
+    },
+
+    mounted() {
+        if (this.currentUser.location.length != 0) {
+            this.location = this.currentUser.location[0]
+        }
+    }
 
 
 }
