@@ -33,7 +33,7 @@
       <gmap-marker v-for="(marker, index) in markers"
         :key="index"
         :position="marker.position"
-        @click='showMarketInfo'/>
+        @click='setMapMarket'/>
 
       <gmap-marker
         v-if="place && isAddingLocation"
@@ -62,8 +62,8 @@ export default {
             place: null,
             isAddingLocation: false,
             mapCenter: {lat: 38.624691, lng: -90.184776},
-            mapZoom: 3
-
+            mapZoom: 3,
+            market: {}
         }
     },
 
@@ -132,7 +132,6 @@ export default {
                     url: this.place.url,
                     vicinity: this.place.vicinity
                 }
-                console.log(newLocation)
                 await this.addLocation(newLocation)
                 this.changeIsAddingLocation()
                 this.$refs.mapRef.$mapPromise.then((map) => {
@@ -141,14 +140,12 @@ export default {
             }
         },
 
-        showMarketInfo(e) {
+        setMapMarket(e) {
             console.log(e)
             let lat = e.latLng.lat()
             let lng = e.latLng.lng()
-            let marketPlace = {lat: lat, lng: lng}
-            console.log(this.allMarkets)
-            let market = this.allMarkets.find(m => m.position.gps === marketPlace)
-            console.log(market)
+            let market = this.allMarkets.find(m => m.position.gps.lat === lat && m.position.gps.lng === lng)
+            this.market = market
         },
 
     },
@@ -157,13 +154,10 @@ export default {
         let response = await this.getAllMarketsFromApi()
 
         for(let idx in response.data) {
-            console.log(this.allMarkets[1])
             let market = response.data[idx]
             let position = {lat: this.allMarkets[idx].position.gps.lat, lng: this.allMarkets[idx].position.gps.lng}
-            console.log(position)
             this.markers.push({position})
         }
-        console.log(this.markers)
         if (this.currentUser.location.length != 0) {
             this.location = this.currentUser.location[0]
             this.mapZoom = 10
