@@ -29,12 +29,12 @@
     <br/>
 
     <gmap-map ref='mapRef' class='gmap'  :zoom='mapZoom' :center='mapCenter' :options="{mapTypeControl: false}">
-
-      <gmap-marker v-for="(marker, index) in markers"
-        :key="index"
-        :position="marker.position"
-        @click='setMapMarket'/>
-
+        <gmap-cluster>
+            <gmap-marker v-for="(marker, index) in markers"
+                :key="index"
+                :position="marker.position"
+                @click='setMapMarket'/>
+        </gmap-cluster>
       <gmap-marker
         v-if="place && isAddingLocation"
         label="★"
@@ -52,10 +52,15 @@
 <script>
 import {mapState, mapActions, mapGetters} from 'vuex'
 
+
+import GmapCluster from 'vue2-google-maps/src/components/cluster' 
+
 export default {
     name: 'GoogleMap',
     props: [],
-
+    components: {
+        GmapCluster
+    },
     data() {
         return {
             markers: [],
@@ -84,15 +89,19 @@ export default {
             'getAllMarketsFromApi'
         ]),
 
+        async setCenter(gps) {
+            let map = await this.$refs.mapRef.$mapPromise
+            map.panTo({lat: gps.lat, lng: gps.lng})
+        },
+
         setDescription(description) {
             this.description = description;
         },
         setPlace(place) {
             this.place = place
-            this.$refs.mapRef.$mapPromise.then((map) => {
-                map.panTo({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()})
-            })
-
+            let gps = {lat: this.place.geometry.location.lat(),
+                       lng: this.place.geometry.location.lng()}
+            this.setCenter(gps)
             // if not at default position at STL Arch at zoom 3 (view of USA), there is a searched position. Zoom in
             if (this.mapCenter != {lat: 38.624691, lng: -90.184776}) {
                 this.mapZoom = 10
