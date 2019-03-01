@@ -13,7 +13,7 @@
                     
                 </div>
 
-                <google-map class='pb-3 align-items-end flex-row'> </google-map>
+                <google-map class='pb-3 align-items-end flex-row' > </google-map>
 
             </div>
 
@@ -28,8 +28,14 @@ export default {
     name:'MapPage',
     components: {
         GoogleMap
-    }
+    },
+    computed: {
 
+    },
+
+    methods:{
+
+    }
 }
 </script>
 
