@@ -31,6 +31,7 @@ namespace MooreMarket.Controllers
     {
       var farmerProducts = _context.Users
         .Include(u => u.Products)
+        .ThenInclude(p => p.Category)
         .SingleOrDefault(u => u.Id == id);
 
       if(farmerProducts == null)
