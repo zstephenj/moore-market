@@ -10,7 +10,7 @@
 
             <div v-if='!isEditing.price' class='margin-left-5'>
                 ${{Number(product.price).toFixed(2)}}
-                <a @click='changeIsEditingPrice()' class='badge badge-success ml-3 mousePointer'> Quick Edit </a>
+                <a @click='changeIsEditingPrice()' class='badge badge-success ml-3 mousePointer float-right' > Quick Edit </a>
             </div>
 
             <form v-if='isEditing.price' >
@@ -40,7 +40,7 @@
 
                 {{Number(product.quantity).toFixed(0)}}
 
-                <a @click='changeIsEditingQuantity()' class='badge badge-success ml-3 mousePointer'> Quick Edit </a>
+                <a @click='changeIsEditingQuantity()' class='badge badge-success ml-3 mousePointer float-right' > Quick Edit </a>
                 
             </div>
 
@@ -61,7 +61,7 @@
 
                 <div v-if='error.quantity' class='row justify-content-center'>
 
-                    <div class='alert alert-danger p-1 font-size-14' role='alert'>
+                    <div class='alert alert-danger p-1 font-size-14' role='alert' >
                         {{error.quantityMsg}}
                     </div>
 
@@ -248,5 +248,4 @@ export default {
 .font-size-14 {
     font-size:14px;
 }
-
 </style>
