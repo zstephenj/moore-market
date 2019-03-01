@@ -1,5 +1,3 @@
-
-
 const user = {
     namespaced: true,
     state: {
@@ -7,14 +5,20 @@ const user = {
             username: "user",
             accountType: "farmer",
             isLoggedIn: true,
+            location: [],
+            favoriteLocations: [],
         },
     },
+
     mutations: {
     },
+
     actions: {
     },
+
     getters: {
     },
+    
 }
 
 export default user
