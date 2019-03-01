@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if='getProductById(productIds[0])'>
+                <template v-if='productIds.some(getProductById)'>
                     <farmer-product-item v-for='id in productIds' :key='id' :product='getProductById(id)'> </farmer-product-item>
                 </template>
             </tbody>
@@ -21,11 +21,9 @@
 </template>
 
 <script>
-import FarmerProductItem from './FarmerProductItem.vue'
-
 import {mapActions, mapGetters} from 'vuex'
-import axios from 'axios'
 
+import FarmerProductItem from './FarmerProductItem.vue'
 export default {
     name: 'FarmerProductDash',
     components: {
@@ -46,14 +44,12 @@ export default {
 
     methods: {
         ...mapActions('product', [
-            'getAllProductsFromTest'
+            'getAllProductsFromApi'
         ])
     },
 
     created() {
-        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        let db = '2'
-        this.getAllProductsFromTest(db)
+        this.getAllProductsFromApi()
         
     },
 }
