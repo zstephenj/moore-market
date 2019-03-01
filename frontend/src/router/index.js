@@ -10,6 +10,7 @@ import SingleProduct from '../components/Product/SingleProduct.vue'
 import ProductSearchResult from '../components/Product/ProductSearchResult.vue'
 import BrowseFarmers from '../components/BrowseFarmers.vue'
 import BrowseInventory from '../components/BrowseInventory.vue'
+import MapPage from '../components/GoogleMaps/MapPage.vue'
 
 Vue.use(Router)
 
@@ -51,5 +52,11 @@ export default new Router({
     path: '/farmers/:id',
     component: BrowseInventory,
     props: true,
-  }],
+  }, {
+    name: 'MapRoute',
+    path: '/map',
+    component:MapPage
+  },
+
+  ],
 })
