@@ -111,5 +111,26 @@ namespace MooreMarket.Controllers
 
             return NoContent();
         }
+        
+        [HttpGet("Search")]
+        public ActionResult<IEnumerable<Product>> Search(string searchTerm)
+        {
+            if(searchTerm == null)
+            {
+                return NoContent();
+            }
+
+            var results = _context.Products
+                .Include(p => p.User)
+                .Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm))
+                .ToList();
+
+            if(results == null)
+            {
+                return NoContent();
+            }
+
+            return results;
+        }
     }
 }

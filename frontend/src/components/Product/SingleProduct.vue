@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if='getProduct' class='container-fluid moore-gradient moore-navy'>
+    <div class='container-fluid moore-gradient moore-navy'>
 
         <div class='row align-items-start justify-content-center'>
 
@@ -117,7 +117,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -128,7 +127,7 @@ export default {
     data(){
             return {
                 productId: parseInt(this.$route.params.id) ,
-                product: [],
+                //product: [],
                 showStorage: false
             }
     },
@@ -138,9 +137,9 @@ export default {
             'getProductById'
         ]),
 
-        getProduct(){
+        product(){
             let gotProduct = this.getProductById(this.productId)
-            this.product = gotProduct
+            //this.product = gotProduct
             return gotProduct
         }
     },
@@ -153,14 +152,6 @@ export default {
         changeShowStorage(){
             this.showStorage = !this.showStorage
         }
-    },
-
-
-    created() {
-        // to be replaced by this.getAllProductsFromAPI
-        let db = ''
-        this.getAllProductsFromTest(db)
-        
     },
 }
 </script>

@@ -10,6 +10,8 @@ import SingleProduct from '../components/Product/SingleProduct.vue'
 import ProductSearchResult from '../components/Product/ProductSearchResult.vue'
 import BrowseFarmers from '../components/BrowseFarmers.vue'
 import BrowseInventory from '../components/BrowseInventory.vue'
+import AllProducts from '../components/Product/AllProducts.vue'
+import SearchProducts from '../components/Product/SearchProducts.vue'
 
 Vue.use(Router)
 
@@ -51,5 +53,13 @@ export default new Router({
     path: '/farmers/:id',
     component: BrowseInventory,
     props: true,
+  }, {
+    name: 'AllProducts',
+    path: '/products/all',
+    component: AllProducts,
+  }, {
+    name: 'SearchProducts',
+    path: '/products/search',
+    component: SearchProducts,
   }],
 })

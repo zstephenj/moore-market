@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <form > 
+    <form @submit.prevent="validateForm()"> 
 
       <div class="form-group row justify-content-center">
         <label for="name" class="col-md-2 col-form-label left-align">Name:</label>
@@ -154,7 +154,7 @@
       </div>  
 
       <div class="center-align">
-        <button class="btn btn-primary" type="button" @click="validateForm()">Submit</button>
+        <button class="btn btn-primary" type="button">Submit</button>
       </div>
       
     </form>
@@ -335,11 +335,6 @@ export default {
       ],
     }
   },
-
-  computed: {
-    
-  },
-
   mounted(){
     if (this.formType === 'edit'){
       this.product = this.productToEdit

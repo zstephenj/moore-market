@@ -1,5 +1,5 @@
 <template>
-    <div class="card my-3 moore-gradient moore-navy " style="border-color: #001f3f; ">
+    <div class="card m-3 moore-gradient moore-navy" style="border-color: #001f3f;">
 
             <router-link v-if='product.image' :to='productURL'> <img class='card-img-top' :src='product.image' alt='Card image cap'> </router-link>
             <router-link v-if='!product.image' :to='productURL'> <img class='card-img-top' src='../../assets/no_image.png' alt='No image card cap'> </router-link>
@@ -64,5 +64,10 @@ export default {
 }
 .mousePointer:hover {
     text-decoration:underline;
+}
+.product-listing {
+  display: inline-block;
+  width: 25%;
+  border-color: #001f3f; 
 }
 </style>

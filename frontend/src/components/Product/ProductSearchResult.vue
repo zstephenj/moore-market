@@ -1,41 +1,18 @@
 <template>
-    <div v-if='getProductById(productIds[0])' class='container-fluid'>
-
-        <div v-for='num in numProductIds' :key='num'>
-
-            <div v-if='((num + 2) % 3) === 0'>
-
-                <div class='row'>
-
-                    <div class='col-md-3'>
-                        <product-search-item :product='getProductById(productIds[num-1])'> </product-search-item>
-                    </div>
-
-                    <div class='col-md-3'>
-                        <product-search-item v-if='(num + 1) <= numProductIds' :product='getProductById(productIds[num])'> </product-search-item>
-                    </div>
-                    
-                    <div class='col-md-3'>
-                        <product-search-item v-if='(num + 2) <= numProductIds' :product='getProductById(productIds[num+1])'> </product-search-item>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+  <div>
+      <div class="product-listing" v-for="(product, idx) in products" :key="idx">
+        <product-search-item :product="product"></product-search-item>
+      </div>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters } from 'vuex'
 import ProductSearchItem from './ProductSearchItem.vue'
 
 export default {
     name: 'ProductSearchResult',
-    props: [/* 'productIds' */],
+    props: ['products'],
     components: {
         ProductSearchItem
     },
@@ -46,12 +23,6 @@ export default {
             productIds: [1,2,3,4,5,66,77,88,99,111,222,333]
         }
     },
-
-    created() {
-        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        let db = '2'
-        this.getAllProductsFromTest(db)
-    },
     computed: {
         numProductIds(){
             return this.productIds.length
@@ -60,16 +31,13 @@ export default {
             'getProductById'
         ])
     },
-
-    methods: {
-        ...mapActions('product', [
-            'getAllProductsFromTest'
-        ])
-    }
-
 }
 </script>
 
-<style>
+<style scoped>
+.product-listing {
+  display: inline-block;
+  width: 33%;
+}
 
 </style>

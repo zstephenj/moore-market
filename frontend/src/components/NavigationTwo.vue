@@ -39,8 +39,8 @@
                 </li>    
             </ul>
 
-            <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="/products/search" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
             <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
             </form>
             <button class="btn btn-dark my-2 mx-1 my-sm-0"><img src="../assets/cart.png" width="24" height="24" class="d-inline-block align-top img thumbnail" alt="">Shopping Cart</button>
