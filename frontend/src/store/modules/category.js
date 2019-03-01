@@ -13,7 +13,7 @@ const category = {
             state.allCategories = categories
         },
 
-        appendNewCategory (state, category) {
+        pushNewCategory (state, category) {
             state.allCategories.push(category)
         },
 
@@ -51,7 +51,7 @@ const category = {
                 response = await axios.post('http://my-json-server.typicode.com/zstephenj/moore-market-fakeJSON-categories/categories')
                 // Comment next line if using FakeJSON
                 // response = await axios.post('/api/categories/add')
-                commit('appendNewCategory', response.data)
+                commit('pushNewCategory', response.data)
                 return response
             } catch (error) {
                 console.error(error)
@@ -96,10 +96,6 @@ const category = {
     },
 
     getters: {
-
-        getAllCategories: (state) => () => {
-            return state.allCategories
-        },
 
         getCategoryIndex: (state) => (id) => {
             return state.allCategories.findIndex(c => c.id === id)
