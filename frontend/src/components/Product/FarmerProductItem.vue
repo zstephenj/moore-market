@@ -1,5 +1,5 @@
 <template>
-    <tr >
+    <tr v-if='product'>
         <td class='align-middle' scope='row'> <router-link :to='productURL' class='moore-navy' style='font-weight:555;'> {{product.id}} </router-link></td>
 
         <td class='align-middle'> <router-link :to='productURL' class='moore-navy'> {{product.name}} </router-link></td>
@@ -19,7 +19,7 @@
                         <input class='form-control form-control-sm' type='number' name='formPrice' v-model='newValue.price' step='0.01'>
                     </div>
                     <div class='col-2'>
-                        <a @click='editProductPrice()' class='badge badge-warning ml-3 mousePointer'> Confirm </a>
+                        <a @click='editProduct(quickEditProperties.price)' class='badge badge-warning ml-3 mousePointer'> Confirm </a>
                         <a @click='changeIsEditingPrice()' class='badge badge-danger ml-3 mousePointer'> Cancel </a>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class='col-2'>
-                        <a @click='editProductQuantity()' class='badge badge-warning ml-3 mousePointer'> Confirm </a>
+                        <a @click='editProduct(quickEditProperties.quantity)' class='badge badge-warning ml-3 mousePointer'> Confirm </a>
                         <a @click='changeIsEditingQuantity()' class='badge badge-danger ml-3 mousePointer'> Cancel </a>
                     </div>
                     
@@ -77,7 +77,7 @@
                 <router-link v-if='!isDeleting' :to='editProductURL'><button type="button" class="btn btn-success"> Edit </button></router-link>
                 <button v-if='!isDeleting' @click='changeIsDeleting()' type="button" class="btn btn-danger"> Delete </button>
                 
-                <button v-if='isDeleting' @click='removeProductById(product.id)' type="button" class="btn btn-danger"> Confirm </button>
+                <button v-if='isDeleting' @click='removeProduct(product.id)' type="button" class="btn btn-danger"> Confirm </button>
                 <button v-if='isDeleting' @click='changeIsDeleting()' type="button" class="btn btn-secondary"> Cancel </button>
             </div>
 
@@ -114,6 +114,11 @@ export default {
             newValue: {
                 price: this.product.price,
                 quantity: this.product.quantity
+            },
+
+            quickEditProperties: {
+                price: 'price',
+                quantity: 'quantity'
             }
         }
     },
@@ -130,31 +135,46 @@ export default {
             this.isDeleting = !this.isDeleting
         },
 
-        editProductPrice() {
-            if (!this.checkErrorPrice()){
-                let editedProduct = this.product
-                editedProduct.price = this.newValue.price
-                console.log(editedProduct)
-                this.editProductById(editedProduct)
-                this.isEditing.price = false
-                return true
-            }
-            else {
-                return false
-            }
+        async removeProduct() {
+            await this.removeProductById(this.product.id)
         },
 
-        editProductQuantity() {
-            if (!this.checkErrorQuantity()) {
-                let editedProduct = this.product
-                editedProduct.quantity = this.newValue.quantity
-                console.log(editedProduct)
-                this.editProductById(editedProduct)
-                this.isEditing.quantity = false
-                return true
+        async editProduct(changedProperty) {
+            let editedProduct = Object.assign(this.product)
+
+            if (changedProperty === 'price') {
+                if (this.checkErrorPrice()){
+                    return false
+                }
+                else {
+                    editedProduct.price = this.newValue.price
+                    
+                }
             }
+
+            if (changedProperty === 'quantity') {
+                if (this.checkErrorQuantity()) {
+                    return false
+                }
+                else {
+                    editedProduct.quantity = this.newValue.quantity
+                    
+                }
+            }
+            
+            let response = await this.editProductById(editedProduct)
+            
+            if (response.status === 400) {
+                //Failed backend validation
+            }
+
             else {
-                return false
+                if (changedProperty === 'price') {
+                    this.isEditing.price = false    
+                }
+                if (changedProperty === 'quantity') {
+                    this.isEditing.quantity = false
+                }
             }
         },
 
@@ -185,12 +205,7 @@ export default {
         checkErrorQuantity() {
             this.error.quantity = true
             let quantity = this.newValue.quantity
-            if (quantity == '') {
-                this.error.quantityMsg = 'Please enter a Quantity'
-                return true
-            }
-
-            else if (quantity > 999999) {
+            if (quantity > 999999) {
                 this.error.quantityMsg = "You couldn't possibly have that many, could you?"
                 return true
             }
