@@ -25,7 +25,7 @@
                 </div>
 
                 <div v-if='error.price' class='row justify-content-center'>
-                    <div class='alert alert-danger p-1 error-font' role='alert'>
+                    <div class='alert alert-danger p-1 font-size-14' role='alert'>
                         {{error.priceMsg}}
                     </div>
                 </div>
@@ -61,7 +61,7 @@
 
                 <div v-if='error.quantity' class='row justify-content-center'>
 
-                    <div class='alert alert-danger p-1 error-font' role='alert' >
+                    <div class='alert alert-danger p-1 font-size-14' role='alert' >
                         {{error.quantityMsg}}
                     </div>
 
@@ -232,7 +232,7 @@ export default {
     margin-right: 3em;
 }
 
-.error-font {
+.font-size-14 {
     font-size:14px;
 }
 </style>
