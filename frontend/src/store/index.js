@@ -4,6 +4,7 @@ import Vue from 'vue';
 import product from  './modules/product'
 import user from './modules/user'
 import farmer from './modules/farmer'
+import market from './modules/market'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ const store = new Vuex.Store({
         product,
         user,
         farmer,
+        market
     }
 })
 
