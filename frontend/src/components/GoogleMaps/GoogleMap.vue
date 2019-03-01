@@ -1,23 +1,31 @@
 <template>
-    <div class='container-fluid'>
+    <div v-if='currentUser' class='container-fluid'>
+
+        <div v-if='(currentUser.accountType === "user" && !currentUser.location) || (currentUser.accountType === "farmer" && currentUser.location.length < 10)'>
+            <button type='button' class='btn btn-success'> Add Location </button>
+        </div>
+
+        <div v-if='currentUser.accountType === "farmer" && currentUser.location.length < 10'>
+            <button type='button' class='btn btn-success'> Add Location </button>
+        </div>
 
     <label>
       AutoComplete
-      <GmapAutocomplete @place_changed="setPlace">
-      </GmapAutocomplete>
+      <gmap-autocomplete @place_changed="setPlace">
+      </gmap-autocomplete>
       <button @click="usePlace">Add</button>
     </label>
 
     <br/>
 
-    <GmapMap style="width: 600px; height: 300px;" :zoom="1" :center="{lat: 0, lng: 0}">
+    <gmap-map style="width: 600px; height: 300px;" :zoom="1" :center="{lat: 0, lng: 0}">
 
-      <GmapMarker v-for="(marker, index) in markers"
+      <gmap-marker v-for="(marker, index) in markers"
         :key="index"
         :position="marker.position"
         />
 
-      <GmapMarker
+      <gmap-marker
         v-if="this.place"
         label="★"
         :position="{
@@ -26,12 +34,14 @@
         }"
         />
 
-    </GmapMap>
+    </gmap-map>
 
     </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
     name: 'GoogleMap',
     props: [],
@@ -43,7 +53,15 @@ export default {
         }
     },
 
+    computed: {
+        ...mapState('user', [
+            'currentUser',
+        ]),
+        
+    },
+
     methods: {
+        
         setDescription(description) {
             this.description = description;
         },
@@ -60,7 +78,7 @@ export default {
                 })
 
             this.place = null;
-        }
+            }
         }
   }
 
