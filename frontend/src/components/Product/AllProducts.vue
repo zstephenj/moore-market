@@ -15,12 +15,6 @@ export default {
   },
   computed: {
     ...mapState('product', ['allProducts']),
-    query() {
-      return this.$router.query.searchTerm
-    },
-  },
-  methods: {
-    ...mapActions('product', ['getAllProductsFromApi']),
   },
 }
 </script>

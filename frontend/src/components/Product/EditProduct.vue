@@ -7,7 +7,7 @@
 
     </div>
 
-    <product-form v-if='getProduct' :productToEdit='getProduct' :formType='formType'> </product-form>
+    <product-form :productToEdit='getProduct' :formType='formType'> </product-form>
 
   </div>
 </template>
@@ -30,18 +30,8 @@ export default {
     return {
       productId: parseInt(this.$route.params.id),
       formType: 'edit',
-      product: []
     }
-  },
-
-  methods: {
-    ...mapActions('product', [
-      'getAllProductsFromTest'
-    ]),
-
-    
-  },
-
+  },   
   computed: {
       ...mapGetters('product', ['getProductById']),
 
@@ -50,19 +40,6 @@ export default {
             return gotProduct
           }
     },
-
-  created() {
-        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        let db = '2'
-        this.getAllProductsFromTest(db)
-        
-    },
-  
-  mounted(){
-
-  }
-  
-  
 }
 </script>
 

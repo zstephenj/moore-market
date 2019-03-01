@@ -127,7 +127,6 @@ export default {
     data(){
             return {
                 productId: parseInt(this.$route.params.id) ,
-                //product: [],
                 showStorage: false
             }
     },
@@ -136,11 +135,8 @@ export default {
         ...mapGetters('product', [
             'getProductById'
         ]),
-
         product(){
-            let gotProduct = this.getProductById(this.productId)
-            //this.product = gotProduct
-            return gotProduct
+            return this.getProductById(this.productId)
         }
     },
 

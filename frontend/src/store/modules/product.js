@@ -25,7 +25,7 @@ const product = {
         addProductToCart(state, product) {
             state.cart.push(product)
         },
-        updateSearchProducts(state, products) {
+        updateSearchResults(state, products) {
           state.searchResults = products
         }
     },
@@ -60,7 +60,7 @@ const product = {
             let response
             try {
                 response = await axios.get('/api/products/search?searchTerm='+searchTerm)
-                return commit('updateSearchProducts', response.data)
+                return commit('updateSearchResults', response.data)
             } catch(error) {
                 console.error(error)
             }

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h2>Showing results for: {{ query }}</h2>
     <ProductSearchResult :products="searchResults" />
   </div>
 </template>
@@ -16,7 +17,6 @@ export default {
   computed: {
     ...mapState('product', ['searchResults']),
     query() {
-      console.log(this.$route.query.searchTerm)
       return this.$route.query.searchTerm
     },
   },

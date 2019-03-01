@@ -16,17 +16,7 @@ export default {
     components: {
         ProductSearchItem
     },
-
-    data() {
-        return {    
-            // temp, to be replaced by prop
-            productIds: [1,2,3,4,5,66,77,88,99,111,222,333]
-        }
-    },
     computed: {
-        numProductIds(){
-            return this.productIds.length
-        },
         ...mapGetters('product', [
             'getProductById'
         ])

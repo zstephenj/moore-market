@@ -7,6 +7,7 @@ const user = {
             username: "user",
             accountType: "farmer",
             isLoggedIn: true,
+            id: 2,
         },
     },
     mutations: {
