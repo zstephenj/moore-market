@@ -1,6 +1,6 @@
 <template>
     <div v-if='category' class='container-fluid' >
-        <div style='border-style:solid; border-color:#001f3f;'>
+        <div class='moore-border'>
             <div class='row align-items-center justify-content-around m-2 py-1'>
 
                 <div v-if='!isEditing' class='col-6 pt-1'>
@@ -9,7 +9,7 @@
                     </h4>
                 </div>
 
-                <div v-if='isEditing' class='col-6 pl-5 py-1' style='margin-top:0.1em;'>
+                <div v-if='isEditing' class='col-6 pl-5 py-1 margin-top-tiny'>
                     <product-category-form formType='edit' @category-input='updateFormCategoryEdited' :oldCategoryName='category.name'> </product-category-form>
                 </div>
 
@@ -107,4 +107,14 @@ export default {
 </script>
 
 <style scoped>
+
+.moore-border {
+    border-style:solid;
+    border-color:#001f3f;
+}
+
+.margin-top-tiny {
+    margin-top:0.1em;
+}
+
 </style>
