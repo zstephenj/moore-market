@@ -29,20 +29,21 @@
     <br/>
 
     <gmap-map ref='mapRef' class='gmap'  :zoom='mapZoom' :center='mapCenter' :options="{mapTypeControl: false}">
-        <gmap-cluster>
+
+        <gmap-cluster @click='clickCluster'>
             <gmap-marker v-for="(marker, index) in markers"
                 :key="index"
                 :position="marker.position"
                 @click='setMapMarket'/>
         </gmap-cluster>
-      <gmap-marker
-        v-if="place && isAddingLocation"
-        label="★"
-        :position="{
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
-        }"
-        />
+
+        <gmap-marker
+            v-if="place && isAddingLocation"
+            label="★"
+            :position="{
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()}"
+            />
 
     </gmap-map>
 
@@ -89,9 +90,13 @@ export default {
             'getAllMarketsFromApi'
         ]),
 
-        async setCenter(gps) {
+        // Async: since we get the Gmap from API, we must return a Promise
+        async setCenter(gps, zoom) {
             let map = await this.$refs.mapRef.$mapPromise
             map.panTo({lat: gps.lat, lng: gps.lng})
+            if (zoom != 0) {
+                this.mapZoom = zoom
+            }
         },
 
         setDescription(description) {
@@ -101,7 +106,7 @@ export default {
             this.place = place
             let gps = {lat: this.place.geometry.location.lat(),
                        lng: this.place.geometry.location.lng()}
-            this.setCenter(gps)
+            this.setCenter(gps, 3)
             // if not at default position at STL Arch at zoom 3 (view of USA), there is a searched position. Zoom in
             if (this.mapCenter != {lat: 38.624691, lng: -90.184776}) {
                 this.mapZoom = 10
@@ -118,6 +123,14 @@ export default {
 
             this.place = null;
             }
+        },
+
+        clickCluster(e) {
+            let gps = {
+                lat: e.center_.lat(),
+                lng: e.center_.lng()
+            }
+            this.setCenter(gps, 0)
         },
 
         changeIsAddingLocation() {
@@ -155,6 +168,11 @@ export default {
             let lng = e.latLng.lng()
             let market = this.allMarkets.find(m => m.position.gps.lat === lat && m.position.gps.lng === lng)
             this.market = market
+            let gps = {
+                lat: lat,
+                lng: lng
+            }
+            this.setCenter(gps, 3)
         },
 
     },
