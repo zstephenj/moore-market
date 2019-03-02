@@ -88,7 +88,7 @@
 
                     <!-- donate to pantry option? -->
 
-                    <button type='button' class='btn btn-block btn-success'> Add to Cart </button>
+                    <button @click='addToCart()' type='button' class='btn btn-block btn-success'> Add to Cart </button>
                     
                 </form>
 
@@ -148,7 +148,8 @@ export default {
             this.showStorage = !this.showStorage
         },
         addToCart() {
-            this.addProductToCart(this.product)
+            this.addProductToCart(Object.assign({}, this.product))
+            console.log(this.$store.state.product.cart)
         }
     },
 }

@@ -64,7 +64,7 @@ export default {
     methods: {
       ...mapActions('product', ['addProductToCart']),
       addToCart() {
-        this.addProductToCart(this.product)
+        this.addProductToCart(Object.assign({}, this.product))
       }
     }
 }

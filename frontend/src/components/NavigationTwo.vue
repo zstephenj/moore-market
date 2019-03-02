@@ -43,7 +43,7 @@
             <input class="form-control mr-sm-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
             <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <button class="btn btn-dark my-2 mx-1 my-sm-0"><img src="../assets/cart.png" width="24" height="24" class="d-inline-block align-top img thumbnail" alt="">Shopping Cart</button>
+            <router-link :to="{name: 'ShoppingCart'}" class="btn btn-dark my-2 mx-1 my-sm-0"><img src="../assets/cart.png" width="24" height="24" class="d-inline-block align-top img thumbnail" alt="">Shopping Cart</router-link>
 
             </div>    
         </nav>
