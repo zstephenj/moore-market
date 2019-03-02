@@ -130,8 +130,7 @@ export default {
                 let lng = this.place.geometry.location.lng()
                 // Pull only relevant properties out of Google Place
                 let newLocation = {
-                    address_components: this.place.address_components, 
-                    adr_address: this.place.adr_address,
+                    address_components: this.place.address_components,
                     formatted_address: this.place.formatted_address,
                     gps: {lat: lat, lng: lng},
                     name: this.place.name,
