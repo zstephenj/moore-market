@@ -8,30 +8,13 @@
         <div v-if='currentUser.accountType === "farmer" && currentUser.location.length < 10'>
             <button type='button' class='btn btn-success'> Add Location </button>
         </div> -->
-        <div class='row justify-content-center'>
-            <div>
-                <h2> Markets Near Me </h2>
-            </div>
-            
+        <h2 class='my-2'> Markets Near Me </h2>
 
-        </div>
-        
         <hr class='border-navy' />
         
 
         <div class='row justify-content-center'>
             <gmap-autocomplete @place_changed="setPlace" class='d-flex flex-grow-1'> </gmap-autocomplete>
-            <div>
-
-                <div v-if='!isAddingLocation'>
-                    <button @click='changeIsAddingLocation()' type='button' class='btn btn-warning'> Set My Location </button>
-                </div>
-
-                <div v-if='isAddingLocation' class='d-flex justify-content-around'>
-                    <button @click='changeIsAddingLocation()' type='button' class='btn btn-secondary'> Cancel </button>
-                    <button @click='addNewLocation()' type='button' class='btn btn-success'> Confirm </button>
-                </div>
-            </div>
         </div>
 
         <div class='row justify-content-center'>
@@ -65,7 +48,7 @@ import {mapState, mapActions, mapGetters} from 'vuex'
 import GmapCluster from 'vue2-google-maps/src/components/cluster'
 export default {
     name: 'GoogleMap',
-    props: [],
+    props: ['isAddingLocation'],
     components: {
         GmapCluster
     },
@@ -73,7 +56,6 @@ export default {
         return {
             markers: [],
             place: null,
-            isAddingLocation: false,
             mapCenter: {lat: 38.624691, lng: -90.184776},
             mapZoom: 3,
         }
@@ -113,6 +95,7 @@ export default {
             let gps = {lat: this.place.geometry.location.lat(),
                        lng: this.place.geometry.location.lng()}
             this.setCenter(gps, 3)
+            this.$emit('change-map-place', place)
         },
         usePlace(place) {
             if (this.place) {
@@ -174,7 +157,7 @@ export default {
                 lng: lng
             }
             this.setCenter(gps, 3)
-            this.$emit('setMapMarket', market)
+            this.$emit('set-map-market', market)
         },
 
     },

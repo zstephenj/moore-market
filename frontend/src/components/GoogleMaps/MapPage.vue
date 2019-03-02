@@ -8,10 +8,13 @@
 
             <div class='col-md-5 border-navy m-2'>
 
-                <google-map @setMapMarket='setMapMarket' class='align-items-end'> </google-map>
+                <google-map class='align-items-end' :isAddingLocation='isAddingLocation' @set-map-market='setMapMarket' @change-map-place='setMapPlace' > </google-map>
 
             </div>
 
+            <div class='col-md-2 m-2 d-flex flex-column'>
+                <map-sidebar :isMapPlace='isMapPlace' @clicked-set-location='changeIsAddingLocation' @clicked-confirm-location='confirmLocation'> </map-sidebar>
+            </div>
         </div>
     </div>
 </template>
@@ -19,29 +22,58 @@
 <script>
 import GoogleMap from './GoogleMap.vue'
 import MapMarket from './MapMarket.vue'
-
+import MapSidebar from './MapSidebar.vue'
 export default {
     name:'MapPage',
     components: {
         GoogleMap,
-        MapMarket
+        MapMarket,
+        MapSidebar
     },
     data() {
         return {
+            // from GoogleMap
             market: {
                 name: 'Please Select A Market To Display'
-            }
+                
+            },
+            mapPlace: {},
+            // from MapSidebar
+            isAddingLocation: false,
+            
         }
 
     },
 
     computed: {
-        
+        // props to MapSidebar
+        isMapPlace() {
+            if (Object.keys(this.mapPlace).length != 0 ) {
+                
+                return true
+            }
+            else {
+                return false
+            }
+        },
+
     },
 
     methods:{
+        // emitted events from GoogleMap
         setMapMarket(e) {
             this.market= e
+        },
+        setMapPlace(e) {
+            this.mapPlace = e
+        },
+
+        // emitted events from MapSidebar
+        changeIsAddingLocation() {
+            this.isAddingLocation = !this.isAddingLocation
+        },
+        confirmLocation() {
+            this.changeIsAddingLocation()   
         }
     }
 }
