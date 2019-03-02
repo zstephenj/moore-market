@@ -1,6 +1,6 @@
 <template>
     <tr >
-        <td class='align-middle' scope='row'> <router-link :to='productURL' class='moore-navy' style='font-weight:555;'> {{product.id}} </router-link></td>
+        <td class='align-middle' scope='row'> <router-link :to='productURL' class='moore-navy font-weight-bold' > {{product.id}} </router-link></td>
 
         <td class='align-middle'> <router-link :to='productURL' class='moore-navy'> {{product.name}} </router-link></td>
 
@@ -8,13 +8,13 @@
 
         <td>
 
-            <div v-if='!isEditing.price' style='margin-left: 5em;'>
+            <div v-if='!isEditing.price' class='margin-left-5'>
                 ${{Number(product.price).toFixed(2)}}
-                <a @click='changeIsEditingPrice()' class='badge badge-success ml-3 mousePointer'> Quick Edit </a>
+                <a @click='changeIsEditingPrice()' class='badge badge-success ml-3 mousePointer float-right' > Quick Edit </a>
             </div>
 
             <form v-if='isEditing.price' >
-                <div class='form-row align-items-center justify-content-end' style='margin-right: 4em;'>
+                <div class='form-row align-items-center justify-content-end margin-right-3'>
                     <div class='col-4'>
                         <input class='form-control form-control-sm' type='number' name='formPrice' v-model='newValue.price' step='0.01'>
                     </div>
@@ -25,7 +25,7 @@
                 </div>
 
                 <div v-if='error.price' class='row justify-content-center'>
-                    <div class='col-md-8 alert alert-danger' role='alert' style='font-size:14px;'>
+                    <div class='alert alert-danger p-1 font-size-14' role='alert'>
                         {{error.priceMsg}}
                     </div>
                 </div>
@@ -36,17 +36,17 @@
 
         <td>
 
-            <div v-if='!isEditing.quantity'  style='margin-left: 5em;'>
+            <div v-if='!isEditing.quantity'  class='margin-left-5'>
 
                 {{Number(product.quantity).toFixed(0)}}
 
-                <a @click='changeIsEditingQuantity()' class='badge badge-success ml-3 mousePointer'> Quick Edit </a>
+                <a @click='changeIsEditingQuantity()' class='badge badge-success ml-3 mousePointer float-right' > Quick Edit </a>
                 
             </div>
 
             <form v-if='isEditing.quantity'>
 
-                <div class='form-row align-items-center justify-content-end' style='margin-right: 3em;'>
+                <div class='form-row align-items-center justify-content-end margin-right-3'>
 
                     <div class='col-4'>
                         <input class='form-control form-control-sm' name='formQuantity' type='number' v-model='newValue.quantity'>
@@ -61,7 +61,7 @@
 
                 <div v-if='error.quantity' class='row justify-content-center'>
 
-                    <div class='col-md-8 alert alert-danger' role='alert' style='font-size:14px;'>
+                    <div class='alert alert-danger p-1 font-size-14' role='alert' >
                         {{error.quantityMsg}}
                     </div>
 
@@ -215,8 +215,24 @@ export default {
 </script>
 
 <style scoped>
+
 .mousePointer {
     cursor: pointer;
 }
 
+.margin-left-5 {
+    margin-left: 5em;
+}
+
+.margin-left-3 {
+    margin-left: 3em;
+}
+
+.margin-right-3 {
+    margin-right: 3em;
+}
+
+.font-size-14 {
+    font-size:14px;
+}
 </style>
