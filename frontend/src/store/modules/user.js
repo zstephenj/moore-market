@@ -5,7 +5,7 @@ const user = {
     state: {
         currentUser: {
             username: "user",
-            accountType: "user",
+            accountType: "farmer",
             isLoggedIn: true,
             id: 2,
         },
