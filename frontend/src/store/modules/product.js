@@ -32,9 +32,9 @@ const product = {
             let response
             try{
                 // Comment next line if using backend database
-                response = await axios.post('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/', product)
+                // response = await axios.post('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/', product)
                 // Comment next line if using FakeJSON
-                // response = await axios.post('/api/products/add', product)
+                response = await axios.post('/api/products/add', product)
                 commit('setNewProduct', response.data)
                 return response
             } catch(error) {
@@ -46,9 +46,9 @@ const product = {
             let response
             try{
                 // Comment next line if using backend database
-                response = await axios.get('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/')
+                // response = await axios.get('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/')
                 // Comment next line if using FakeJSON
-                // response = await axios.get('/api/products')
+                response = await axios.get('/api/products')
                 commit('updateAllProducts', response.data)
                 return response
             } catch(error) {
@@ -60,9 +60,9 @@ const product = {
             let response
             try{
                 // Comment next line if using backend database
-                response = await axios.delete('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/' + id)
+                // response = await axios.delete('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/' + id)
                 // Comment next line if using FakeJSON
-                // response = await axios.delete('/api/products/remove/'+ id)
+                response = await axios.delete('/api/products/remove/'+ id)
                 let idx = getters.getProductIndex(id) 
                 commit('removeProductByIndex', idx)
                 return response
@@ -76,11 +76,11 @@ const product = {
             let response
             try{
                 // Comment next line if using backend database
-                response = await axios.put('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/' + product.id, product)
+                // response = await axios.put('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/' + product.id, product)
                 // Comment next line if using FakeJSON
-                // response = await axios.put('/api/products/edit/'+ product.id, product)
-                let idx = getters.getProductIndex(product.id)
-                let payload = {'idx':idx, 'product':product}
+                response = await axios.put('/api/products/edit/'+ product.id, product)
+                let idx = getters.getProductIndex(response)
+                let payload = {'idx':idx, 'product':response}
                 commit('addEditedProduct', payload)
                 return response
             } catch(error) {
