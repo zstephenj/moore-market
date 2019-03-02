@@ -7,46 +7,54 @@
 
         <div v-if='currentUser.accountType === "farmer" && currentUser.location.length < 10'>
             <button type='button' class='btn btn-success'> Add Location </button>
+        </div> -->
+        <div class='row justify-content-center'>
+            <div>
+                <h2> Markets Near Me </h2>
+            </div>
+            
+
+        </div>
+        
+        <hr class='border-navy' />
+        
+
+        <div class='row justify-content-center'>
+            <gmap-autocomplete @place_changed="setPlace" class='d-flex flex-grow-1'> </gmap-autocomplete>
+            <div>
+
+                <div v-if='!isAddingLocation'>
+                    <button @click='changeIsAddingLocation()' type='button' class='btn btn-warning'> Set My Location </button>
+                </div>
+
+                <div v-if='isAddingLocation' class='d-flex justify-content-around'>
+                    <button @click='changeIsAddingLocation()' type='button' class='btn btn-secondary'> Cancel </button>
+                    <button @click='addNewLocation()' type='button' class='btn btn-success'> Confirm </button>
+                </div>
+            </div>
         </div>
 
-    <label>
-      AutoComplete
-      <gmap-autocomplete @place_changed="setPlace">
-      </gmap-autocomplete>
-      <button @click="usePlace">Add</button>
-    </label> -->
-    <div v-if='!isAddingLocation'>
-        <button @click='changeIsAddingLocation()' type='button' class='btn btn-warning'> Set Location </button>
-    </div>
+        <div class='row justify-content-center'>
+            <gmap-map ref='mapRef' class='gmap mb-2' :zoom='mapZoom' :center='mapCenter' :options="{mapTypeControl: false}">
 
-    <div v-if='isAddingLocation' class='d-flex justify-content-around'>
-        <button @click='changeIsAddingLocation()' type='button' class='btn btn-secondary'> Cancel </button>
-        <button @click='addNewLocation()' type='button' class='btn btn-success'> Confirm </button>
-    </div>
-    <gmap-autocomplete @place_changed="setPlace">
-    </gmap-autocomplete>
+                <gmap-cluster @click='clickCluster'>
+                    <gmap-marker v-for="(marker, index) in markers"
+                        :key="index"
+                        :position="marker.position"
+                        @click='setMapMarket'/>
+                </gmap-cluster>
 
-    <br/>
+                <gmap-marker
+                    v-if="place && isAddingLocation"
+                    label="★"
+                    :position="{
+                    lat: place.geometry.location.lat(),
+                    lng: place.geometry.location.lng()}"
+                    />
 
-    <gmap-map ref='mapRef' class='gmap'  :zoom='mapZoom' :center='mapCenter' :options="{mapTypeControl: false}">
+            </gmap-map>
 
-        <gmap-cluster @click='clickCluster'>
-            <gmap-marker v-for="(marker, index) in markers"
-                :key="index"
-                :position="marker.position"
-                @click='setMapMarket'/>
-        </gmap-cluster>
-
-        <gmap-marker
-            v-if="place && isAddingLocation"
-            label="★"
-            :position="{
-            lat: place.geometry.location.lat(),
-            lng: place.geometry.location.lng()}"
-            />
-
-    </gmap-map>
-
+        </div>
     </div>
 </template>
 
@@ -54,8 +62,7 @@
 import {mapState, mapActions, mapGetters} from 'vuex'
 
 
-import GmapCluster from 'vue2-google-maps/src/components/cluster' 
-
+import GmapCluster from 'vue2-google-maps/src/components/cluster'
 export default {
     name: 'GoogleMap',
     props: [],
@@ -69,7 +76,6 @@ export default {
             isAddingLocation: false,
             mapCenter: {lat: 38.624691, lng: -90.184776},
             mapZoom: 3,
-            market: {}
         }
     },
 
@@ -107,10 +113,6 @@ export default {
             let gps = {lat: this.place.geometry.location.lat(),
                        lng: this.place.geometry.location.lng()}
             this.setCenter(gps, 3)
-            // if not at default position at STL Arch at zoom 3 (view of USA), there is a searched position. Zoom in
-            if (this.mapCenter != {lat: 38.624691, lng: -90.184776}) {
-                this.mapZoom = 10
-            }
         },
         usePlace(place) {
             if (this.place) {
@@ -167,12 +169,12 @@ export default {
             let lat = e.latLng.lat()
             let lng = e.latLng.lng()
             let market = this.allMarkets.find(m => m.position.gps.lat === lat && m.position.gps.lng === lng)
-            this.market = market
             let gps = {
                 lat: lat,
                 lng: lng
             }
             this.setCenter(gps, 3)
+            this.$emit('setMapMarket', market)
         },
 
     },
@@ -195,8 +197,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 .gmap {
-    width: 600px; height: 300px;
+    width: 100%; height: 333px;
+}
+
+.border-navy {
+    border-style:solid;
+    border-color: #001f3f;
 }
 </style>
