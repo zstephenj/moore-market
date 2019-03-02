@@ -18,6 +18,9 @@
                 <li class="nav-item">
                     <router-link to="/dashboard" class="nav-link" >Dashboard</router-link>
                 </li>
+                <li class='nav-item'>
+                    <router-link to="/map" class="nav-link" > Map </router-link>
+                </li>
                 <li class="nav-item">
                     <router-link to="/product/add" class="nav-link" >Add Product</router-link>
                 </li>
