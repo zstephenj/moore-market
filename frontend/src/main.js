@@ -6,6 +6,7 @@ import router from './router'
 import store from './store';
 
 import geo from './geo'
+import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
