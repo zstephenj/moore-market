@@ -5,7 +5,7 @@
                 <h1 class="display-3 text-left">Moore Market</h1>
             </div>
         </div>
-        <nav class="navbar navbar-inverse navbar-static-top navbar-expand-lg navbar-light bg-light" style="background: linear-gradient(-90deg, #84CF6A, #16C080);">
+        <nav class="navbar  navbar-expand-lg navbar-light bg-light" style="background: linear-gradient(-90deg, #84CF6A, #16C080);">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
