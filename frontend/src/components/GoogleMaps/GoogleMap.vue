@@ -18,7 +18,7 @@
         </div>
 
         <div class='row justify-content-center'>
-            <gmap-map ref='mapRef' class='gmap mb-2' :zoom='mapZoom' :center='mapCenter' :options="{mapTypeControl: false}">
+            <gmap-map ref='mapRef' class='gmap mb-2' :zoom='3' :center='mapCenter' :options="{mapTypeControl: false}">
 
                 <gmap-cluster @click='clickCluster'>
                     <gmap-marker v-for="(marker, index) in markers"
@@ -57,7 +57,6 @@ export default {
             markers: [],
             place: null,
             mapCenter: {lat: 38.624691, lng: -90.184776},
-            mapZoom: 3,
         }
     },
 
@@ -83,7 +82,7 @@ export default {
             let map = await this.$refs.mapRef.$mapPromise
             map.panTo({lat: gps.lat, lng: gps.lng})
             if (zoom != 0) {
-                this.mapZoom = zoom
+                map.setZoom(zoom)
             }
         },
 
@@ -94,7 +93,8 @@ export default {
             this.place = place
             let gps = {lat: this.place.geometry.location.lat(),
                        lng: this.place.geometry.location.lng()}
-            this.setCenter(gps, 3)
+            
+            this.setCenter(gps, 10)
             this.$emit('change-map-place', place)
         },
         usePlace(place) {
@@ -156,7 +156,7 @@ export default {
                 lat: lat,
                 lng: lng
             }
-            this.setCenter(gps, 3)
+            this.setCenter(gps, 15)
             this.$emit('set-map-market', market)
         },
 
