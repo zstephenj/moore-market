@@ -8,12 +8,22 @@
 
             <div class='col-md-5 border-navy m-2'>
 
-                <google-map class='align-items-end' :isAddingLocation='isAddingLocation' @set-map-market='setMapMarket' @change-map-place='setMapPlace' > </google-map>
+                <google-map class='align-items-end' 
+                    :isAddingLocation='isAddingLocation'
+                    :filter='filter'
+                    @set-map-market='setMapMarket' 
+                    @change-map-place='setMapPlace'> 
+                </google-map>
 
             </div>
 
             <div class='col-md-2 m-2 d-flex flex-column'>
-                <map-sidebar :isMapPlace='isMapPlace' @clicked-set-location='changeIsAddingLocation' @clicked-confirm-location='confirmLocation'> </map-sidebar>
+                <map-sidebar 
+                    :isMapPlace='isMapPlace' 
+                    @clicked-set-location='changeIsAddingLocation' 
+                    @clicked-confirm-location='confirmLocation'
+                    @change-filter='changeFilter'> 
+                </map-sidebar>
             </div>
         </div>
     </div>
@@ -33,13 +43,12 @@ export default {
     data() {
         return {
             // from GoogleMap
-            market: {
-                name: 'Please Select A Market To Display'
-                
-            },
+            market: {},
             mapPlace: {},
             // from MapSidebar
             isAddingLocation: false,
+            filter: {},
+
             
         }
 
@@ -61,11 +70,11 @@ export default {
 
     methods:{
         // emitted events from GoogleMap
-        setMapMarket(e) {
-            this.market= e
+        setMapMarket(market) {
+            this.market= market
         },
-        setMapPlace(e) {
-            this.mapPlace = e
+        setMapPlace(place) {
+            this.mapPlace = place
         },
 
         // emitted events from MapSidebar
@@ -74,7 +83,11 @@ export default {
         },
         confirmLocation() {
             this.changeIsAddingLocation()   
+        },
+        changeFilter(filter) {
+            this.filter = filter
         }
+
     }
 }
 </script>

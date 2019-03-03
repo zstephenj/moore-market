@@ -2,11 +2,40 @@
     <div class="container-fluid d-flex h-100">
         <div class='row h-100'>
             
-            <div class="card sidebar-background h-100  d-flex flex-column flex-grow">
+            <div class="card sidebar-background h-100  d-flex flex-column flex-grow text-green">
                 <div class="card-body ">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    
+                    
+                    <h5 class="card-title"> Filter Markets </h5>
                     <div>
+                        Distance (mi): 
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="5">
+                        <label  class="form-check-label" for="inlineRadio1">5</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="15">
+                        <label class="form-check-label" for="inlineRadio2">15</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="30" >
+                        <label class="form-check-label" for="inlineRadio3">30</label>
+                        
+                    </div>
+                     <div class="form-check form-check-inline">
+                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="50"    >
+                        <label class="form-check-label" for="inlineRadio3">50</label>
+                        
+                    </div>
+                    <div class="form-check">
+                        <input @change='changeFilterFavoriteMarkets($event)' class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            My Favorite Markets
+                        </label>
+                    </div>
+                    <a class="badge badge-secondary">Reset Map</a>
+                    <div class='my-2'>
                         <div v-if='!isAddingLocation'>
                             <button @click='emitChangeAdding(0)' type='button' class='btn btn-warning'> Set My Location </button>
                         </div>
@@ -17,26 +46,8 @@
                             
                         </div>
                     </div>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
                 </div>
-                <div class='accordion' id='sidebar'>
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Filter Markets: 
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#sidebar">
-                            <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             
         </div>
@@ -50,6 +61,10 @@ export default {
     data() {
         return {
             isAddingLocation: false,
+            filter:{
+                byDistance: null,
+                byFavorite: false
+            }
         }
     },
 
@@ -70,8 +85,22 @@ export default {
             }
             this.changeIsAddingLocation()
         },
-        changeIsAddingLocation() {
+        emitChangeFilter() {
+            this.$emit('change-filter', this.filter)
+        },
+        changeFilterDistance(e) {
+            this.filter.byDistance = this.milesToMeters(e.target.value)
+            this.emitChangeFilter()
+        },
+        changeFilterFavoriteMarkets() {
+            this.filter.byFavorite = !this.filter.byFavorite
+            this.emitChangeFilter()
+        },
+        changeIsAddingLocation(e) {
             this.isAddingLocation = !this.isAddingLocation
+        },
+        milesToMeters(miles) {
+            return miles * 1609.34
         }
     }
 }
@@ -83,4 +112,7 @@ export default {
     width: 100%;
 }
 
+.text-green {
+    color: #84CF6A;
+}
 </style>

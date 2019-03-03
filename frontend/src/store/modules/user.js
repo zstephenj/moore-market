@@ -6,7 +6,7 @@ const user = {
             accountType: "farmer",
             isLoggedIn: true,
             location: [],
-            favoriteLocations: [],
+            favoriteMarkets: [1,3,5],
         },
     },
 
