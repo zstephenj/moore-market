@@ -38,6 +38,8 @@
           <input id="quantity" type="number" class="form-control" v-model.number="product.quantity" />
         </div>
       </div>
+      <div v-if="errors.quantityError" class="col-md-6 centered alert alert-danger">{{ errors.quantityErrorMsg }}
+        </div>
 
       <div class="form-group row justify-content-center">
         <label for="price" class="col-md-2 col-form-label left-align">Price:</label>
@@ -214,6 +216,13 @@ export default {
         this.errors.priceErrorMsg = noErrorMsg
         this.errors.priceError = false
       }
+      if(this.product.quantity === 0) {
+        this.errors.quantityErrorMsg = 'Please set a quantity'
+        this.errors.quantityError = true
+      } else {
+        this.errors.quantityErrorMsg = noErrorMsg
+        this.errors.quantityError = false
+      }
       if(this.product.isPerishable) {
         let errorMsg = 'Please provide a shelf life'
         if(this.keepRoom && this.product.shelfLifeRoom === '') {
@@ -247,6 +256,7 @@ export default {
       }
       if(!this.checkErrors()) {
         this.product.userId = this.currentUser.id
+        console.log(this.product)
         if(this.formType === 'add') {
           let res = await this.addNewProduct(this.product)
           if (res.data) {
@@ -322,6 +332,8 @@ export default {
         categoryErrorMsg: '',
         priceError: false,
         priceErrorMsg: '',
+        quantityError: false,
+        quantityErrorMsg: '',
         keepRoomError: false,
         keepRoomErrorMsg: '',
         keepFridgeError: false,
