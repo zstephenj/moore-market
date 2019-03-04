@@ -1,36 +1,22 @@
 <template>
     <div v-if='getProductById(productIds[0])' class='container-fluid'>
 
-        <div v-for='num in numProductIds' :key='num'>
 
-            <div v-if='((num + 2) % 3) === 0'>
+        <div class='row'>
 
-                <div class='row'>
-
-                    <div class='col-md-3'>
-                        <product-search-item :product='getProductById(productIds[num-1])'> </product-search-item>
-                    </div>
-
-                    <div class='col-md-3'>
-                        <product-search-item v-if='(num + 1) <= numProductIds' :product='getProductById(productIds[num])'> </product-search-item>
-                    </div>
-                    
-                    <div class='col-md-3'>
-                        <product-search-item v-if='(num + 2) <= numProductIds' :product='getProductById(productIds[num+1])'> </product-search-item>
-                    </div>
-
-                </div>
-
+            <div v-for='productId in productIds' :key='productId' class='col-md-4'>
+                <product-search-item :product='getProductById(productId)'> </product-search-item>
             </div>
 
         </div>
+
 
     </div>
 </template>
 
 <script>
-import axios from 'axios'
 import {mapGetters, mapActions} from 'vuex'
+    
 import ProductSearchItem from './ProductSearchItem.vue'
 
 export default {
@@ -47,15 +33,10 @@ export default {
         }
     },
 
-    created() {
-        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        let db = '2'
-        this.getAllProductsFromTest(db)
+    async created() {
+        await this.getAllProductsFromApi()
     },
     computed: {
-        numProductIds(){
-            return this.productIds.length
-        },
         ...mapGetters('product', [
             'getProductById'
         ])
@@ -63,7 +44,7 @@ export default {
 
     methods: {
         ...mapActions('product', [
-            'getAllProductsFromTest'
+            'getAllProductsFromApi'
         ])
     }
 

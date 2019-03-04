@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if='getProductById(productIds[0])'>
-                    <farmer-product-item v-for='id in productIds' :key='id' :product='getProductById(id)'> </farmer-product-item>
+                <template v-if='this.currentUser.products.length > 0'>
+                    <farmer-product-item v-for='product of this.currentUser.products' :key='product.id' :product='product'> </farmer-product-item>
                 </template>
             </tbody>
         </table>
@@ -21,11 +21,9 @@
 </template>
 
 <script>
+import {mapActions, mapGetters, mapState} from 'vuex'
+
 import FarmerProductItem from './FarmerProductItem.vue'
-
-import {mapActions, mapGetters} from 'vuex'
-import axios from 'axios'
-
 export default {
     name: 'FarmerProductDash',
     components: {
@@ -34,26 +32,35 @@ export default {
     
     data() {
         return {
-            productIds: [1,2,3,4,5,66,77,88,99,111,222,333]
+            
         }
     },
 
     computed: {
-        ...mapGetters('product', [
-            'getProductById'
-        ])
+        ...mapState('product', [
+            'allProducts'
+        ]),
+        ...mapState('user', [
+            'currentUser'
+        ]),
+        
+        
     },
 
     methods: {
         ...mapActions('product', [
-            'getAllProductsFromTest'
-        ])
+            'getAllProductsFromApi'
+        ]),
+        ...mapActions('user', [
+            'getUserProducts'
+        ]),
+        
+
     },
 
-    created() {
-        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        let db = '2'
-        this.getAllProductsFromTest(db)
+    async created() {
+        await this.getAllProductsFromApi()
+        await this.getUserProducts(this.currentUser.id)
         
     },
 }

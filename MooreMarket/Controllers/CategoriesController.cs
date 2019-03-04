@@ -8,7 +8,7 @@ using MooreMarket.Models;
 
 namespace MooreMarket.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
@@ -94,7 +94,7 @@ namespace MooreMarket.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(GetCategory), new { id = id});
+            return Ok(category);
         }
 
         //DELETE Categories/Remove/{id}

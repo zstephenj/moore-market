@@ -14,7 +14,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import axios from 'axios'
 
 import ProductForm from './ProductForm.vue'
 
@@ -37,7 +36,7 @@ export default {
 
   methods: {
     ...mapActions('product', [
-      'getAllProductsFromTest'
+      'getAllProductsFromApi'
     ]),
 
     
@@ -52,10 +51,8 @@ export default {
           }
     },
 
-  created() {
-        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        let db = '2'
-        this.getAllProductsFromTest(db)
+  async created() {
+        await this.getAllProductsFromApi()
         
     },
   
