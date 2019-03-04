@@ -141,6 +141,7 @@ export default {
 
         async removeProduct() {
             await this.removeProductById(this.product.id)
+            await this.getUserProducts(this.currentUser.id)
         },
 
         async editProduct(changedProperty) {

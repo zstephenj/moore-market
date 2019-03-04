@@ -170,6 +170,9 @@ export default {
   computed: {
     ...mapState('category', [
       'allCategories'
+    ]),
+    ...mapState('user', [
+      'currentUser'
     ])
   },
   methods: {
@@ -243,7 +246,7 @@ export default {
         }
       }
       if(!this.checkErrors()) {
-        
+        this.product.userId = this.currentUser.id
         if(this.formType === 'add') {
           let res = await this.addNewProduct(this.product)
           if (res.data) {
