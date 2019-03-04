@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapState} from 'vuex'
 
 import FarmerProductItem from './FarmerProductItem.vue'
 export default {
@@ -32,11 +32,16 @@ export default {
     
     data() {
         return {
-            productIds: [1,2,3,4,5,66,77,88,99,111,222,333]
         }
     },
 
     computed: {
+        ...mapState('product', [
+            'allProducts'
+        ]),
+        ...mapState('user', [
+            'currentUser'
+        ]),
         ...mapGetters('product', [
             'getProductById'
         ])
@@ -48,8 +53,8 @@ export default {
         ])
     },
 
-    created() {
-        this.getAllProductsFromApi()
+    async created() {
+        await this.getAllProductsFromApi()
         
     },
 }

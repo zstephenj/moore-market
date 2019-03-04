@@ -130,20 +130,23 @@ export default {
             }
 
             else {
-                let newCategory = this.formCategoryNew
+                let newCategory = {name: this.formCategoryNew}
+                console.log(this.allCategories)
+                console.log(newCategory)
                 let response = await this.addNewCategory(newCategory)
                 if (response.status === 201) {
                     this.isAdding = false
                 }
                 else {
                     //backend validation failed, display error?
+                    console.log('backend rejected')
                 }
             }
         }
     },
 
-    created() {
-        this.getAllCategoriesFromApi()
+    async created() {
+        await this.getAllCategoriesFromApi()
     }
 }
 </script>

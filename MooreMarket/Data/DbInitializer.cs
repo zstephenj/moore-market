@@ -8,6 +8,7 @@ namespace MooreMarket.Data
     {
         public static void Initialize(MooreMarketContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             if (context.Users.Count() == 0)

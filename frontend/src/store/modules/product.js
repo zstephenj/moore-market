@@ -79,8 +79,8 @@ const product = {
                 // response = await axios.put('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/' + product.id, product)
                 // Comment next line if using FakeJSON
                 response = await axios.put('/api/products/edit/'+ product.id, product)
-                let idx = getters.getProductIndex(response)
-                let payload = {'idx':idx, 'product':response}
+                let idx = getters.getProductIndex(response.data.id)
+                let payload = {'idx':idx, 'product':response.data}
                 commit('addEditedProduct', payload)
                 return response
             } catch(error) {
