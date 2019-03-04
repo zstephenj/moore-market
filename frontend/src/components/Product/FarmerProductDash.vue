@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if='productIds.some(getProductById)'>
-                    <farmer-product-item v-for='id in productIds' :key='id' :product='getProductById(id)'> </farmer-product-item>
+                <template v-if='this.currentUser.products.length > 0'>
+                    <farmer-product-item v-for='product of this.currentUser.products' :key='product.id' :product='product'> </farmer-product-item>
                 </template>
             </tbody>
         </table>
@@ -32,6 +32,7 @@ export default {
     
     data() {
         return {
+            
         }
     },
 
@@ -42,19 +43,24 @@ export default {
         ...mapState('user', [
             'currentUser'
         ]),
-        ...mapGetters('product', [
-            'getProductById'
-        ])
+        
+        
     },
 
     methods: {
         ...mapActions('product', [
             'getAllProductsFromApi'
-        ])
+        ]),
+        ...mapActions('user', [
+            'getUserProducts'
+        ]),
+        
+
     },
 
     async created() {
         await this.getAllProductsFromApi()
+        await this.getUserProducts(this.currentUser.id)
         
     },
 }

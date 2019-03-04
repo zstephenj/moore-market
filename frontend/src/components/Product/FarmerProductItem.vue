@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
     name: 'FarmerProductItem',
@@ -122,7 +122,11 @@ export default {
             }
         }
     },
-
+    computed: {
+        ...mapState('user', [
+            'currentUser'
+        ])
+    },
     methods: {
         changeIsEditingPrice(){
             this.isEditing.price = !this.isEditing.price
@@ -163,6 +167,7 @@ export default {
             }
             
             let response = await this.editProductById(editedProduct)
+            await this.getUserProducts(this.currentUser.id)
             
             if (response.status === 400) {
                 //Failed backend validation
@@ -224,6 +229,9 @@ export default {
         ...mapActions('product', [
             'editProductById',
             'removeProductById'
+        ]),
+        ...mapActions('user', [
+            'getUserProducts'
         ])
     }
 }
