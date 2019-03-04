@@ -66,6 +66,7 @@ const market = {
                 response = await axios.put('http://my-json-server.typicode.com/zstephenj/moore-market-fakeJSON2/markets/' + market.id, market)
                 // Comment next line if using FakeJSON
                 // response = await axios.put('/api/markets/edit/' + id)
+                // Change market to response.data
                 let idx = getters.getMarketIndex(market.id)
                 let payload = {'idx':idx, 'market': market}
                 commit('editMarketByIndex', payload)

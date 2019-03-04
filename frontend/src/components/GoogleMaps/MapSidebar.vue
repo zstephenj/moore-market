@@ -11,36 +11,36 @@
                         Distance (mi): 
                     </div>
                     <div class="form-check form-check-inline">
-                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="5">
+                        <input v-model='byDistance' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" :value="8046.7" :disabled='!isUserLocation'>
                         <label  class="form-check-label" for="inlineRadio1">5</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="15">
+                        <input v-model='byDistance' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" :value="24140.1" :disabled='!isUserLocation'>
                         <label class="form-check-label" for="inlineRadio2">15</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="30" >
+                        <input v-model='byDistance' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" :value="48280.2" :disabled='!isUserLocation'>
                         <label class="form-check-label" for="inlineRadio3">30</label>
                         
                     </div>
                      <div class="form-check form-check-inline">
-                        <input @input='changeFilterDistance($event)' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="50"    >
+                        <input v-model='byDistance' class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" :value="80467" :disabled='!isUserLocation'>
                         <label class="form-check-label" for="inlineRadio3">50</label>
                         
                     </div>
                     <div class="form-check">
-                        <input @change='changeFilterFavoriteMarkets($event)' class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <input v-model='byFavorite' class="form-check-input" type="checkbox" :value="true" id="defaultCheck1">
                         <label class="form-check-label" for="defaultCheck1">
                             My Favorite Markets
                         </label>
                     </div>
-                    <a class="badge badge-secondary">Reset Map</a>
+                    <a @click='resetMap()' class="badge badge-secondary">Reset Map</a>
                     <div class='my-2'>
-                        <div v-if='!isAddingLocation'>
+                        <div v-if='!isSettingLocation'>
                             <button @click='emitChangeAdding(0)' type='button' class='btn btn-warning'> Set My Location </button>
                         </div>
 
-                        <div v-if='isAddingLocation' class='d-flex justify-content-around'>
+                        <div v-if='isSettingLocation' class='d-flex justify-content-around'>
                             <button @click='emitChangeAdding(1)' type='button' class='btn btn-success'> Confirm </button>
                             <button @click='emitChangeAdding(0)' type='button' class='btn btn-secondary'> Cancel </button>
                             
@@ -55,19 +55,41 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
     name: 'MapSidebar',
     props: ['isMapPlace'],
     data() {
         return {
-            isAddingLocation: false,
-            filter:{
-                byDistance: null,
-                byFavorite: false
-            }
+            isSettingLocation: false,
+            byDistance: null,
+            byFavorite: false
         }
     },
+    computed: {
+        ...mapState('user', [
+            'currentUser'
+        ]),
 
+        filter() {
+            let newFilter = {}
+            if (this.byDistance != undefined) {
+                newFilter.byDistance = this.byDistance
+            }
+            else {
+                newFilter.byDistance = null
+            }
+            newFilter.byFavorite = this.byFavorite
+            console.log(newFilter)
+            this.$emit('change-filter', newFilter)
+            return newFilter
+        },
+        isUserLocation() {
+            let location = Object.keys(this.currentUser.location)
+            return (location.length != 0 ? true: false)
+        }
+    },
     methods: {
         emitChangeAdding(confirmed) {
             if (confirmed === 0) {
@@ -83,25 +105,18 @@ export default {
                     this.$emit('clicked-confirm-location')    
                 }
             }
-            this.changeIsAddingLocation()
+            this.changeIsSettingLocation()
         },
-        emitChangeFilter() {
-            this.$emit('change-filter', this.filter)
-        },
-        changeFilterDistance(e) {
-            this.filter.byDistance = this.milesToMeters(e.target.value)
-            this.emitChangeFilter()
+        resetMap() {
+            this.byDistance= null,
+            this.byFavorite= false
         },
         changeFilterFavoriteMarkets() {
             this.filter.byFavorite = !this.filter.byFavorite
-            this.emitChangeFilter()
         },
-        changeIsAddingLocation(e) {
-            this.isAddingLocation = !this.isAddingLocation
+        changeIsSettingLocation(e) {
+            this.isSettingLocation = !this.isSettingLocation
         },
-        milesToMeters(miles) {
-            return miles * 1609.34
-        }
     }
 }
 </script>

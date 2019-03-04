@@ -9,10 +9,10 @@
             <div class='col-md-5 border-navy m-2'>
 
                 <google-map class='align-items-end' 
-                    :isAddingLocation='isAddingLocation'
-                    :filter='filter'
+                    :sidebar='sidebar'
                     @set-map-market='setMapMarket' 
-                    @change-map-place='setMapPlace'> 
+                    @change-map-place='setMapPlace'
+                    @change-is-confirming-location='changeIsConfirmingLocation'> 
                 </google-map>
 
             </div>
@@ -20,7 +20,7 @@
             <div class='col-md-2 m-2 d-flex flex-column'>
                 <map-sidebar 
                     :isMapPlace='isMapPlace' 
-                    @clicked-set-location='changeIsAddingLocation' 
+                    @clicked-set-location='changeIsSettingLocation' 
                     @clicked-confirm-location='confirmLocation'
                     @change-filter='changeFilter'> 
                 </map-sidebar>
@@ -45,9 +45,12 @@ export default {
             // from GoogleMap
             market: {},
             mapPlace: {},
-            // from MapSidebar
-            isAddingLocation: false,
-            filter: {},
+            // from MapSidebar to GoogleMap
+            sidebar: {
+                isSettingLocation: false,
+                isConfirmingLocation: false,
+                filter: {},
+            }
 
             
         }
@@ -76,16 +79,20 @@ export default {
         setMapPlace(place) {
             this.mapPlace = place
         },
+        changeIsConfirmingLocation() {
+            this.sidebar.isSettingLocation = false
+            this.sidebar.isConfirmingLocation = false
+        },
 
         // emitted events from MapSidebar
-        changeIsAddingLocation() {
-            this.isAddingLocation = !this.isAddingLocation
+        changeIsSettingLocation() {
+            this.sidebar.isSettingLocation = !this.sidebar.isSettingLocation
         },
         confirmLocation() {
-            this.changeIsAddingLocation()   
+            this.sidebar.isConfirmingLocation = !this.sidebar.isConfirmingLocation
         },
         changeFilter(filter) {
-            this.filter = filter
+            this.sidebar.filter = filter
         }
 
     }

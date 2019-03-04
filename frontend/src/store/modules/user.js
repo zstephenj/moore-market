@@ -5,7 +5,7 @@ const user = {
             username: "user",
             accountType: "farmer",
             isLoggedIn: true,
-            location: [],
+            location: {},
             favoriteMarkets: [1,3,5],
         },
     },
@@ -16,8 +16,8 @@ const user = {
             state.currentUser = payload
         },
 
-        pushLocation (state, payload) {
-            state.currentUser.location.push(payload)
+        setUserLocation (state, payload) {
+            state.currentUser.location = payload
         },
 
         removeLocation (state, payload) {
@@ -43,15 +43,15 @@ const user = {
 
         },
 
-        async addLocation({ commit }, location) {
+        async setLocation({ commit }, location) {
             let response
             try {
                 // Comment next line if using backend database
                 // response = await axios.post('http://my-json-server.typicode.com/zstephenj/moore-market-fakeJSON-categories/categories', location)
                 // Comment next line if using FakeJSON
                 // response = await axios.post('/api/categories/add')
-                commit('pushLocation', location)//response.data)
-                return response
+                commit('setUserLocation', location)//response.data)
+                return location//response
             } catch (error) {
                 console.error(error)
             }

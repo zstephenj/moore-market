@@ -21,14 +21,14 @@
             <gmap-map ref='mapRef' class='gmap mb-2' :zoom='3' :center='mapCenter' :options="{mapTypeControl: false}">
 
                 <gmap-cluster @click='clickCluster'>
-                    <gmap-marker v-for="(marker, index) in markers"
+                    <gmap-marker v-for="(marker, index) of markers"
                         :key="index"
-                        :position="markers[index].position"
+                        :position="marker.position"
                         @click='setMapMarket'/>
                 </gmap-cluster>
 
                 <gmap-marker
-                    v-if="place && isAddingLocation"
+                    v-if="place && sidebar.isSettingLocation"
                     label="★"
                     :position="{
                     lat: place.geometry.location.lat(),
@@ -49,7 +49,7 @@ import GmapCluster from 'vue2-google-maps/src/components/cluster'
 import {gmapApi} from 'vue2-google-maps'
 export default {
     name: 'GoogleMap',
-    props: ['isAddingLocation', 'filter'],
+    props: ['sidebar'],
     components: {
         GmapCluster
     },
@@ -58,6 +58,7 @@ export default {
             markets: [],
             place: null,
             mapCenter: {lat: 38.624691, lng: -90.184776},
+            oldFilter: {},
         }
     },
 
@@ -69,21 +70,39 @@ export default {
             'allMarkets',
         ]),
         google: gmapApi,
+        isConfirmingLocation() {
+            return this.sidebar.isConfirmingLocation
+        },
+        filter () {
+            return this.sidebar.filter
+        },
         markers() {
             let markers = []
-            for (let idx in this.markets) {
-                let gps = this.markets[idx].position.gps
-                let title = this.markets[idx].name
+            for (let market of this.markets) {
+                let gps = market.position.gps
+                let title = market.name
                 let marker = {position: gps, title: title}
                 markers.push(marker)
             }
             return markers
+        },
+        searchArea() {
+            let userGps = this.currentUser.location.gps
+            let searchArea = {
+                strokeColor: '#FF0000',
+                strokeOpacity: 0,
+                strokeWeight: 2,
+                center : userGps,
+                radius : this.sidebar.filter.byDistance
+            }
+            searchArea = new google.maps.Circle(searchArea)
+            return searchArea
         }
     },
 
     methods: {
         ...mapActions('user', [
-            'addLocation'
+            'setLocation'
         ]),
         ...mapActions('market', [
             'getAllMarketsFromApi'
@@ -130,21 +149,8 @@ export default {
             this.setCenter(gps, 0)
         },
 
-        changeIsAddingLocation() {
-            this.isAddingLocation = !this.isAddingLocation
-        },
-        async addNewLocation() {
-            if (!this.place) {
-                console.log('error')
-                return false
-            }
-            else {
-                let newLocation = this.getPlacePosition()
-                await this.addLocation(newLocation)
-                this.setCenter(gps, 10)
-                this.changeIsAddingLocation()
-                
-            }
+        emitChangeIsConfirmingLocation() {
+            this.$emit('change-is-confirming-location')
         },
         async addNewMarket() {
             if (this.place === 12345) {
@@ -182,48 +188,75 @@ export default {
             this.$emit('set-map-market', market)
         },
         filterMarketsByFavorite(market) {
-            for(let idx in this.currentUser.favoriteMarkets) {
-                let fm = this.currentUser.favoriteMarkets
-                if (fm[idx] === market.id)
+            for(let favoriteMarketId of this.currentUser.favoriteMarkets) {
+                if (favoriteMarketId === market.id)
                     return true
             }
             return false
         },
-        filterMarketsByDistance(distance) {
-            for (idx in this.markets) {
-
+        filterMarketsByDistance(market) {
+            let lat = market.position.gps.lat
+            let lng = market.position.gps.lng
+            let point = new google.maps.LatLng(lat, lng)
+            console.log(point)
+            let userPoint = new google.maps.LatLng(this.currentUser.location.gps,lat, this.currentUser.location.gps.lng)
+            let distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(point, userPoint)
+            console.log(distanceBetween)
+            if (distanceBetween < this.sidebar.filter.byDistance) {
+                return true
+            }
+            else {
+                return false
             }
         },
         
     },
     watch: {
         filter: {
-            handler: async function (filter, oldFilter) {
-                let map = await this.$refs.mapRef.$mapPromise
-                if (filter.byFavorite === true) {
-                    let filteredMarkets = this.markets.filter(this.filterMarketsByFavorite)
-                    this.markets = filteredMarkets
-                    console.log(filteredMarkets)
-                }
-                if (filter.byDistance !=  oldFilter.byDistance) {
-                    this.filterMarketsByDistance(filter.byDistance)
-                }
+            handler: 
+                function (filter) {
                 
-            },
+                    console.log('filtering')
+                    this.markets = this.allMarkets
+                    console.log(filter)
+                    if (filter.byFavorite === true) {
+                        console.log('filter favs')
+                        let filteredMarkets = this.markets.filter(this.filterMarketsByFavorite)
+                        this.markets = filteredMarkets
+                        console.log(filteredMarkets)
+                    }
+                    if (filter.byDistance != null) {
+                        if (Object.keys(this.currentUser.location).length != 0) {
+                            console.log('filtering distance')
+                            let filteredMarkets = this.markets.filter(this.filterMarketsByDistance)
+                            console.log(filteredMarkets)
+                            this.markets = filteredMarkets
+                        }
+                    }
+                },
             deep: true
+        },
+        isConfirmingLocation: 
+                async function (isConfirmingLocation) {
+                    if (this.place) {
+                    let newLocation = this.getPlacePosition()
+                    let response = await this.setLocation(newLocation)
+                    console.log(response)
+                    //change to response.data
+                    this.setCenter(response.gps, 10)
+                    this.emitChangeIsConfirmingLocation()
+                }
         }
     },
     async mounted() {
         let response = await this.getAllMarketsFromApi()
 
-        for(let idx in response.data) {
-            let market = response.data[idx]
+        for(let market of response.data) {
             this.markets.push(market)
         }
         
-        if (this.currentUser.location.length != 0) {
-            this.location = this.currentUser.location[0]
-            this.mapZoom = 10
+        if (this.currentUser.location.gps) {
+            this.setCenter(this.currentUser.location.gps, 10)
         }
     }
 
@@ -232,6 +265,11 @@ export default {
 </script>
 
 <style scoped>
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
 .gmap {
     width: 100%; height: 333px;
