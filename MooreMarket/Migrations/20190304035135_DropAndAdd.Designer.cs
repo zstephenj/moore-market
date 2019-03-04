@@ -8,21 +8,22 @@ using MooreMarket.Data;
 namespace MooreMarket.Migrations
 {
     [DbContext(typeof(MooreMarketContext))]
-    [Migration("20190211010852_Init")]
-    partial class Init
+    [Migration("20190304035135_DropAndAdd")]
+    partial class DropAndAdd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("MooreMarket.Models.Product", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryID");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Description");
 
@@ -48,28 +49,32 @@ namespace MooreMarket.Migrations
 
                     b.Property<string>("ShelfLifeRoom");
 
-                    b.HasKey("ID");
+                    b.Property<int>("UserId");
 
-                    b.HasIndex("CategoryID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("MooreMarket.Models.ProductCategory", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("MooreMarket.Models.UserModel", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccountType");
@@ -78,7 +83,7 @@ namespace MooreMarket.Migrations
 
                     b.Property<string>("Username");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
@@ -86,8 +91,13 @@ namespace MooreMarket.Migrations
             modelBuilder.Entity("MooreMarket.Models.Product", b =>
                 {
                     b.HasOne("MooreMarket.Models.ProductCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MooreMarket.Models.UserModel", "User")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryID")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
