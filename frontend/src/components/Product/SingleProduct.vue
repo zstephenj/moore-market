@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if='product' class='container-fluid moore-gradient moore-navy'>
+    <div v-if='product.length != 0' class='container-fluid moore-gradient moore-navy'>
 
         <div class='row align-items-start justify-content-center'>
 
@@ -66,7 +66,7 @@
                 <div class='my-3'>
 
                     <h5> Price: 
-                        <span class='font-weight-bold font-size-24'> ${{product.price}} </span>
+                        <span class='font-weight-bold font-size-24'> {{Number(product.price).toFixed(2)}} </span>
 
                         <span v-if='product.quantity > 10' class="badge badge-success">In Stock</span>
                         <span v-else-if='product.quantity === 0' class="badge badge-danger">Out of Stock</span>
