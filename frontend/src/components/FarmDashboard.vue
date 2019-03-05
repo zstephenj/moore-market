@@ -4,19 +4,20 @@
           <h1>Vendor-Mart</h1>
       </div>
 
-      <div class="card-deck mx-2">
-        <FeedBox :messages="messages"></FeedBox>
+      <div class='row justify-content-center m-3'>
 
         <div class="card">
           <div class="card-body">
-            <p><router-link to="/product/add"><button type="button" class="btn btn-success btn-lg">Add New Item</button></router-link></p>
-            <button type="button" class="btn btn-success btn-lg" disabled>Add New Category</button>
+            <router-link to="/product/add"><button type="button" class="btn btn-success btn-lg mx-3">Add New Item</button></router-link>
+            <router-link to='/categories'> <button type="button" class="btn btn-success btn-lg" > Manage Categories </button> </router-link>
           </div>
         </div>
-        <SummaryBox :sumBoxMessages="sumBoxMessages"></SummaryBox>
+        
         
       </div>
-
+      
+      <SummaryBox :sumBoxMessages="sumBoxMessages" class='m-3'></SummaryBox>
+      
       <div class=farmerNav>
       </div>
       
@@ -26,15 +27,12 @@
 </template>
 
 <script>
-import FeedBox from '../components/FeedBox.vue';
 import SummaryBox from '../components/SummaryBox.vue';
 import FarmerProductDash from '../components/Product/FarmerProductDash.vue'
-import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'FarmDashboard',
   components: {
-      'FeedBox': FeedBox,
       'SummaryBox': SummaryBox,
       FarmerProductDash
 

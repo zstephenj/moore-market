@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MooreMarket.Controllers
 {
-  [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

@@ -13,6 +13,7 @@
             </thead>
             <tbody>
                 <farmer-product-item v-for='product in farmerProducts.products' :key='product.id' :product='product'> </farmer-product-item>
+
             </tbody>
         </table>
     </div>
@@ -22,7 +23,7 @@
 import FarmerProductItem from './FarmerProductItem.vue'
 import { mapActions, mapState } from 'vuex'
 
-
+import FarmerProductItem from './FarmerProductItem.vue'
 export default {
     name: 'FarmerProductDash',
     components: {
@@ -48,10 +49,21 @@ export default {
         ])
     },
 
-    created() {
-        // Fills store state with data from fakeJSON API rather than calling store actions to fill state.Product.AllProducts
-        this.getFarmerProducts(this.id)
-        console.log(this.farmerProducts)      
+    methods: {
+        ...mapActions('product', [
+            'getAllProductsFromApi'
+        ]),
+        ...mapActions('user', [
+            'getUserProducts'
+        ]),
+        
+
+    },
+
+    async created() {
+        await this.getAllProductsFromApi()
+        await this.getUserProducts(this.currentUser.id)
+        
     },
 }
 </script>

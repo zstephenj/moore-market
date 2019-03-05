@@ -21,6 +21,9 @@ const user = {
     mutations: {
     },
     actions: {
+      registerUser({ commit, state }, user) {
+
+      }
     },
     getters: {
     },

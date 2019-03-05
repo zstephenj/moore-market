@@ -1,5 +1,4 @@
 <template>
-
     <div class='container-fluid moore-gradient moore-navy'>
 
         <div class='row align-items-start justify-content-center'>
@@ -9,7 +8,7 @@
                 <div class='my-4'>
 
                     <img :src='product.image' >
-                    <hr style='border-color: #001f3f' />
+                    <hr class='border-color-navy' />
 
                 </div>
 
@@ -17,12 +16,12 @@
 
                     <div>
 
-                        <h5 align='left' style='font-weight: 588;'> About this item:  </h5>
-                        <p style='text-align:left;'> {{product.description}} </p>
+                        <h5 align='left' class='font-weight-bold'> About this item:  </h5>
+                        <p class='text-left'> {{product.description}} </p>
 
                         <div v-if='product.isPerishable === 1'>
 
-                            <h6 align='left' style='text-indent: 1em; font-weight: 555;'> Food Storage Recommendations
+                            <h6 align='left' class='font-weight-bold indent-1'> Food Storage Recommendations
 
                                 <a v-if='!showStorage' @click='changeShowStorage()'  class="badge badge-pill badge-success ml-3">Show Info</a>
                                 <a v-if='showStorage' @click='changeShowStorage()'  class="badge badge-pill badge-success ml-3">Hide Info</a>
@@ -31,15 +30,15 @@
 
                             <div v-show='showStorage'>
 
-                                <h6 v-if='product.keepRoom === 1' align='left' style='text-indent: 2em; font-weight: 444;'> Room Temperature: 
+                                <h6 v-if='product.keepRoom === 1' align='left' class='indent-2'> Room Temperature: 
                                     <span> {{product.shelfLifeRoom}} </span>
                                 </h6>
 
-                                <h6 v-if='product.keepFridge === 1' align='left' style='text-indent: 2em; font-weight: 444;'> Refrigerator: 
+                                <h6 v-if='product.keepFridge === 1' align='left' class='indent-2'> Refrigerator: 
                                     <span> {{product.shelfLifeRoom}} </span>
                                 </h6>
 
-                                <h6 v-if='product.keepFreezer === 1' align='left' style='text-indent: 2em; font-weight: 444;'> Freezer: 
+                                <h6 v-if='product.keepFreezer === 1' align='left' class='indent-2'> Freezer: 
                                     <span> {{product.shelfLifeRoom}} </span>
                                 </h6>
 
@@ -47,7 +46,7 @@
 
                         </div>
 
-                        <hr style='border-color: #001f3f' />
+                        <hr class='border-color-navy' />
 
                     </div>
 
@@ -55,18 +54,18 @@
 
             </div>
 
-            <div class='col-md-4' style='text-align:left;'>
+            <div class='col-md-4 text-left'>
 
                 <div class='my-4'>
 
-                    <h3 style='font-weight: 555; text-align:left;'> {{product.name}} </h3>
+                    <h3 class='font-weight-bold'> {{product.name}} </h3>
 
                 </div>
 
                 <div class='my-3'>
 
                     <h5> Price: 
-                        <span style='font-size: 24px; font-weight: 588;'> ${{product.price}} </span>
+                        <span class='font-weight-bold font-size-24'> ${{product.price}} </span>
 
                         <span v-if='product.quantity > 10' class="badge badge-success">In Stock</span>
                         <span v-else-if='product.quantity === 0' class="badge badge-danger">Out of Stock</span>
@@ -80,7 +79,7 @@
                 <form>
 
                     <div class='form-group row my-4'>
-                        <label for='addCartQuantity' class='col-md-2 col-form-label' style='font-size: 18px;'>Quantity: </label>
+                        <label for='addCartQuantity' class='col-md-2 col-form-label font-size-18'>Quantity: </label>
                         <div class='col-md-3'>
                             <input type='number' class='form-control' id='addCartQuantity' value='1'>
                         </div>
@@ -92,7 +91,7 @@
                     
                 </form>
 
-                <hr style='border-color: #001f3f' />
+                <hr class='border-color-navy' />
 
                 <!-- Add Farmer info div, pull in product.farmerID & product.farmer, href to farmer store etc. -->
 
@@ -105,7 +104,7 @@
             <div class='col-md-6 '>
 
                 <div class='ml-3'>
-                    <h5 align='left' style='font-weight: 588;'> Other products in {{product.category.name}}: </h5>
+                    <h5 align='left' class='font-weight-bold'> Other products in {{product.category.name}}: </h5>
                     <!-- Add ProductSearchResult cards? -->
                 </div>
 
@@ -155,6 +154,24 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.font-size-18 {
+    font-size:18px;
+}
+.font-size-24 {
+    font-size:24px;
+}
+
+.border-color-navy {
+    border-color: #001f3f;
+}
+
+.indent-1 {
+    text-indent: 1em;
+}
+.indent-2{
+    text-indent: 1em;
+}
 
 </style>
