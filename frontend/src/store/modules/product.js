@@ -86,7 +86,7 @@ const product = {
             } catch(error) {
                 console.error(error)
             }
-        }
+        },
         async editProductById({ commit, getters }, product) {
             let response
             try{
