@@ -21,19 +21,83 @@
                 <span class='ml-2'><a class='badge badge-info'>Favorite</a></span> 
                 <span class='ml-2'><a class='badge badge-warning'>Favorited</a></span> 
                 <span class='ml-2'><a class='badge badge-warning'>Add to My Markets</a></span>     
-                <span class='ml-2'><a class='badge badge-warning'>Add to Favorite Market</a></span> 
+                <span class='ml-2'><a class='badge badge-warning'>Search Market Products</a></span> 
             </div>
 
+            <hr class='border-navy' />
+            <h4> Farmers at this Market: </h4>
+            <div v-if='numCarousels > 0' id="carousel" class="carousel slide" data-ride="carousel">
+                
+                <div class="carousel-inner ">
+                    <div v-for='num in Object.keys(carouselFarmersIds).length' :key='"car" + num' class="carousel-item" :class='{active: num === 1}'>
+                        
+                            <div class='row justify-content-center' v-for='farmer in carouselFarmersIds[num-1].length' :key='farmer'>
+
+                                    <router-link-button type='farmer' :item='carouselFarmersIds[num-1][farmer-1]' :buttonText='carouselNames[num-1][farmer-1]' class='my-3'> </router-link-button>
+                                
+                            </div>
+                        
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <!-- <div v-for='idx in market.farmersNames' :key='idx'>
+                <router-link-button type='farmer' :item='market.farmersIds[idx]' :buttonText='market.farmersNames[idx]'> </router-link-button>
+             </div> -->
         </div>
 
     </div>
 </template>
 
 <script>
+import RouterLinkButton from '../RouterLinkButton.vue'
+
 export default {
     name: 'MapMarket',
     props: ['market'],
-
+    components: {
+        RouterLinkButton
+    },
+    data() {
+        return {
+            url: '../farmers/',
+            carouselNames: {},
+            carouselFarmersIds: {}
+        }
+    },
+    computed: {
+        numCarousels() {
+            let num
+            if (Object.keys(this.market).length != 0) {
+                num = Math.ceil(this.market.farmersIds.length / 4)
+                for (let i = 0; i < num; i++) {
+                    let farmersIds = []
+                    farmersIds = this.market.farmersIds.slice(i*4, (i+1)*4)
+                    this.carouselFarmersIds[i] = farmersIds
+                }
+                for (let i = 0; i < num; i++) {
+                    
+                    let farmersNames = this.market.farmersNames.slice(i*4, (i+1)*4)
+                    this.carouselNames[i] = farmersNames
+                    
+                }
+            } else {
+                num = 0
+            }
+            
+            return num
+        },
+    },
+    async mounted() {
+         
+    }
 }
 </script>
 
@@ -43,5 +107,18 @@ export default {
     border-style:solid;
     border-color: #001f3f;
 }
+.pc-button {
+    border-style: solid;
+    border-color: #001f3f;
+    color: #001f3f;
+    font-weight: 600;
+    padding: 0.5em;
+}
 
+.pc-button:hover {
+    background-color: #001f3f;
+    color: #16C080;
+    font-weight: 600;
+    padding: 0.5em;
+}
 </style>

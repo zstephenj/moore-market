@@ -86,18 +86,6 @@ export default {
             }
             return markers
         },
-        searchArea() {
-            let userGps = this.currentUser.location.gps
-            let searchArea = {
-                strokeColor: '#FF0000',
-                strokeOpacity: 0,
-                strokeWeight: 2,
-                center : userGps,
-                radius : this.sidebar.filter.byDistance
-            }
-            searchArea = new google.maps.Circle(searchArea)
-            return searchArea
-        }
     },
 
     methods: {
