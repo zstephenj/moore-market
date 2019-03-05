@@ -10,6 +10,7 @@
 
                 <google-map class='align-items-end' 
                     :sidebar='sidebar'
+                    @change-is-pan-to='changeIsPanToFalse'
                     @set-map-market='setMapMarket' 
                     @change-map-place='setMapPlace'
                     @change-is-confirming-location='changeIsConfirmingLocation'> 
@@ -20,6 +21,7 @@
             <div class='col-md-2 m-2 d-flex flex-column'>
                 <map-sidebar 
                     :isMapPlace='isMapPlace' 
+                    @nav-set-gps='changeIsPanToTrue'
                     @clicked-set-location='changeIsSettingLocation' 
                     @clicked-confirm-location='confirmLocation'
                     @change-filter='changeFilter'> 
@@ -50,6 +52,7 @@ export default {
                 isSettingLocation: false,
                 isConfirmingLocation: false,
                 filter: {},
+                isPanTo: false
             }
 
             
@@ -93,6 +96,12 @@ export default {
         },
         changeFilter(filter) {
             this.sidebar.filter = filter
+        },
+        changeIsPanToTrue() {
+            this.sidebar.isPanTo = true
+        },
+        changeIsPanToFalse() {
+            this.sidebar.isPanTo = false
         }
 
     }

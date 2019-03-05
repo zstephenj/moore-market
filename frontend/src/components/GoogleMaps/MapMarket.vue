@@ -18,14 +18,15 @@
                   
                 </h5>
                 <span class='ml-2'><a :href='market.position.url' class='badge badge-info' target="_blank" rel="noopener noreferrer"> Get Directions </a></span>
-                <span class='ml-2'><a class='badge badge-info'>Favorite</a></span> 
-                <span class='ml-2'><a class='badge badge-warning'>Favorited</a></span> 
+                <span class='ml-2'><a class='badge badge-notfav'>Favorite</a></span> 
+                <span @mouseover.native='isOverFavButton = true' @mouseleave.native='isOverFavButton = false' class='ml-2'><a class='badge badge-fav'>{{favButtonText}}</a></span> 
                 <span class='ml-2'><a class='badge badge-warning'>Add to My Markets</a></span>     
                 <span class='ml-2'><a class='badge badge-warning'>Search Market Products</a></span> 
             </div>
 
             <hr class='border-navy' />
-            <h4> Farmers at this Market: </h4>
+            <h4> Farmers at this Market </h4>
+            <hr class='border-navy w-50' />
             <div v-if='numCarousels > 0' id="carousel" class="carousel slide" data-ride="carousel">
                 
                 <div class="carousel-inner ">
@@ -57,6 +58,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import RouterLinkButton from '../RouterLinkButton.vue'
 
 export default {
@@ -69,10 +71,14 @@ export default {
         return {
             url: '../farmers/',
             carouselNames: {},
-            carouselFarmersIds: {}
+            carouselFarmersIds: {},
+            isOverFavButton: false
         }
     },
     computed: {
+        ...mapState('user', [
+            'currentUser'
+        ]),
         numCarousels() {
             let num
             if (Object.keys(this.market).length != 0) {
@@ -94,6 +100,27 @@ export default {
             
             return num
         },
+        isFavorite(){
+            let included
+            if (Object.keys(this.market).length != 0) {
+                included = this.currentUser.favoriteMarkets.includes(this.market.id)
+            } else {
+                included = false
+            }
+            return (included ? true: false)
+        },
+        favButtonText() {
+            let buttonText
+            if (this.isOverFavButton === true) {
+                buttonText = 'Unfavorite'
+            } else {
+                buttonText = 'Favorited'
+            }
+            return buttonText
+        }
+    },
+    methods: {
+        
     },
     async mounted() {
          
@@ -120,5 +147,13 @@ export default {
     color: #16C080;
     font-weight: 600;
     padding: 0.5em;
+}
+
+.badge-fav {
+    background-color: gold;
+}
+.badge-fav:hover {
+    background-color: red;
+    color: white;
 }
 </style>

@@ -35,16 +35,21 @@
                         </label>
                     </div>
                     <a @click='resetMap()' class="badge badge-secondary">Reset Map</a>
-                    <div class='my-2'>
-                        <div v-if='!isSettingLocation'>
-                            <button @click='emitChangeAdding(0)' type='button' class='btn btn-warning'> Set My Location </button>
-                        </div>
+                    
+                    <div class='mt-3'>
+                        <h6> Set Location by: </h6>
+                        <button @click='getPosition' type="button" class="btn btn-moore-invert btn-sm"><img class='gps-img mr-2' src='../../assets/gps_target.png'>My Location</button>
+                        <div class='my-2'>
+                            <div v-if='!isSettingLocation'>
+                                <button @click='emitChangeAdding(0)' type='button' class='btn btn-moore-invert btn-sm'> Map Search </button>
+                            </div>
 
-                        <div v-if='isSettingLocation' class='d-flex justify-content-around'>
-                            <button @click='emitChangeAdding(1)' type='button' class='btn btn-success'> Confirm </button>
-                            <button @click='emitChangeAdding(0)' type='button' class='btn btn-secondary'> Cancel </button>
-                            
+                            <div v-if='isSettingLocation' class='d-flex justify-content-around'>
+                                <button @click='emitChangeAdding(1)' type='button' class='btn btn-success btn-sm'> Confirm </button>
+                                <button @click='emitChangeAdding(0)' type='button' class='btn btn-secondary btn-sm'> Cancel </button>
+                                
                         </div>
+                    </div>
                     </div>
                 </div>
                 
@@ -55,7 +60,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
     name: 'MapSidebar',
@@ -91,6 +96,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions('user', [
+            'setLocation'
+        ]),
         emitChangeAdding(confirmed) {
             if (confirmed === 0) {
                 this.$emit('clicked-set-location')
@@ -117,6 +125,25 @@ export default {
         changeIsSettingLocation(e) {
             this.isSettingLocation = !this.isSettingLocation
         },
+        getPosition() {
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(this.setPosition);
+            } else {
+                this.error = "Geolocation is not supported";
+            }
+        },
+        async setPosition(navGeo) {
+            let gps = {
+                lat: navGeo.coords.latitude,
+                lng: navGeo.coords.longitude
+            }
+            let position = {
+                gps: gps
+            }
+            let response = await this.setLocation(position)
+            this.$emit('nav-set-gps')
+            console.log(response)
+        }
     }
 }
 </script>
@@ -129,5 +156,15 @@ export default {
 
 .text-green {
     color: #84CF6A;
+}
+
+.gps-img {
+    width: 15%;
+    height: 15%;
+}
+
+.btn-moore-invert {
+    background-color:#84CF6A ;
+    color:#001f3f;
 }
 </style>

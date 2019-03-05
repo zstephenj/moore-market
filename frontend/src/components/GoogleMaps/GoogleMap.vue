@@ -34,6 +34,14 @@
                     lat: place.geometry.location.lat(),
                     lng: place.geometry.location.lng()}"
                     />
+                
+                <gmap-marker
+                    v-if="Object.keys(currentUser.location).length > 0"
+                    label="★"
+                    :position="{
+                    lat: currentUser.location.gps.lat,
+                    lng: currentUser.location.gps.lng}"
+                    />
 
             </gmap-map>
 
@@ -75,6 +83,9 @@ export default {
         },
         filter () {
             return this.sidebar.filter
+        },
+        isPanTo(){
+            return this.sidebar.isPanTo
         },
         markers() {
             let markers = []
@@ -153,11 +164,10 @@ export default {
             let gps = {lat: lat, lng: lng}
             // Pull only relevant properties out of Google Place
             let position = {
-                formatted_address: this.place.formatted_address,
                 gps: gps,
-                vicinity: this.place.vicinity
             }  
             if (type === 'market') {
+                position.formatted_address = this.place.formatted_address,
                 position.url = this.place.url
             }
             return position
@@ -234,7 +244,12 @@ export default {
                     this.setCenter(response.gps, 10)
                     this.emitChangeIsConfirmingLocation()
                 }
-        }
+        },
+        isPanTo:
+            async function (isPanTo) {
+                this.setCenter(this.currentUser.location.gps, 10)
+                this.$emit('change-is-pan-to')
+            }
     },
     async mounted() {
         let response = await this.getAllMarketsFromApi()
@@ -266,5 +281,10 @@ html, body {
 .border-navy {
     border-style:solid;
     border-color: #001f3f;
+}
+
+.btn-moore {
+    background-color: #001f3f;
+    color:#84CF6A;
 }
 </style>
