@@ -20,8 +20,10 @@
                 <span class='ml-2'><a :href='market.position.url' class='badge badge-moore' target="_blank" rel="noopener noreferrer"> Get Directions </a></span>
                 <span v-if='!isFavorite' @click='changeFavoriteMarket(1)' class='ml-2 badge badge-notfav mousePointer'>Favorite</span> 
                 <span v-if='isFavorite' @click='changeFavoriteMarket(0)' class='ml-2 badge badge-fav mousePointer'>Favorited</span> 
-                <span v-if='!isVendorMarket' @click='addCurrentUserToMarket()' class='ml-2 badge badge-notfav mousePointer'>Add My Store</span> 
-                <span v-if='isVendorMarket' @click='removeCurrentUserFromMarket()' class='ml-2 badge badge-fav mousePointer'>Remove My Store</span>      
+                    <span v-if='currentUser.accountType === "farmer"'>
+                        <span v-if='!isVendorMarket' @click='addCurrentUserToMarket()' class='ml-2 badge badge-notfav mousePointer'>Add My Store</span> 
+                        <span v-if='isVendorMarket' @click='removeCurrentUserFromMarket()' class='ml-2 badge badge-fav mousePointer'>Remove My Store</span>      
+                    </span>
                 <span class='ml-2'><router-link class='badge badge-moore' :to='"../search/markets/"+market.id'>Search Market Products</router-link></span> 
             </div>
 

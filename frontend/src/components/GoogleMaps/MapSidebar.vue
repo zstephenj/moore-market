@@ -52,7 +52,7 @@
 
                     </div>
 
-                    <button @click='emitChangeAdding(0)' type='button' class='btn btn-sm btn-moore-invert mt-5' data-toggle="tooltip" data-placement="bottom" title="Please Search For A Place" ref='tooltip1'> Suggest New Market </button>
+                    <button v-if='currentUser.accountType === "farmer"' @click='emitChangeAdding(0)' type='button' class='btn btn-sm btn-moore-invert mt-5' data-toggle="tooltip" data-placement="bottom" title="Please Search For A Place" ref='tooltip1'> Suggest New Market </button>
                 </div>
                 
             </div>
