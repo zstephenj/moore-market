@@ -15,6 +15,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
+
 import ProductForm from './ProductForm.vue'
 
 export default {
@@ -40,7 +41,7 @@ export default {
             return gotProduct
           }
     },
-}
+
 </script>
 
 <style>

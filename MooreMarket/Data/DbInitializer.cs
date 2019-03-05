@@ -8,47 +8,65 @@ namespace MooreMarket.Data
     {
         public static void Initialize(MooreMarketContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            if (context.Users.Count() == 0)
+            UserModel farmer1 = new UserModel
             {
-                UserModel farmer1 = new UserModel
-                {
-                    Username = "farmer1",
-                    Password = "password",
-                    AccountType = AccountType.Farmer
-                };
+                Username = "farmer1",
+                Password = "password",
+                AccountType = AccountType.Farmer
+            };
 
-                UserModel farmer2 = new UserModel
-                {
-                    Username = "farmer2",
-                    Password = "password",
-                    AccountType = AccountType.Farmer
-                };
+            UserModel farmer2 = new UserModel
+            {
+                Username = "farmer2",
+                Password = "password",
+                AccountType = AccountType.Farmer
+            };
 
-                UserModel user1 = new UserModel
-                {
-                    Username = "user1",
-                    Password = "password",
-                    AccountType = AccountType.User
-                };
+            UserModel user1 = new UserModel
+            {
+                Username = "user1",
+                Password = "password",
+                AccountType = AccountType.User
+            };
 
-                UserModel user2 = new UserModel
-                {
-                    Username = "user2",
-                    Password = "password",
-                    AccountType = AccountType.User
-                };
+            UserModel user2 = new UserModel
+            {
+                Username = "user2",
+                Password = "password",
+                AccountType = AccountType.User
+            };
 
-                context.Users.Add(farmer1);
-                context.Users.Add(farmer2);
-                context.Users.Add(user1);
-                context.Users.Add(user2);
+            context.Users.Add(farmer1);
+            context.Users.Add(farmer2);
+            context.Users.Add(user1);
+            context.Users.Add(user2);
 
-                context.SaveChanges();
-            }
+            context.SaveChanges();
+            
+            ProductCategory TestCat1 = new ProductCategory("TestCategory1");
+            TestCat1.Id = 1;
+            ProductCategory TestCat2 = new ProductCategory("TestCategory2");
+            TestCat2.Id = 2;
+            context.Categories.Add(TestCat1);
+            context.Categories.Add(TestCat2);
+            context.SaveChanges();
 
-            if (context.Products.Count() == 0)
+            Product farmer1Product1 = new Product
+            {
+                Name = "farmer1's Product1",
+                Description = "farmer1 product1 description",
+                CategoryId = 1,
+                Category = TestCat1,
+                Quantity = 1,
+                Price = 5.50f,
+                IsPerishable = false,
+                UserId = 1
+            };
+
+            Product farmer1Product2 = new Product
             {
                 ProductCategory TestCat1 = new ProductCategory("TestCategory1");
                 TestCat1.Id = 1;

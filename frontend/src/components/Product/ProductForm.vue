@@ -162,24 +162,28 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'ProductForm',
   props: ['formType', 'productToEdit'],
   computed: {
-    //not sure if this is actually necessary
-    // product() {
-    //   const newProduct = this.productToEdit
-    //   return newProduct
-    // }
+    ...mapState('category', [
+      'allCategories'
+    ]),
+    ...mapState('user', [
+      'currentUser'
+    ])
   },
   methods: {
     ...mapActions('product', [
       'addNewProduct',
       'editProductById'
     ]),
-    validateForm() {
+    ...mapActions('category', [
+      'getAllCategoriesFromApi'
+    ]),
+    async validateForm() {
       let noErrorMsg = ''
 
       if(this.product.name === '') {
@@ -242,20 +246,19 @@ export default {
         }
       }
       if(!this.checkErrors()) {
-        console.log(this.product)
-        
+        this.product.userId = this.currentUser.id
         if(this.formType === 'add') {
-          let res = this.addNewProduct(this.product)
-          if (res.data != '') {
+          let res = await this.addNewProduct(this.product)
+          if (res.data) {
             let productId = res.data.id
             this.$router.push({ path: `/product/${productId}`})
           }
         }
 
         if(this.formType === 'edit') {
-          let res = this.editProductById(this.product)
+          let res = await this.editProductById(this.product)
           
-          if (res.data != '') {
+          if (res.data) {
             let productId = res.data.id
             this.$router.push({ path: `/product/${productId}`})
           }
@@ -328,19 +331,8 @@ export default {
         imageError: false,
         imageErrorMsg: '',
       },
-      allCategories: [
-        { id: 1, name: 'Category 1'},
-        { id: 2, name: 'Category 2'},
-        { id: 3, name: 'Category 3'},
-      ],
     }
   },
-  mounted(){
-    if (this.formType === 'edit'){
-      this.product = this.productToEdit
-    }
-    
-  }
 }
 </script>
 
