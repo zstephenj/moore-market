@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 function authHeader() {
   let user = JSON.parse(sessionStorage.getItem('user'));
 
@@ -17,13 +19,24 @@ const user = {
       //   isLoggedIn: true,
       //   id: 2,
       // },
+      user: null,
     },
     mutations: {
+      setUser(state, user) {
+        state.user = user;
+      },
     },
     actions: {
-      registerUser({ commit, state }, user) {
-
-      }
+      async registerUser({ commit, state }, user) {
+        let response;
+        try {
+          response = axios.post('/api/user/register', user);
+          commit('setUser', response.data);
+          return response;
+        } catch(error) {
+          console.error(error);
+        }
+      },
     },
     getters: {
     },

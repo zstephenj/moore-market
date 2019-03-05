@@ -73,7 +73,7 @@ namespace MooreMarket.Controllers
           try
           {
             _userService.Create(user, userDto.Password);
-            return Ok();
+            return Ok(user);
           }
           catch(AppException ex)
           {

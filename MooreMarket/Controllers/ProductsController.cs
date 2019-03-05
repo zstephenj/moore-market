@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MooreMarket.Data;
@@ -8,6 +9,7 @@ using MooreMarket.Models;
 namespace MooreMarket.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -20,6 +22,7 @@ namespace MooreMarket.Controllers
         
         //GET Products/
         [HttpGet]
+
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         public IActionResult GetAllProducts()
