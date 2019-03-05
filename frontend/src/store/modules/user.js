@@ -24,12 +24,18 @@ const user = {
             state.currentUser.location = payload
         },
 
-        removeLocation (state, payload) {
-            state.currentUser.splice(payload, 1)
+        removeLocation (state) {
+            state.currentUser.location = {}
         },
 
         setUserProducts(state, products) {
             state.currentUser.products = products
+        },
+        pushFavoriteMarket(state, marketId) {
+            state.currentUser.favoriteMarkets.push(marketId)
+        },
+        spliceFavoriteMarket(state, idx) {
+            state.currentUser.favoriteMarkets.splice(idx, 1)
         },
     },
 
@@ -38,10 +44,8 @@ const user = {
         async getUserFromApi({ commit }, login) {
             let response
             try {
-                // Comment next line if using backend database
-                // response = await axios.get('https://my-json-server.typicode.com/zstephenj/moore-market-fakeJSON-categories/categories', login)
-                // Comment next line if using FakeJSON
-                // response = await axios.get('/api/categories')
+                
+                // response = await axios.get('/api/')
                 // commit('setCurrentUser', response.data)
                 return response
             } catch (error) {
@@ -53,10 +57,7 @@ const user = {
         async setLocation({ commit }, location) {
             let response
             try {
-                // Comment next line if using backend database
-                // response = await axios.post('http://my-json-server.typicode.com/zstephenj/moore-market-fakeJSON-categories/categories', location)
-                // Comment next line if using FakeJSON
-                // response = await axios.post('/api/categories/add')
+                
                 commit('setUserLocation', location)//response.data)
                 return location//response
             } catch (error) {
@@ -65,15 +66,12 @@ const user = {
 
         },
 
-        async removeLocation({ commit, getters }, location) {
+        async removeLocation({ commit}) {
             let response
             try {
-                // Comment next line if using backend database
-                // response = await axios.delete('http://my-json-server.typicode.com/zstephenj/moore-market-fakeJSON-categories/categories/' + id)
-                // Comment next line if using FakeJSON
-                // response = await axios.delete('/api/categories/remove/' + id)
-                let idx = getters.getLocationIndex(location)
-                commit('removeLocation', idx)
+                
+                // response = await axios.delete('/api/users/location/remove/')
+                commit('removeLocation')
                 return response
             } catch (error) {
                 console.error(error)
@@ -85,9 +83,7 @@ const user = {
         async getUserProducts({ commit }, id) {
             let response
             try{
-                // Comment next line if using backend database
-                // response = await axios.get('http://my-json-server.typicode.com/zstephenj/moore-market-fakejson/products/')
-                // Comment next line if using FakeJSON
+               
                 response = await axios.get('api/user/products/' + id)
                 console.log(response)
                 commit('setUserProducts', response.data)
@@ -96,14 +92,35 @@ const user = {
                 console.log(error)
             }
         },
+
+        async addFavoriteMarket ({commit}, id) {
+            let response
+            try {
+                // response = await axios.post('api/user/favoriteMarkets', id)
+                commit('pushFavoriteMarket', id)//response.data)
+            }  catch(error) {
+                console.log(error)
+            }
+            
+        },
+        async removeFavoriteMarket ({commit, getters}, id) {
+            let response
+            try {
+                // response = await axios.delete('api/user/favoriteMarkets', id)
+                console.log(id)
+                let idx = getters.getFavoriteMarketIndex(id)
+                commit('spliceFavoriteMarket', idx)//response.data)
+            }  catch(error) {
+                console.log(error)
+            }
+        },
     },
 
     getters: {
-
-        getLocationIndex: (state) => (location) => {
-            console.log(state.location)
-            return state.location.findIndex(location)
+        getFavoriteMarketIndex: (state) => (marketId) => {
+            return state.currentUser.favoriteMarkets.findIndex(m => m.id === marketId)
         },
+        
 
     }
 
