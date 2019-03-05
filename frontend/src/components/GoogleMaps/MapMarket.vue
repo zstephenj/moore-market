@@ -20,7 +20,8 @@
                 <span class='ml-2'><a :href='market.position.url' class='badge badge-moore' target="_blank" rel="noopener noreferrer"> Get Directions </a></span>
                 <span v-if='!isFavorite' @click='changeFavoriteMarket(1)' class='ml-2 badge badge-notfav mousePointer'>Favorite</span> 
                 <span v-if='isFavorite' @click='changeFavoriteMarket(0)' class='ml-2 badge badge-fav mousePointer'>Favorited</span> 
-                <span @click='addCurrentUserToMarket()' class='ml-2 badge badge-moore mousePointer'>Add My Store</span>     
+                <span v-if='!isVendorMarket' @click='addCurrentUserToMarket()' class='ml-2 badge badge-notfav mousePointer'>Add My Store</span> 
+                <span v-if='isVendorMarket' @click='removeCurrentUserFromMarket()' class='ml-2 badge badge-fav mousePointer'>Remove My Store</span>      
                 <span class='ml-2'><router-link class='badge badge-moore' :to='"../search/markets/"+market.id'>Search Market Products</router-link></span> 
             </div>
 
@@ -110,24 +111,28 @@ export default {
             }
             return (included ? true: false)
         },
-        favButtonText() {
-            let buttonText
-            if (this.isOverFavButton === true) {
-                buttonText = 'Unfavorite'
+        isVendorMarket(){
+            let included
+            if (Object.keys(this.market).length != 0) {
+                included = this.currentUser.vendorMarkets.includes(this.market.id)
             } else {
-                buttonText = 'Favorited'
+                included = false
             }
-            return buttonText
-        }
+            return (included ? true: false)
+        },
     },
     methods: {
         ...mapActions('user', [
             'addFavoriteMarket',
             'removeFavoriteMarket',
-            ''
+            'addVendorMarket',
+            'removeVendorMarket'
         ]),
-        addCurrentUserToMarket() {
-
+        async addCurrentUserToMarket() {
+            this.addVendorMarket(this.market.id)
+        },
+        async removeCurrentUserFromMarket() {
+            this.removeVendorMarket(this.market.id)
         },
         async changeFavoriteMarket(num) {
             console.log('trying to change')

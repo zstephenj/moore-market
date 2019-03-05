@@ -24,6 +24,12 @@ const market = {
         removeMarketByIndex (state, payload) {
             state.allMarkets.splice(payload, 1)
         },
+        pushNewFarmerToMarket (state, payload) {
+            state.allMarkets[payload.idx].farmersIds.push(payload.farmerId)
+        },
+        removeFarmerFromMarket (state, indexes) {
+            state.allMarkets[indexes.market].farmersIds.splice(indexes.farmer, 1)
+        },
 
     },
 
@@ -68,8 +74,47 @@ const market = {
                 // response = await axios.put('/api/markets/edit/' + id)
                 // Change market to response.data
                 let idx = getters.getMarketIndex(market.id)
-                let payload = {'idx':idx, 'market': market}
+                let payload = {idx:idx, market: market}
                 commit('editMarketByIndex', payload)
+                return response
+            } catch (error) {
+                console.error(error)
+            }
+            
+        },
+        async addUserToMarket({ commit, getters }, dispatchObj) {
+            let response
+            try {
+                
+                // response = await axios.put('/api/markets/addFarmer/' + id, dispatchObj.userId)
+                // later use response instead of dispatchObj
+                let idx = getters.getMarketIndex(dispatchObj.marketId)
+                let payload = {idx:idx, farmerId: dispatchObj.userId}
+                commit('pushNewFarmerToMarket', payload)
+                return response
+            } catch (error) {
+                console.error(error)
+            }
+            
+        },
+        async removeUserFromMarket({ commit, getters }, dispatchObj) {
+            let response
+            try {
+                
+                // response = await axios.put('/api/markets/addFarmer/' + id, dispatchObj.userId)
+                 // later use response instead of dispatchObj
+                
+                let indexes = {
+                    market:getters.getMarketIndex(dispatchObj.marketId),
+                }
+                let obj = {
+                    idx:indexes.market,
+                    userId: dispatchObj.userId
+                }
+                indexes.farmer = getters.getMarketFarmerIndex(obj)
+                
+
+                commit('removeFarmerFromMarket', indexes)
                 return response
             } catch (error) {
                 console.error(error)
@@ -100,6 +145,9 @@ const market = {
 
         getMarketIndex: (state) => (id) => {
             return state.allMarkets.findIndex(m => m.id === id)
+        },
+        getMarketFarmerIndex: (state) => (obj) => {
+            return state.allMarkets[obj.idx].farmersIds.findIndex(id => id === obj.userId)
         },
 
         

@@ -45,7 +45,7 @@
                             </div>
 
                             <div v-if='isSettingLocation' class='d-flex justify-content-around'>
-                                <button @click='emitChangeAdding(1)' type='button' class='btn btn-success btn-sm' data-toggle="tooltip" data-placement="bottom" title="Please Search For A Place" ref='tooltip2'> Confirm </button>
+                                <button @click='emitChangeAdding(1)' type='button' class='btn btn-moore-invert btn-sm' data-toggle="tooltip" data-placement="left" title="Please Search For A Place" ref='tooltip2'> Confirm </button>
                                 <button @click='emitChangeAdding(0)' type='button' class='btn btn-secondary btn-sm'> Cancel </button>    
                             </div>
                         </div>

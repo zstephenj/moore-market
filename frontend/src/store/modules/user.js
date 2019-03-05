@@ -10,7 +10,8 @@ const user = {
             isLoggedIn: true,
             location: {},
             favoriteMarkets: [1,3,5],
-            products: []
+            products: [],
+            vendorMarkets: []
         },
     },
 
@@ -36,6 +37,12 @@ const user = {
         },
         spliceFavoriteMarket(state, idx) {
             state.currentUser.favoriteMarkets.splice(idx, 1)
+        },
+        pushVendorMarket(state, marketId) {
+            state.currentUser.vendorMarkets.push(marketId)
+        },
+        spliceVendorMarket(state, idx) {
+            state.currentUser.vendorMarkets.splice(idx, 1)
         },
     },
 
@@ -114,13 +121,45 @@ const user = {
                 console.log(error)
             }
         },
+        async addVendorMarket ({commit, dispatch, state}, id) {
+            let response
+            try {
+                // response = await axios.put('api/user/vendorMarkets', id)
+                commit('pushVendorMarket', id)//response.data)
+                let dispatchObj = {
+                    marketId: id,
+                    userId: state.currentUser.id
+                }
+                dispatch('market/addUserToMarket',dispatchObj,{root:true})
+            }  catch(error) {
+                console.log(error)
+            }
+            
+        },
+        async removeVendorMarket ({commit, getters, dispatch, state}, id) {
+            let response
+            try {
+                // response = await axios.delete('api/user/favoriteMarkets', id)
+                let idx = getters.getVendorMarketIndex(id)
+                commit('spliceVendorMarket', idx)//response.data)
+                let dispatchObj = {
+                    marketId: id,
+                    userId: state.currentUser.id
+                }
+                dispatch('market/removeUserFromMarket',dispatchObj,{root:true})
+            }  catch(error) {
+                console.log(error)
+            }
+        },
     },
 
     getters: {
         getFavoriteMarketIndex: (state) => (marketId) => {
             return state.currentUser.favoriteMarkets.findIndex(m => m.id === marketId)
         },
-        
+        getVendorMarketIndex: (state) => (marketId) => {
+            return state.currentUser.vendorMarkets.findIndex(m => m.id === marketId)
+        },
 
     }
 
