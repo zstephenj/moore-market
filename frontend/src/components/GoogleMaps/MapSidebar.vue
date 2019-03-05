@@ -34,23 +34,25 @@
                             My Favorite Markets
                         </label>
                     </div>
-                    <a @click='resetMap()' class="badge badge-secondary">Reset Map</a>
+                    <a @click='resetMap()' class="badge badge-secondary mousePointer">Reset Map</a>
                     
                     <div class='mt-3'>
                         <h6> Set Location by: </h6>
-                        <button @click='getPosition' type="button" class="btn btn-moore-invert btn-sm"><img class='gps-img mr-2' src='../../assets/gps_target.png'>My Location</button>
+                        <button @click='getPosition' type="button" class="btn btn-moore-invert btn-sm"><img class='gps-img mr-2' src='../../assets/gps_fixed.svg'>My Location</button>
                         <div class='my-2'>
                             <div v-if='!isSettingLocation'>
                                 <button @click='emitChangeAdding(0)' type='button' class='btn btn-moore-invert btn-sm'> Map Search </button>
                             </div>
 
                             <div v-if='isSettingLocation' class='d-flex justify-content-around'>
-                                <button @click='emitChangeAdding(1)' type='button' class='btn btn-success btn-sm'> Confirm </button>
-                                <button @click='emitChangeAdding(0)' type='button' class='btn btn-secondary btn-sm'> Cancel </button>
-                                
+                                <button @click='emitChangeAdding(1)' type='button' class='btn btn-success btn-sm' data-toggle="tooltip" data-placement="bottom" title="Please Search For A Place" ref='tooltip2'> Confirm </button>
+                                <button @click='emitChangeAdding(0)' type='button' class='btn btn-secondary btn-sm'> Cancel </button>    
+                            </div>
                         </div>
+
                     </div>
-                    </div>
+
+                    <button @click='emitChangeAdding(0)' type='button' class='btn btn-sm btn-moore-invert mt-5' data-toggle="tooltip" data-placement="bottom" title="Please Search For A Place" ref='tooltip1'> Suggest New Market </button>
                 </div>
                 
             </div>
@@ -61,7 +63,7 @@
 
 <script>
 import {mapState, mapActions} from 'vuex'
-
+import jQuery from 'jquery'
 export default {
     name: 'MapSidebar',
     props: ['isMapPlace'],
@@ -99,7 +101,7 @@ export default {
         ...mapActions('user', [
             'setLocation'
         ]),
-        emitChangeAdding(confirmed) {
+        async emitChangeAdding(confirmed) {
             if (confirmed === 0) {
                 this.$emit('clicked-set-location')
             }
@@ -107,6 +109,7 @@ export default {
                 console.log(this.isMapPlace)
                 if (this.isMapPlace === false) {
                     console.log('error')
+                    await jQuery(this.$refs.tooltip2).tooltip('enable')
                     return false
                 }
                 else {
@@ -144,6 +147,11 @@ export default {
             this.$emit('nav-set-gps')
             console.log(response)
         }
+    },
+    async mounted() {
+        if (this.currentUser.accountType === 'farmer') {
+            await jQuery(this.$refs.tooltip1).tooltip('enable')
+        }
     }
 }
 </script>
@@ -159,12 +167,15 @@ export default {
 }
 
 .gps-img {
-    width: 15%;
-    height: 15%;
+    fill:white;
 }
 
 .btn-moore-invert {
     background-color:#84CF6A ;
     color:#001f3f;
+}
+
+.mousePointer {
+    cursor: pointer;
 }
 </style>
