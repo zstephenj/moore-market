@@ -6,6 +6,8 @@ const product = {
     state: { 
         newProduct: null,
         allProducts: [],
+        cart: [],
+        searchResults: [],
     },
 
     mutations: {
@@ -13,18 +15,21 @@ const product = {
             state.newProduct = product
             state.allProducts.push(product)
         },
-
         updateAllProducts(state, products) {
             state.allProducts = products
         },
-
         removeProductByIndex(state, idx) {
             state.allProducts.splice(idx, 1)
         },
         addEditedProduct(state, payload) {
             state.allProducts.splice(payload.idx, 1, payload.product)
         },
-
+        addProductToCart(state, product) {
+            state.cart.push(product)
+        },
+        updateSearchResults(state, products) {
+          state.searchResults = products
+        }
     },
 
     actions: { 
@@ -41,7 +46,6 @@ const product = {
                 console.log(error)
             }
         },
-
         async getAllProductsFromApi({ commit }) {
             let response
             try{
@@ -71,7 +75,18 @@ const product = {
             }
             
         },
-
+        addProductToCart({ commit }, product) {
+            return commit('addProductToCart', product)
+        },
+        async searchProducts({ commit }, searchTerm) {
+            let response
+            try {
+                response = await axios.get('/api/products/search?searchTerm='+searchTerm)
+                return commit('updateSearchResults', response.data)
+            } catch(error) {
+                console.error(error)
+            }
+        },
         async editProductById({ commit, getters }, product) {
             let response
             try{
@@ -87,7 +102,6 @@ const product = {
                 console.log(error)
             }
         },
-
     },
 
     getters: {

@@ -8,6 +8,7 @@
 <script>
 import Navigation from "./components/Navigation.vue"
 import NavigationTwo from "./components/NavigationTwo.vue"
+import { mapActions } from 'vuex'
 
 export default {
   name: 'app',
@@ -15,6 +16,12 @@ export default {
     Navigation,
     NavigationTwo
   },
+  methods: {
+    ...mapActions('product', ['getAllProductsFromApi'])
+  },
+  mounted() {
+    this.getAllProductsFromApi()
+  }
 }
 </script>
 

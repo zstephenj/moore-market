@@ -1,15 +1,21 @@
 <template>
   <div class="vendor-list">
+    <h2>Viewing Farmers</h2>
     <ul>
       <li 
-      class="vendor-card"
+      class="card"
       v-for="farmer in allFarmers" :key="farmer.id"
       ><router-link
       :to="{
         name: 'BrowseInventory',
         params: { id: farmer.id },
-      }">
-      {{ farmer.username }}'s items
+      }" class="vendor-link">
+        <div class="card-header">
+          {{ farmer.username }}'s items
+        </div>
+        <div class="card-body">
+          <p>Some short description about their store</p>
+        </div>
       </router-link>
       </li>
     </ul>
@@ -37,4 +43,31 @@ export default {
 ul {
   list-style-type: none;
 }
+
+h2 {
+  margin-bottom: 30px;
+}
+
+.vendor-list {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.card {
+  margin-bottom: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.card:hover, .card:focus {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.vendor-link {
+  text-decoration: none;
+  color: black;
+}
+
 </style>

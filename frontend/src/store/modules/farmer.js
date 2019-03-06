@@ -4,11 +4,13 @@ const farmer = {
   namespaced: true,
   state: {
     allFarmers: [],
-    farmerProducts: null,
+    farmerProducts: [],
+    currentFarmer: null,
   },
   mutations: {
     setFarmerProducts(state, data) {
       state.farmerProducts = data
+      state.currentFarmer = data
     },
     setFarmers(state, farmers) {
       state.allFarmers = farmers
