@@ -66,62 +66,94 @@ namespace MooreMarket.Data
                 UserId = 1
             };
 
-            Product farmer1Product2 = new Product
+            Product newProduct1 = new Product 
             {
-                Name = "farmer1's Product2",
-                Description = "farmer1's product2 description",
-                CategoryId = 2,
-                Category = TestCat2,
-                Quantity = 1,
-                Price = 5.50f,
-                IsPerishable = false,
-                UserId = 1
+              Name = "Bananas From Far Away",
+              Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lobortis malesuada lacus vitae ultricies. Suspendisse rutrum nulla sit amet mi ullamcorper tempor. Nunc fringilla diam luctus nunc tincidunt, id accumsan elit sollicitudin. Morbi nisi nulla, condimentum quis ultricies sed, congue at nibh. Phasellus massa tellus, dictum in imperdiet sit amet, pellentesque vel nibh. Pellentesque aliquet, justo ac mollis faucibus, ex justo congue ipsum, non blandit ligula arcu at nisl.",
+              CategoryId = 1,
+              Quantity = 11,
+              Price = 1.11f,
+              IsPerishable = true,
+              KeepRoom = true,
+              ShelfLifeRoom = "some time",
+              KeepFridge = true,
+              ShelfLifeFridge = "something",
+              KeepFreezer = true,
+              ShelfLifeFreezer = "something",
+              UserId = 1
             };
+            context.Add(newProduct1);
 
-            Product farmer2Product1 = new Product
+            Product newProduct2 = new Product
             {
-                Name = "farmer2's product1",
-                Description = "farmer2's product1 description",
-                CategoryId = 1,
-                Quantity = 40,
-                Price = 10,
-                IsPerishable = false,
-                UserId = 2
+              Name = "Apples",
+              Description = "some apples",
+              CategoryId = 1,
+              Quantity = 6,
+              Price = 12.22f,
+              IsPerishable = true,
+              KeepRoom = true,
+              ShelfLifeRoom = "shelf life",
+              UserId = 1
             };
+            context.Add(newProduct2);
 
-            Product farmer2Product2 = new Product
+            Product newProduct3 = new Product
             {
-                Name = "farmer2's product2",
-                Description = "farmer2 product2 description",
-                CategoryId = 1,
-                Quantity = 40,
-                Price = 10,
-                IsPerishable = false,
-                UserId = 2
+              Name = "I'm Always Out of Stock",
+              Description = "Does it really matter? I'm always going to be out of stock. No bueno.",
+              CategoryId = 2,
+              Quantity = 0,
+              Price = 3.33f,
+              UserId = 2
             };
+            context.Add(newProduct3);
 
-            context.Products.Add(farmer1Product1);
-            context.Products.Add(farmer1Product2);
-            context.Products.Add(farmer2Product1);
-            context.Products.Add(farmer2Product2);
+            Product newProduct4 = new Product
+            {
+              Name = "Super Expensive",
+              Description = "Is This Love",
+              CategoryId = 1,
+              Quantity = 420,
+              Price = 710,
+              UserId = 2
+            };
+            context.Add(newProduct4);
 
-            context.SaveChanges();
+            Product newProduct5 = new Product
+            {
+              Name = "Thing",
+              Description = "description of thing",
+              CategoryId = 2,
+              Quantity = 3,
+              Price = 7.10f,
+              UserId = 1
+            };
+            context.Add(newProduct5);
 
-            IList<Product> farmer1Products = new List<Product>
-            { farmer1Product1, farmer1Product2};
-            farmer1.Products = farmer1Products;
+            Product newProduct6 = new Product
+            {
+              Name = "Other thing",
+              Description = "Is This Love",
+              CategoryId = 2,
+              Quantity = 420,
+              Price = 74.12f,
+              UserId = 2
+            };
+            context.Add(newProduct6);
 
-            IList<Product> farmer2Products = new List<Product>
-            { farmer2Product1, farmer2Product2};
-            farmer2.Products = farmer2Products;
+            Product newProduct7 = new Product
+            {
+              Name = "Other thing",
+              Description = "Is This Love",
+              CategoryId = 1,
+              Quantity = 420,
+              Price = 74.12f,
+              UserId = 2
+            };
+            context.Add(newProduct7);
 
-            context.Users.Update(farmer1);
-            context.Users.Update(farmer2);
-            context.SaveChanges();
-            
-        
-
-                
+            context.SaveChanges();      
         }
     }
 }

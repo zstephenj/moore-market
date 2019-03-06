@@ -27,9 +27,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions('product', ['editProductById']),
+    ...mapActions('product', ['editProduct']),
     sendEdit(editedProduct) {
-      this.editProductById(editedProduct)
+      this.editProduct(editedProduct)
         .then(() => this.$router.push('/dashboard'))
     }
   },

@@ -5,7 +5,7 @@
             <h2> Add Product </h2>
         </div>
 
-        <product-form :formType='formType'> </product-form>
+        <product-form formType='add'> </product-form>
 
     </div>
 </template>
@@ -19,13 +19,6 @@ export default {
     components: {
         ProductForm
     },
-
-    data() {
-        return {
-            formType: 'add'
-
-        }
-    }
 }
 </script>
 

@@ -1,6 +1,5 @@
 <template>
-
-    <div v-if='product' class='container-fluid moore-gradient moore-navy'>
+    <div class='container-fluid moore-gradient moore-navy'>
 
         <div class='row align-items-start justify-content-center'>
 
@@ -88,7 +87,7 @@
 
                     <!-- donate to pantry option? -->
 
-                    <button type='button' class='btn btn-block btn-success'> Add to Cart </button>
+                    <button @click='addToCart()' type='button' class='btn btn-block btn-success'> Add to Cart </button>
                     
                 </form>
 
@@ -127,7 +126,6 @@ export default {
     data(){
             return {
                 productId: parseInt(this.$route.params.id) ,
-                product: [],
                 showStorage: false
             }
     },
@@ -136,23 +134,22 @@ export default {
         ...mapGetters('product', [
             'getProductById'
         ]),
-        
+        product(){
+            return this.getProductById(this.productId)
+        }
     },
 
     methods: {
         ...mapActions('product', [
-            'getAllProductsFromApi'
+            'addProductToCart',  
         ]),
-
         changeShowStorage(){
             this.showStorage = !this.showStorage
+        },
+        addToCart() {
+            this.addProductToCart(Object.assign({}, this.product))
+            console.log(this.$store.state.product.cart)
         }
-    },
-
-
-    async created() {
-        await this.getAllProductsFromApi()
-        this.product = this.getProductById(this.productId)
     },
 }
 </script>

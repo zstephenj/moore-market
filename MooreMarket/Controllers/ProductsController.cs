@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MooreMarket.Data;
@@ -8,6 +9,7 @@ using MooreMarket.Models;
 namespace MooreMarket.Controllers
 {
     [Route("api/[controller]")]
+    //[Authorize]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -24,7 +26,10 @@ namespace MooreMarket.Controllers
         [ProducesResponseType(204)]
         public IActionResult GetAllProducts()
         {
-            IList<Product> allProducts = _context.Products.Include(p => p.Category).ToList();
+            IList<Product> allProducts = _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.User)
+                .ToList();
 
 
             
@@ -110,6 +115,27 @@ namespace MooreMarket.Controllers
             _context.SaveChanges();
 
             return NoContent();
+        }
+        
+        [HttpGet("Search")]
+        public ActionResult<IEnumerable<Product>> Search(string searchTerm)
+        {
+            if(searchTerm == null)
+            {
+                return NoContent();
+            }
+
+            var results = _context.Products
+                .Include(p => p.User)
+                .Where(p => p.Name.Contains(searchTerm) || p.User.Username.Contains(searchTerm))
+                .ToList();
+
+            if(results == null)
+            {
+                return NoContent();
+            }
+
+            return results;
         }
     }
 }
