@@ -9,7 +9,7 @@ using MooreMarket.Models;
 namespace MooreMarket.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -22,7 +22,6 @@ namespace MooreMarket.Controllers
         
         //GET Products/
         [HttpGet]
-
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         public IActionResult GetAllProducts()

@@ -23,7 +23,6 @@
 import FarmerProductItem from './FarmerProductItem.vue'
 import { mapActions, mapState } from 'vuex'
 
-import FarmerProductItem from './FarmerProductItem.vue'
 export default {
     name: 'FarmerProductDash',
     components: {

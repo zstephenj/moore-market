@@ -13,13 +13,13 @@ function authHeader() {
 const user = {
     namespaced: true,
     state: {
-      // currentUser: {
-      //   username: "user",
-      //   accountType: "farmer",
-      //   isLoggedIn: true,
-      //   id: 2,
-      // },
-      user: null,
+      currentUser: {
+        username: "user",
+        accountType: "farmer",
+        isLoggedIn: true,
+        id: 2,
+      },
+      //user: null,
     },
     mutations: {
       setUser(state, user) {

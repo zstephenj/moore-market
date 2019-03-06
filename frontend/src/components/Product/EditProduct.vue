@@ -41,6 +41,7 @@ export default {
             return gotProduct
           }
     },
+}
 
 </script>
 
