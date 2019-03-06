@@ -7,13 +7,14 @@
 
     </div>
 
-    <product-form v-if='getProduct' :productToEdit='getProduct' :formType='formType'> </product-form>
+    <product-form :productToEdit='getProduct' :formType='formType'> </product-form>
 
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+
 
 import ProductForm from './ProductForm.vue'
 
@@ -30,18 +31,8 @@ export default {
     return {
       productId: parseInt(this.$route.params.id),
       formType: 'edit',
-      product: []
     }
-  },
-
-  methods: {
-    ...mapActions('product', [
-      'getAllProductsFromApi'
-    ]),
-
-    
-  },
-
+  },   
   computed: {
       ...mapGetters('product', ['getProductById']),
 
@@ -50,18 +41,8 @@ export default {
             return gotProduct
           }
     },
-
-  async created() {
-        await this.getAllProductsFromApi()
-        
-    },
-  
-  mounted(){
-
-  }
-  
-  
 }
+
 </script>
 
 <style>

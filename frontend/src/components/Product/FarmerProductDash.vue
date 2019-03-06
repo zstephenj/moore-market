@@ -12,18 +12,17 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if='this.currentUser.products.length > 0'>
-                    <farmer-product-item v-for='product of this.currentUser.products' :key='product.id' :product='product'> </farmer-product-item>
-                </template>
+                <farmer-product-item v-for='product in farmerProducts.products' :key='product.id' :product='product'> </farmer-product-item>
+
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
-import {mapActions, mapGetters, mapState} from 'vuex'
-
 import FarmerProductItem from './FarmerProductItem.vue'
+import { mapActions, mapState } from 'vuex'
+
 export default {
     name: 'FarmerProductDash',
     components: {
@@ -32,19 +31,21 @@ export default {
     
     data() {
         return {
-            
+            //temporary
+            id: 2
         }
     },
 
     computed: {
-        ...mapState('product', [
-            'allProducts'
+        ...mapState('farmer', [
+          'farmerProducts'
         ]),
-        ...mapState('user', [
-            'currentUser'
-        ]),
-        
-        
+    },
+
+    methods: {
+        ...mapActions('farmer', [
+            'getFarmerProducts'
+        ])
     },
 
     methods: {

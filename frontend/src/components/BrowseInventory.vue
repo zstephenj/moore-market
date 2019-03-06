@@ -1,27 +1,26 @@
 <template>
-  <div class="browse-farmer-products">
+  <div class="browse-farmer-products container">
     <div class="farmer-details">
-      <h3>{{ farmerProducts.username }}</h3>
+      <h3>{{ farmerProducts.username }}'s Inventory</h3>
     </div>
-    <div class="farmer-products">
-      <ul>
-        <li v-for="product in farmerProducts.products" :key="product.id">
-          {{ product.name }} | {{ product.description }}
-        </li>
-      </ul>
+    <div class="product-listing" v-for="(product, idx) in farmerProducts.products" :key="idx">
+      <product-search-item :product="product" :farmer="farmerProducts"></product-search-item>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import ProductSearchItem from './Product/ProductSearchItem'
 
 export default {
   name: 'BrowseInventory',
+  components: {
+    ProductSearchItem,
+  },
   props: {
     id: {
       type: [Number, String],
-      required: true,
       validator(value) {
         return Number.isInteger(value)
       }
@@ -39,6 +38,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.browse-farmer-products {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.farmer-details {
+  flex-basis: 100%;
+}
 
 </style>
