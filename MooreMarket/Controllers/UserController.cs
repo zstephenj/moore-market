@@ -11,6 +11,8 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using MooreMarket.Data;
+using System.Linq;
 
 namespace MooreMarket.Controllers
 {
@@ -22,13 +24,15 @@ namespace MooreMarket.Controllers
         private IUserService _userService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private MooreMarketContext _context;
         public UserController(IUserService userService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings, MooreMarketContext context)
         {
             _userService = userService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -80,6 +84,49 @@ namespace MooreMarket.Controllers
           {
             return BadRequest(new { message = ex.Message });
           }
+        }
+
+        //POST api/User/Location/{id}
+        [HttpPost("Location")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult SetUserLocation(int id, UserModel userLocation)
+        {
+            UserModel user = _context.Users.SingleOrDefault(u => u.Id == userLocation.Id);
+            user.Lat = userLocation.Lat;
+            user.Lng = userLocation.Lng;
+            
+
+            _context.SaveChanges();
+
+            return Ok(userLocation);
+        }
+        
+        //POST api/User/Favorites/Market/{id}
+        [HttpPost("Favorites/Market/{id}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult AddFavoriteMarket(int id, int marketId)
+        {
+            UserModel user = _context.Users.SingleOrDefault(u => u.Id == id);
+            user.FavMarketIds.Add(marketId);
+            _context.SaveChanges();
+
+            return Ok(marketId);
+        }
+
+        //DELETE api/User/Favorites/Market/{id}
+        [HttpDelete("Favorites/Market/{id}")]
+        public IActionResult RemoveFavoriteMarket(int id, int marketId)
+        {
+            UserModel user = _context.Users.SingleOrDefault(u => u.Id == id);
+
+            user.FavMarketIds.Remove(marketId);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
