@@ -1,8 +1,8 @@
 <template>
-    <div class="container-fluid d-flex h-100">
+    <div class="container-fluid h-100">
         <div class='row h-100'>
             
-            <div class="card sidebar-background h-100  d-flex flex-column flex-grow text-green">
+            <div class="card sidebar-background h-100 text-green">
                 <div class="card-body ">
                     
                     
@@ -52,7 +52,7 @@
 
                     </div>
 
-                    <button v-if='currentUser.accountType === "farmer"' @click='emitChangeAdding(0)' type='button' class='btn btn-sm btn-moore-invert mt-5' data-toggle="tooltip" data-placement="bottom" title="Please Search For A Place" ref='tooltip1'> Suggest New Market </button>
+                    <button v-if='currentUser.accountType === "vendor"' @click='emitChangeAdding(0)' type='button' class='btn btn-sm btn-moore-invert mt-5' data-toggle="tooltip" data-placement="bottom" title="Please Search For A Place" ref='tooltip1'> Suggest New Market </button>
                 </div>
                 
             </div>
@@ -149,7 +149,7 @@ export default {
         }
     },
     async mounted() {
-        if (this.currentUser.accountType === 'farmer') {
+        if (this.currentUser.accountType === 'vendor') {
             await jQuery(this.$refs.tooltip1).tooltip('enable')
         }
     }

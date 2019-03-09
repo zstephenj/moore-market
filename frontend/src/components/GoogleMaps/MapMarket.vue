@@ -20,7 +20,7 @@
                 <span class='ml-2'><a :href='market.position.url' class='badge badge-moore' target="_blank" rel="noopener noreferrer"> Get Directions </a></span>
                 <span v-if='!isFavorite' @click='changeFavoriteMarket(1)' class='ml-2 badge badge-notfav mousePointer'>Favorite</span> 
                 <span v-if='isFavorite' @click='changeFavoriteMarket(0)' class='ml-2 badge badge-fav mousePointer'>Favorited</span> 
-                    <span v-if='currentUser.accountType === "farmer"'>
+                    <span v-if='currentUser.accountType === "vendor"'>
                         <span v-if='!isVendorMarket' @click='addCurrentUserToMarket()' class='ml-2 badge badge-notfav mousePointer'>Add My Store</span> 
                         <span v-if='isVendorMarket' @click='removeCurrentUserFromMarket()' class='ml-2 badge badge-fav mousePointer'>Remove My Store</span>      
                     </span>
@@ -28,10 +28,10 @@
             </div>
 
             <hr class='border-navy' />
-            <h4 class='font-weight-bold'> Farmers at this Market </h4>
+            <h4 class='font-weight-bold'> Vendors at this Market </h4>
             <hr class='border-navy w-50' />
             <div v-if='numCarousels === 0'>
-                <h6> No Farmers Yet </h6>
+                <h6> No Vendors Yet </h6>
             </div>
             <div v-if='numCarousels > 0' id="carousel" class="carousel slide" data-ride="carousel">
                 

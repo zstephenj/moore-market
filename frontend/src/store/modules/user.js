@@ -16,7 +16,7 @@ const user = {
         currentUser: {
             id: 1,
             username: "user",
-            accountType: "farmer",
+            accountType: "vendor",
             isLoggedIn: true,
             location: {},
             favoriteMarkets: [1,3,5],

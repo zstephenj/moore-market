@@ -1,14 +1,12 @@
 <template>
-    <div class='container-fluid moore-gradient moore-navy'>
-        <div class='row'>
+    <div class='container-fluid moore-navy'>
+        <div class='row justify-content-end'>
 
-            <div class='col d-flex flex-grow'>
-                <map-market :market='market' class='m-2'> </map-market>
-            </div>
+            
 
-            <div class='col-md-5 border-navy m-2'>
+            <div class='col-9 border-navy padding-0'>
 
-                <google-map class='align-items-end' 
+                <google-map
                     :sidebar='sidebar'
                     @change-is-pan-to='changeIsPanToFalse'
                     @set-map-market='setMapMarket' 
@@ -18,7 +16,7 @@
 
             </div>
 
-            <div class='col-md-2 m-2 d-flex flex-column'>
+            <div class='col-3 padding-0'>
                 <map-sidebar 
                     :isMapPlace='isMapPlace' 
                     @nav-set-gps='changeIsPanToTrue'
@@ -26,6 +24,12 @@
                     @clicked-confirm-location='confirmLocation'
                     @change-filter='changeFilter'> 
                 </map-sidebar>
+            </div>
+            
+        </div>
+        <div class='row justify-content-center my-3'>
+            <div class='col'>
+                <map-market :market='market' class=''> </map-market>
             </div>
         </div>
     </div>
@@ -113,6 +117,10 @@ export default {
 .border-navy {
     border-style:solid;
     border-color: #001f3f;
+}
+.padding-0{
+    padding-right:0;
+    padding-left:0;
 }
 
 </style>
