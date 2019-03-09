@@ -161,14 +161,14 @@ export default {
         getPlacePosition(type) {
             let lat = this.place.geometry.location.lat()
             let lng = this.place.geometry.location.lng()
-            let gps = {lat: lat, lng: lng}
+            let gps = {
+                lat: lat,
+                lng: lng
+                }
             // Pull only relevant properties out of Google Place
-            let position = {
-                gps: gps,
-            }  
             if (type === 'market') {
-                position.formatted_address = this.place.formatted_address,
-                position.url = this.place.url
+                gps.Address = this.place.formatted_address,
+                gps.url = this.place.url
             }
             return position
         },
@@ -237,8 +237,9 @@ export default {
         isConfirmingLocation: 
                 async function (isConfirmingLocation) {
                     if (this.place) {
-                    let newLocation = this.getPlacePosition()
-                    let response = await this.setLocation(newLocation)
+                    let newUserLocation = this.getPlacePosition()
+                    newUserLocation.id = this.currentUser.id
+                    let response = await this.setLocation(newUserLocation)
                     console.log(response)
                     //change to response.data
                     this.setCenter(response.gps, 10)
