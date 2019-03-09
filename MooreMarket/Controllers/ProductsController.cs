@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MooreMarket.Data;
 using MooreMarket.Models;
-using Microsoft.AspNetCore.Authorization;
 
 
 namespace MooreMarket.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace MooreMarket.Controllers
 
         }
         
-        //GET Products/
+        //GET api/Products/
         [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -44,7 +44,7 @@ namespace MooreMarket.Controllers
             return Ok(allProducts);
         }
 
-        //GET Products/{id}
+        //GET api/Products/{id}
         [AllowAnonymous]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
@@ -61,7 +61,7 @@ namespace MooreMarket.Controllers
             return Ok(product);
         }
 
-        //POST Products/Add
+        //POST api/Products/Add
         [HttpPost("Add")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -87,7 +87,7 @@ namespace MooreMarket.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
-        //PUT Products/Edit/{id}
+        //PUT api/Products/Edit/{id}
         [HttpPut("Edit/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -109,7 +109,7 @@ namespace MooreMarket.Controllers
             return Ok(product);
         }
 
-        //DELETE Products/Remove/{id}
+        //DELETE api/Products/Remove/{id}
         [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
@@ -120,6 +120,7 @@ namespace MooreMarket.Controllers
 
             return NoContent();
         }
+        
         [AllowAnonymous]
         [HttpGet("Search")]
         public ActionResult<IEnumerable<Product>> Search(string searchTerm)
