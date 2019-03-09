@@ -137,13 +137,16 @@ export default {
             this.removeVendorMarket(this.market.id)
         },
         async changeFavoriteMarket(num) {
-            console.log('trying to change')
+            let ids = {
+                marketId: this.market.id,
+                userId: this.currentUser.id
+            }
             if (num === 1) {
                 
-                await this.addFavoriteMarket(this.market.id)
+                await this.addFavoriteMarket(ids)
             }
             if (num === 0) {
-                await this.removeFavoriteMarket(this.market.id)
+                await this.removeFavoriteMarket(ids)
             }
         }
     },
