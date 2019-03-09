@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using MooreMarket.Data;
 using MooreMarket.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@ namespace MooreMarket.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
@@ -73,7 +75,7 @@ namespace MooreMarket.Controllers
             return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
         }
 
-        //PUT Categories/Edit/{id}
+        //PUT api/Categories/Edit/{id}
         [HttpPut("Edit/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -101,7 +103,7 @@ namespace MooreMarket.Controllers
             return Ok(category);
         }
 
-        //DELETE Categories/Remove/{id}
+        //DELETE api/Categories/Remove/{id}
         [HttpDelete("Remove/{id}")]
         public IActionResult Remove(int id)
         {
