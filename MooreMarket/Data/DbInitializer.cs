@@ -15,7 +15,9 @@ namespace MooreMarket.Data
             {
                 Username = "farmer1",
                 Password = "password",
-                AccountType = AccountType.Vendor
+                AccountType = AccountType.Vendor,
+                FavMarketIds = {1,3,5}
+
             };
 
             UserModel farmer2 = new UserModel
@@ -153,7 +155,72 @@ namespace MooreMarket.Data
             };
             context.Add(newProduct7);
 
-            context.SaveChanges();      
+            context.SaveChanges();
+
+            Market newMarket1 = new Market
+            {
+              Name = "The Tower Grove Farmers' Market",
+              Address = "Center Cross Dr, St. Louis, MO 63116, USA",
+              Lat = 38.6067598F,
+              Lng = -90.26026680000001F,
+              Url = "https://maps.google.com/?cid=9216417861388382972"
+            };
+            Market newMarket2 = new Market
+            {
+              Name = "Summit Produce at Kirkwood Farmers Market",
+              Address = "150 E Argonne Dr, Kirkwood, MO 63122, USA",
+              Lat = 38.58082F,
+              Lng = 90.404518F,
+              Url = "https://maps.google.com/?cid=2173026026069796459"
+            };
+            Market newMarket3 = new Market
+            {
+              Name = "Midtown Farmers Market",
+              Address = "6655 Delmar Blvd, St. Louis, MO 63130, USA",
+              Lat = 38.6563628F,
+              Lng = 90.3071822F,
+              Url = "https://maps.google.com/?cid=10918335213966964871"
+            };
+            Market newMarket4 = new Market
+            {
+              Name = "Park Avenue Coffee - Soulard Farmers Market",
+              Address = "720 Carroll St, St. Louis, MO 63104, USA",
+              Lat = 38.61039509999999F,
+              Lng = 90.2000544F,
+              Url = "https://maps.google.com/?cid=6908738308197433128"
+            };
+            Market newMarket5 = new Market
+            {
+              Name = "Schlafly Farmers Market",
+              Address = "7260 Southwest Ave, Maplewood, MO 63143, USA",
+              Lat = 38.61282949999999F,
+              Lng = 90.31501220000001F,
+              Url = "https://maps.google.com/?cid=788000265220792073"
+            };
+            Market newMarket6 = new Market
+            {
+              Name = "Union Station Farmers Market",
+              Address = "1701 Wynkoop St, Denver, CO 80202, USA",
+              Lat = 39.7529662F,
+              Lng = 105.0002556F,
+              Url = "https://maps.google.com/?q=1701+Wynkoop+St,+Denver,+CO+80202,+USA&ftid=0x876c78c308d895a7:0xc3c54d6855585937"
+            };
+            Market newMarket7 = new Market
+            {
+              Name = "Colorado Fresh Markets Inc",
+              Address = "3000 E 1st Ave, Denver, CO 80209, USA",
+              Lat = 39.7168239F,
+              Lng = 104.9526295F,
+              Url = "https://maps.google.com/?q=3000+E+1st+Ave,+Denver,+CO+80209,+USA&ftid=0x876c7e913a89fcd1:0x854d98cbd1f0f519"
+            };
+            Market newMarket8 = new Market
+            {
+              Name = "Stapleton Farmers Market",
+              Address = "7351 E 29th Ave, Denver, CO 80238, USA",
+              Lat = 39.75817F,
+              Lng = 104.90216900000001F,
+              Url = "https://maps.google.com/?q=7351+E+29th+Ave,+Denver,+CO+80238,+USA&ftid=0x876c7b9b1035f7fb:0x99ebf43a08dc9165"
+            };
         }
     }
 }
