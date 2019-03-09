@@ -8,118 +8,78 @@ const user = {
             username: "user",
             accountType: "vendor",
             isLoggedIn: true,
-            location: {},
-            favoriteMarkets: [1,3,5],
+            favMarketIds: [],
+            lat: null,
+            lng: null
         },
     },
 
     mutations: {
 
-        setCurrentUser (state, user) {
-            state.currentUser = user
+        setCurrentUser(state, user) {
+            state.currentUser = user;
         },
 
-        setUserLocation (state, payload) {
-            state.currentUser.location = payload
+        setUserLocation(state, payload) {
+            let {lat, lng} = payload;
+            state.currentUser.lat = lat;
+            state.currentUser.lng = lng;
         },
 
-        removeLocation (state) {
-            state.currentUser.location = {}
+        removeLocation(state) {
+            state.currentUser.lat = null;
+            state.currentUser.lng = null;
         },
 
-        setUserProducts(state, products) {
-            state.currentUser.products = products
-        },
         pushFavoriteMarket(state, marketId) {
-            state.currentUser.favoriteMarkets.push(marketId)
+            state.currentUser.favMarketIds.push(marketId);
         },
         spliceFavoriteMarket(state, idx) {
-            state.currentUser.favoriteMarkets.splice(idx, 1)
-        },
-        pushVendorMarket(state, marketId) {
-            state.currentUser.vendorMarkets.push(marketId)
-        },
-        spliceVendorMarket(state, idx) {
-            state.currentUser.vendorMarkets.splice(idx, 1)
+            state.currentUser.favMarketIds.splice(idx, 1);
         }
     },
 
     actions: {
 
-        async getUserFromApi({ commit }, login) {
-            let response
+        async setLocation({commit}, userLocation) {
+            let response;
             try {
-                
-                // response = await axios.get('/api/')
-                // commit('setCurrentUser', response.data)
-                return response
+                response = axios.post('/user/location/', userLocation);
+                commit('setUserLocation', response.data);
+                return response;
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
 
         },
 
-        async setLocation({ commit }, location) {
-            let response
+        async addFavoriteMarket({commit}, ids) {
+            let response;
+            let {marketId, userId} = ids;
             try {
-                
-                commit('setUserLocation', location)//response.data)
-                return location//response
+                response = await axios.post('api/user/favoriteMarkets/' + userId, marketId);
+                commit('pushFavoriteMarket', response.data);
+                return response;
             } catch (error) {
-                console.error(error)
+                console.log(error);
             }
 
         },
-
-        async removeLocation({ commit}) {
-            let response
+        async removeFavoriteMarket({commit, getters}, ids) {
+            let response;
+            let {marketId, userId} = ids;
             try {
-                
-                // response = await axios.delete('/api/users/location/remove/')
-                commit('removeLocation')
-                return response
+                response = await axios.delete('api/user/favoriteMarkets/' + userId, marketId);
+                let idx = getters.getFavoriteMarketIndex(marketId)
+                if (response.status === 200) {
+                    commit('spliceFavoriteMarket', idx)
+                }
+                return response;
             } catch (error) {
-                console.error(error)
-            }
-
-        },
-
-
-        async getUserProducts({ commit }, id) {
-            let response
-            try{
-               
-                response = await axios.get('api/user/products/' + id)
-                console.log(response)
-                commit('setUserProducts', response.data)
-                return response
-            } catch(error) {
                 console.log(error)
             }
         },
-
-        async addFavoriteMarket ({commit}, id) {
-            let response
-            try {
-                // response = await axios.post('api/user/favoriteMarkets', id)
-                commit('pushFavoriteMarket', id)//response.data)
-            }  catch(error) {
-                console.log(error)
-            }
-            
-        },
-        async removeFavoriteMarket ({commit, getters}, id) {
-            let response
-            try {
-                // response = await axios.delete('api/user/favoriteMarkets', id)
-                console.log(id)
-                let idx = getters.getFavoriteMarketIndex(id)
-                commit('spliceFavoriteMarket', idx)//response.data)
-            }  catch(error) {
-                console.log(error)
-            }
-        },
-        async addVendorMarket ({commit, dispatch, state}, id) {
+        async addVendorMarket({ commit, dispatch, state }, id) {
             let response
             try {
                 // response = await axios.put('api/user/vendorMarkets', id)
@@ -128,13 +88,13 @@ const user = {
                     marketId: id,
                     userId: state.currentUser.id
                 }
-                dispatch('market/addUserToMarket',dispatchObj,{root:true})
-            }  catch(error) {
+                dispatch('market/addUserToMarket', dispatchObj, { root: true })
+            } catch (error) {
                 console.log(error)
             }
-            
+
         },
-        async removeVendorMarket ({commit, getters, dispatch, state}, id) {
+        async removeVendorMarket({ commit, getters, dispatch, state }, id) {
             let response
             try {
                 // response = await axios.delete('api/user/favoriteMarkets', id)
@@ -144,59 +104,58 @@ const user = {
                     marketId: id,
                     userId: state.currentUser.id
                 }
-                dispatch('market/removeUserFromMarket',dispatchObj,{root:true})
-            }  catch(error) {
+                dispatch('market/removeUserFromMarket', dispatchObj, { root: true })
+            } catch (error) {
                 console.log(error)
             }
         },
-      async registerUser({ commit, state }, user) {
-      async login({commit}, userDto) {
-        let response;
-        try {
-          response = await axios.post('api/user/login', userDto);
-          if (response.status === 200) {
-            let {id, username, accountType, token} = response.data;
-            let user = {
-              id: id,
-              username: username,
-              // Refactor if more than two accountTypes
-              accountType: (accountType === 0 ? 'vendor': 'user'),
-              isLoggedIn: true
-            };
-            sessionStorage.user = JSON.stringify({token:token});
-            commit('setUser', user);
-            return true;
-          } else {
-            // Wrong username or password
-            return false;
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
+        async login({ commit }, userDto) {
+                let response;
+                try {
+                    response = await axios.post('api/user/login', userDto);
+                    if (response.status === 200) {
+                        let { id, username, accountType, token } = response.data;
+                        let user = {
+                            id: id,
+                            username: username,
+                            // Refactor if more than two accountTypes
+                            accountType: (accountType === 0 ? 'vendor' : 'user'),
+                            isLoggedIn: true
+                        };
+                        sessionStorage.user = JSON.stringify({ token: token });
+                        commit('setCurrentUser', user);
+                        return true;
+                    } else {
+                        // Wrong username or password
+                        return false;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            },
 
-      async registerUser({commit}, user) {
-        let response;
-        try {
-          response = await axios.post('/api/user/register', user);
-          commit('setUser', response.data);
-          return response;
-        } catch(error) {
-          console.error(error);
-        }
-      },
-    },
+            async registerUser({ commit }, user) {
+                let response;
+                try {
+                    response = await axios.post('/api/user/register', user);
+                    commit('setCurrentUser', response.data);
+                    return response;
+                } catch (error) {
+                    console.error(error);
+                }
+            },
+        },
 
-    getters: {
-        getFavoriteMarketIndex: (state) => (marketId) => {
-            return state.currentUser.favoriteMarkets.findIndex(m => m.id === marketId)
-        },
-        getVendorMarketIndex: (state) => (marketId) => {
-            return state.currentUser.vendorMarkets.findIndex(m => m.id === marketId)
-        },
+        getters: {
+            getFavoriteMarketIndex: (state) => (marketId) => {
+                return state.currentUser.favoriteMarkets.findIndex(m => m.id === marketId)
+            },
+            getVendorMarketIndex: (state) => (marketId) => {
+                return state.currentUser.vendorMarkets.findIndex(m => m.id === marketId)
+            },
+
+        }
 
     }
-
 }
-
 export default user
