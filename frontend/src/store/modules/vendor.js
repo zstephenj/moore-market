@@ -4,36 +4,40 @@ const vendor = {
   namespaced: true,
   state: {
     allVendors: [],
-    vendorProducts: [],
-    currentVendor: null,
+    currentVendor: {},
   },
 
   mutations: {
-    setVendorProducts(state, data) {
-      state.vendorProducts = data
-      state.currentVendor = data
+    setCurrentVendor(state, vendor) {
+      state.currentVendor = vendor;
     },
-    setVendors(state, vendors) {
-      state.allVendors = vendors
+    setAllVendors(state, vendors) {
+      state.allVendors = vendors;
     },
   },
   
   actions: {
-    async getVendorProducts({ commit }, id) {
+    async getAllVendors({commit}) {
       let response
       try {
-        response = await axios.get('/api/vendors/'+ id)
-        console.log(response)
-        commit('setVendorProducts', response.data)
+        response = await axios.get('/api/vendors');
+        commit('setAllVendors', response.data);
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getVendor({commit}, id) {
+      let response
+      try {
+        response = await axios.get('/api/vendors/'+ id);
+        commit('setCurrentVendor', response.data);
       } catch(error) {
-        console.log(error)
+        console.log(error);
       }
       
     },
-    getVendors({ commit }) {
-      axios.get('/api/vendors')
-        .then(response => commit('setVendors', response.data))
-    },
+    
   },
 
   getters: {

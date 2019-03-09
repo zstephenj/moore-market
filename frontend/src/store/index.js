@@ -6,6 +6,7 @@ import category from './modules/category'
 import user from './modules/user'
 import vendor from './modules/vendor'
 import market from './modules/market'
+import api from './modules/api'
 
 Vue.use(Vuex)
 
@@ -15,9 +16,9 @@ const store = new Vuex.Store({
         category,
         user,
         vendor,
-        market
+        market,
+        api
     }
 })
 
 export default store
-
