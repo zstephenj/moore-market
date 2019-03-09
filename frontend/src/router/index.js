@@ -65,9 +65,7 @@ export default new Router({
     name: 'MapRoute',
     path: '/map',
     component:MapPage
-  },
-
-  ],
+  }, {
     name: 'AllProducts',
     path: '/products/all',
     component: AllProducts,
