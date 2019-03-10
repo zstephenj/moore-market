@@ -13,6 +13,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using MooreMarket.Data;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace MooreMarket.Controllers
 {
@@ -103,30 +104,53 @@ namespace MooreMarket.Controllers
             return Ok(userLocation);
         }
         
-        //POST api/User/Favorites/Market/{id}
-        [HttpPost("Favorites/Market/{id}")]
+        //POST api/User/Favorites/Market/{userId}
+        [HttpPost("Favorites/Market/{userId}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult AddFavoriteMarket(int id, int marketId)
+        public IActionResult AddFavoriteMarket(int userId, int marketId)
         {
-            UserModel user = _context.Users.SingleOrDefault(u => u.Id == id);
-            user.FavMarketIds.Add(marketId);
-            _context.SaveChanges();
+            IList<UserMarket> existingItems = _context.UserMarkets
+              .Where(cm => cm.UserId == userId)
+              .Where(cm => cm.MarketId == marketId)
+              .ToList();
+            if (existingItems.Count == 0)
+            {
+              UserModel user = _context.Users.SingleOrDefault(u => u.Id == userId);
+              Market market = _context.Markets.SingleOrDefault(m => m.Id == marketId);
+              UserMarket userMarket = new UserMarket {
+                MarketId = marketId,
+                Market = market,
+                UserId = userId,
+                User = user
+              };
+              _context.UserMarkets.Add(userMarket);
+              _context.SaveChanges();
+              return Ok(userMarket);
+            }
 
-            return Ok(marketId);
+            return BadRequest();
+            
         }
 
-        //DELETE api/User/Favorites/Market/{id}
-        [HttpDelete("Favorites/Market/{id}")]
-        public IActionResult RemoveFavoriteMarket(int id, int marketId)
+        //DELETE api/User/Favorites/Market/{userId}
+        [HttpDelete("Favorites/Market/{userId}")]
+        public IActionResult RemoveFavoriteMarket(int userId, int marketId)
         {
-            UserModel user = _context.Users.SingleOrDefault(u => u.Id == id);
+            UserModel user = _context.Users.SingleOrDefault(u => u.Id == userId);
+            Market market = _context.Markets.SingleOrDefault(m => m.Id == marketId);
+            UserMarket userMarket = new UserMarket {
+              MarketId = marketId,
+              Market = market,
+              UserId = userId,
+              User = user
+            };
 
-            user.FavMarketIds.Remove(marketId);
+            user.UserMarkets.Remove(userMarket);
             _context.SaveChanges();
 
-            return NoContent();
+            return Ok();
         }
     }
 }
