@@ -10,16 +10,17 @@ namespace MooreMarket.Models
 
         public string Address {get;set;}
 
-        public float Lat {get;set;}
+        public double Lat {get;set;}
 
-        public float Lng {get;set;}
+        public double Lng {get;set;}
         public string Url {get;set;}
-        public IList<UserModel> Users {get;set;}
+        public IList<UserMarket> UserMarkets {get;set;}
+        public IList<VendorMarket> VendorMarkets {get;set;}
         public Market()
         {
 
         }
-        public Market(string name, string address, float lat, float lng, string url)
+        public Market(string name, string address, double lat, double lng, string url)
         {
             Name = name;
             Address = address;
