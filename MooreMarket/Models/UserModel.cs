@@ -19,10 +19,11 @@ namespace MooreMarket.Models
         public AccountType AccountType { get; set; } = AccountType.User;
 
         public IList<Product> Products { get; set; }
-        public List<int> FavMarketIds {get;set;}
+        public IList<UserMarket> UserMarkets {get;set;}
+        public IList<VendorMarket> VendorMarkets {get;set;}
 
-        public float Lat {get;set;}
+        public double Lat {get;set;}
 
-        public float Lng {get;set;}
+        public double Lng {get;set;}
     }
 }
